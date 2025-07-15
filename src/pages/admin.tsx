@@ -31,7 +31,7 @@ const AdminPage = () => {
     setError(null);
 
     axios
-      .get<Recruitment[]>('https://virtserver.swaggerhub.com/bluemoon/api/recruitments')
+      .get<Recruitment[]>('http://172.31.224.1:8000/api/recruitments')
       .then((res) => {
         setRecruitments(res.data);
       })
@@ -49,7 +49,7 @@ const AdminPage = () => {
     setError(null);
 
     axios
-      .get<Inquiry[]>('https://virtserver.swaggerhub.com/bluemoon/api/inquiries')
+      .get<Inquiry[]>('http://192.168.100.95:8000/api/Inquiries')
       .then((res) => {
         setInquiries(res.data);
       })
