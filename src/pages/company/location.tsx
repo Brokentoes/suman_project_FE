@@ -1,13 +1,21 @@
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer"; // 경로 수정됨
 import { motion, type Transition } from "framer-motion";
-import { useState } from "react"; // useState 훅을 가져옵니다.
+import { useState, useEffect, useRef } from "react";
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 export default function LocationPage() {
-  // 어떤 지도가 열려 있는지 관리하는 상태 (null, '본사', '천안사업장', '시험센터' 중 하나)
   const [openMap, setOpenMap] = useState<string | null>(null);
+  const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const kakaoMaps = useRef<{ [key: string]: any }>({});
+  const infoWindows = useRef<{ [key: string]: any }>({});
+  const currentOpenInfowindow = useRef<any>(null);
 
-  // 섹션 애니메이션을 위한 Framer Motion 변형
   const fadeInVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -17,35 +25,169 @@ export default function LocationPage() {
     },
   };
 
-  // 지도 펼치기/접기 애니메이션을 위한 트랜지션
   const mapTransition = {
     type: "spring",
     stiffness: 200,
     damping: 20,
+    duration: 0.5,
   };
 
-  // 지도 URL (실제 지도 임베드 URL로 **반드시 교체해야 합니다**)
-  const mapUrls: { [key: string]: string } = {
-    본사: "https://map.naver.com/v5/entry/place/12345678?c=15,0,0,0,dh", // 본사 실제 지도 URL로 교체
-    천안사업장: "https://map.naver.com/v5/entry/place/87654321?c=15,0,0,0,dh", // 천안사업장 실제 지도 URL로 교체
-    시험센터: "https://map.naver.com/v5/entry/place/98765432?c=15,0,0,0,dh", // 시험센터 실제 지도 URL로 교체
+  const kakaoMapConfigs: {
+    [key: string]: {
+      latitude: number;
+      longitude: number;
+      level?: number;
+      address: string;
+    };
+  } = {
+    본사: {
+      latitude: 36.439533,
+      longitude: 127.394547,
+      level: 3,
+      address: "대전광역시 대덕구 문평동 43-10",
+    },
+    천안사업장: {
+      latitude: 36.848807,
+      longitude: 127.122367,
+      level: 3,
+      address: "충청남도 천안시 서북구 성성동 336-4 G1비즈캠퍼스 4F 401호",
+    },
+    시험센터: {
+      latitude: 36.424057,
+      longitude: 127.406167,
+      level: 3,
+      address: "대전광역시 유성구 테크노2로 187 B동 120호",
+    },
   };
 
-  // 지도 토글 함수
+  const KAKAO_MAP_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY;
+
+  const initKakaoMap = (locationKey: string) => {
+    const config = kakaoMapConfigs[locationKey];
+    const container = mapRefs.current[locationKey];
+
+    if (kakaoMaps.current[locationKey]) {
+      return;
+    }
+
+    if (config && container && window.kakao && window.kakao.maps) {
+      const options = {
+        center: new window.kakao.maps.LatLng(config.latitude, config.longitude),
+        level: config.level,
+      };
+      const map = new window.kakao.maps.Map(container, options);
+      kakaoMaps.current[locationKey] = map;
+
+      const zoomControl = new window.kakao.maps.ZoomControl();
+      map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
+
+      const markerPosition = new window.kakao.maps.LatLng(
+        config.latitude,
+        config.longitude
+      );
+      const marker = new window.kakao.maps.Marker({
+        position: markerPosition,
+        map: map,
+      });
+
+      const infowindowContent =
+        `<div style="padding:10px;font-size:14px;font-weight:bold;color:#333;">` +
+        `<div style="margin-bottom:5px;">${locationKey}</div>` +
+        `<div style="font-size:12px;color:#666;">${config.address}</div>` +
+        `</div>`;
+
+      const infowindow = new window.kakao.maps.InfoWindow({
+        content: infowindowContent,
+        removable: true,
+      });
+
+      infoWindows.current[locationKey] = infowindow;
+
+      window.kakao.maps.event.addListener(marker, "click", function () {
+        if (currentOpenInfowindow.current) {
+          currentOpenInfowindow.current.close();
+        }
+        infowindow.open(map, marker);
+        currentOpenInfowindow.current = infowindow;
+      });
+
+      window.kakao.maps.event.addListener(map, "click", function () {
+        if (currentOpenInfowindow.current) {
+          currentOpenInfowindow.current.close();
+          currentOpenInfowindow.current = null;
+        }
+      });
+
+      console.log(`${locationKey} Kakao Map initialized.`);
+    } else {
+      console.warn(
+        `[[initKakaoMap]] Failed to initialize Kakao Map for ${locationKey}. Config, container or Kakao API not ready.`
+      );
+    }
+  };
+
   const handleToggleMap = (location: string) => {
-    // 현재 열린 지도와 클릭한 위치가 같으면 지도를 닫고, 다르면 해당 위치의 지도를 엽니다.
-    setOpenMap((prevOpenMap) => (prevOpenMap === location ? null : location));
+    setOpenMap((prevOpenMap) => {
+      const nextOpenMap = prevOpenMap === location ? null : location;
+
+      if (!nextOpenMap && currentOpenInfowindow.current) {
+        currentOpenInfowindow.current.close();
+        currentOpenInfowindow.current = null;
+      }
+
+      if (nextOpenMap && kakaoMaps.current[nextOpenMap]) {
+        setTimeout(() => {
+          kakaoMaps.current[nextOpenMap].relayout();
+          const config = kakaoMapConfigs[nextOpenMap];
+          kakaoMaps.current[nextOpenMap].setCenter(
+            new window.kakao.maps.LatLng(config.latitude, config.longitude)
+          );
+        }, mapTransition.duration * 1000 + 50);
+      }
+      return nextOpenMap;
+    });
   };
+
+  useEffect(() => {
+    if (
+      KAKAO_MAP_APP_KEY &&
+      typeof window !== "undefined" &&
+      !window.kakao?.maps
+    ) {
+      const script = document.createElement("script");
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`;
+      script.async = true;
+      script.onload = () => {
+        window.kakao.maps.load(() => {
+          console.log("Kakao Map Script Loaded and Ready on LocationPage.");
+          Object.keys(kakaoMapConfigs).forEach((key) => {
+            initKakaoMap(key);
+          });
+        });
+      };
+      script.onerror = (error) => {
+        console.error("Kakao Map Script failed to load:", error);
+      };
+      document.head.appendChild(script);
+    } else if (
+      KAKAO_MAP_APP_KEY &&
+      typeof window !== "undefined" &&
+      window.kakao?.maps
+    ) {
+      Object.keys(kakaoMapConfigs).forEach((key) => {
+        initKakaoMap(key);
+      });
+    }
+  }, [KAKAO_MAP_APP_KEY]);
 
   return (
     <>
       <Header />
 
-      {/* 히어로 섹션 */}
       <section
         className="hero-section relative bg-cover bg-center h-[300px] flex items-center text-white"
         style={{
-          backgroundImage: 'url("/images/history-hero-bg.png")', // 히어로 이미지 변경 고려
+          backgroundImage: 'url("/images/history-hero-bg.png")',
           backgroundPosition: "center top",
         }}
       >
@@ -56,14 +198,12 @@ export default function LocationPage() {
         </div>
       </section>
 
-      {/* 서브 내비게이션 (Breadcrumb) 섹션 */}
       <section className="breadcrumb-section bg-gray-700 py-4 px-4 md:px-8 text-white">
         <div className="max-w-7xl mx-auto">
           <p className="text-md">회사소개 &gt; 시설 위치 / 찾아오시는 길</p>
         </div>
       </section>
 
-      {/* 찾아오시는 길 섹션 */}
       <main className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -85,7 +225,6 @@ export default function LocationPage() {
                     <h3 className="text-xl font-semibold mb-2">본사</h3>
                     <p className="text-gray-700">대전광역시 대덕구 문평서로</p>
                   </div>
-                  {/* 파란색 지도 아이콘 */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -106,31 +245,34 @@ export default function LocationPage() {
                     />
                   </svg>
                 </div>
-                {/* 지도 iframe (접히고 펼쳐지는 애니메이션 적용) */}
                 <motion.div
                   initial={false}
-                  // openMap 상태에 따라 높이와 투명도 애니메이션
                   animate={{
-                    height: openMap === "본사" ? "250px" : "0px",
-                    opacity: openMap === "본사" ? 1 : 0,
+                    height: openMap === "본사" ? "250px" : "100px",
+                    opacity: openMap === "본사" ? 1 : 0.6,
+                    filter: openMap === "본사" ? "blur(0px)" : "blur(3px)",
                   }}
                   transition={mapTransition}
-                  className="mt-4 overflow-hidden" // 접혔을 때 내용이 숨겨지도록 설정
+                  className="mt-4 rounded-md overflow-hidden relative"
+                  style={{ minHeight: "100px" }}
                 >
-                  {openMap === "본사" && ( // 본사 지도가 열려 있을 때만 iframe 렌더링
-                    <iframe
-                      src={mapUrls.본사}
-                      width="100%"
-                      height="250"
-                      allowFullScreen={true}
-                      loading="lazy"
-                      className="rounded-md"
-                    ></iframe>
-                  )}
+                  <div
+                    ref={(el) => (mapRefs.current["본사"] = el)}
+                    className="w-full h-full absolute top-0 left-0"
+                    style={{ backgroundColor: "lightgray" }}
+                  >
+                    {/* 투명 오버레이 추가 */}
+                    {openMap !== "본사" && (
+                      <div
+                        className="absolute inset-0 z-10"
+                        style={{ pointerEvents: "auto" }} // 마우스 이벤트를 가로챔
+                      ></div>
+                    )}
+                  </div>
                 </motion.div>
               </div>
 
-              {/* 천안사업장 (위 본사와 동일한 구조) */}
+              {/* 천안사업장 */}
               <div className="border border-gray-300 rounded-lg p-6">
                 <div
                   className="flex justify-between items-center cursor-pointer"
@@ -163,26 +305,32 @@ export default function LocationPage() {
                 <motion.div
                   initial={false}
                   animate={{
-                    height: openMap === "천안사업장" ? "250px" : "0px",
-                    opacity: openMap === "천안사업장" ? 1 : 0,
+                    height: openMap === "천안사업장" ? "250px" : "100px",
+                    opacity: openMap === "천안사업장" ? 1 : 0.6,
+                    filter:
+                      openMap === "천안사업장" ? "blur(0px)" : "blur(3px)",
                   }}
                   transition={mapTransition}
-                  className="mt-4 overflow-hidden"
+                  className="mt-4 rounded-md overflow-hidden relative"
+                  style={{ minHeight: "100px" }}
                 >
-                  {openMap === "천안사업장" && (
-                    <iframe
-                      src={mapUrls.천안사업장}
-                      width="100%"
-                      height="250"
-                      allowFullScreen={true}
-                      loading="lazy"
-                      className="rounded-md"
-                    ></iframe>
-                  )}
+                  <div
+                    ref={(el) => (mapRefs.current["천안사업장"] = el)}
+                    className="w-full h-full absolute top-0 left-0"
+                    style={{ backgroundColor: "lightgray" }}
+                  >
+                    {/* 투명 오버레이 추가 */}
+                    {openMap !== "천안사업장" && (
+                      <div
+                        className="absolute inset-0 z-10"
+                        style={{ pointerEvents: "auto" }}
+                      ></div>
+                    )}
+                  </div>
                 </motion.div>
               </div>
 
-              {/* 시험센터 (위 본사와 동일한 구조) */}
+              {/* 시험센터 */}
               <div className="border border-gray-300 rounded-lg p-6">
                 <div
                   className="flex justify-between items-center cursor-pointer"
@@ -215,22 +363,27 @@ export default function LocationPage() {
                 <motion.div
                   initial={false}
                   animate={{
-                    height: openMap === "시험센터" ? "250px" : "0px",
-                    opacity: openMap === "시험센터" ? 1 : 0,
+                    height: openMap === "시험센터" ? "250px" : "100px",
+                    opacity: openMap === "시험센터" ? 1 : 0.6,
+                    filter: openMap === "시험센터" ? "blur(0px)" : "blur(3px)",
                   }}
                   transition={mapTransition}
-                  className="mt-4 overflow-hidden"
+                  className="mt-4 rounded-md overflow-hidden relative"
+                  style={{ minHeight: "100px" }}
                 >
-                  {openMap === "시험센터" && (
-                    <iframe
-                      src={mapUrls.시험센터}
-                      width="100%"
-                      height="250"
-                      allowFullScreen={true}
-                      loading="lazy"
-                      className="rounded-md"
-                    ></iframe>
-                  )}
+                  <div
+                    ref={(el) => (mapRefs.current["시험센터"] = el)}
+                    className="w-full h-full absolute top-0 left-0"
+                    style={{ backgroundColor: "lightgray" }}
+                  >
+                    {/* 투명 오버레이 추가 */}
+                    {openMap !== "시험센터" && (
+                      <div
+                        className="absolute inset-0 z-10"
+                        style={{ pointerEvents: "auto" }}
+                      ></div>
+                    )}
+                  </div>
                 </motion.div>
               </div>
             </div>

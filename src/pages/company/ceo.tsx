@@ -56,9 +56,9 @@ export default function CeoPage() {
       </section>
 
       {/* 2. 서브 내비게이션 (Breadcrumb) 섹션 - 애니메이션 없음 */}
-      <section className="breadcrumb-section bg-blue-900 py-4 px-4 md:px-8 text-white">
+      <section className="breadcrumb-section bg-gray-700 py-4 px-4 md:px-8 text-white">
         <div className="max-w-7xl mx-auto">
-          <p className="text-lg">회사소개 &gt; CEO 인사말</p>
+          <p className="text-md">회사소개 &gt; CEO인사말</p>
         </div>
       </section>
 
