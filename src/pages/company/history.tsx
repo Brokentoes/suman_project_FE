@@ -1,5 +1,7 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+// history.tsx
+import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
+import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
+import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 import { motion, type Transition } from "framer-motion";
 
 export default function HistoryPage() {
@@ -35,30 +37,17 @@ export default function HistoryPage() {
   };
 
   return (
-    <>
-      <Header />
+    // Layout 컴포넌트로 전체 페이지 내용을 감쌉니다.
+    <Layout>
+      {/* HeroSection 컴포넌트 사용 */}
+      <HeroSection
+        title="연혁"
+        subtitle="History"
+        backgroundImage="/images/history-hero-bg.png" // 해당 페이지에 맞는 배경 이미지 경로
+      />
 
-      {/* 히어로 섹션 */}
-      <section
-        className="hero-section relative bg-cover bg-center h-[300px] flex items-center text-white"
-        style={{
-          backgroundImage: 'url("/images/history-hero-bg.png")',
-          backgroundPosition: "center top",
-        }}
-      >
-        <div className="absolute inset-0 bg-black opacity-60"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">연혁</h1>
-          <p className="text-lg md:text-xl font-medium">History</p>
-        </div>
-      </section>
-
-      {/* 서브 내비게이션 (Breadcrumb) 섹션 */}
-      <section className="breadcrumb-section bg-gray-700 py-4 px-4 md:px-8 text-white">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-md">회사소개 &gt; 연혁</p>
-        </div>
-      </section>
+      {/* BreadcrumbSection 컴포넌트 사용 */}
+      <BreadcrumbSection path="회사소개 > 연혁" />
 
       {/* 새로운 섹션 추가: "SUMAN은 끊임없는 혁신..." - DESIGN MODIFIED */}
       <section className="relative py-20 px-4 md:px-8 bg-[#2A3644] text-white overflow-hidden">
@@ -107,7 +96,8 @@ export default function HistoryPage() {
         </div>
       </section>
 
-      <main className="content-wrapper">
+      {/* main 태그는 Layout에서 이미 처리했으므로, 여기서는 div로 변경 */}
+      <div className="content-wrapper">
         {/* 연혁 타임라인 섹션: 이미지와 동일하게 화면 중앙 정렬 및 제목 부분 스타일링 */}
         <section className="main-history-timeline py-20 px-4 md:px-8 bg-white">
           <div className="max-w-7xl mx-auto text-left">
@@ -326,9 +316,7 @@ export default function HistoryPage() {
             </div>
           </div>
         </section>
-      </main>
-
-      <Footer />
-    </>
+      </div>
+    </Layout>
   );
 }
