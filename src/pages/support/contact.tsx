@@ -1,5 +1,3 @@
-// pages/support/inquiry.tsx or 적절한 위치
-
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -20,7 +18,7 @@ export default function InquiryForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://192.168.100.95:8000/api/Inquiries/', form);
+      await axios.post('http://192.168.100.106:8000/api/Inquiries/', form);
       alert('문의가 등록되었습니다.');
     } catch (error) {
       alert('등록 중 오류가 발생했습니다.');
