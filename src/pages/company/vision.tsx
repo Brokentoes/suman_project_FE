@@ -1,10 +1,11 @@
-import Layout from "@/components/Layout"; // 새로운 Layout 컴포넌트 임포트
-import HeroSection from "@/components/HeroSection"; // 새로운 HeroSection 컴포넌트 임포트
-import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트 (추가)
+import Layout from "@/components/Layout";
+import HeroSection from "@/components/HeroSection";
+import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
+import { useState } from "react";
 
 export default function VisionPage() {
-  // Framer Motion Variants 정의
+  // Framer Motion Variants 정의 (이전과 동일)
   const fadeInRiseVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -33,7 +34,6 @@ export default function VisionPage() {
     },
   };
 
-  // R&D 섹션 전체를 위한 Variant (아래에서 위로)
   const rndSectionRiseVariants = {
     hidden: { opacity: 0, y: 100 },
     visible: {
@@ -42,12 +42,11 @@ export default function VisionPage() {
       transition: {
         duration: 1.0,
         ease: "easeOut",
-        when: "beforeChildren", // 자식 요소 애니메이션 시작 전에 부모 애니메이션 완료
+        when: "beforeChildren",
       } as Transition,
     },
   };
 
-  // R&D 기획, R&D 박스 왼쪽에서 나타나는 Variant
   const rndBoxLeftInVariants = {
     hidden: { opacity: 0, x: -100 },
     visible: {
@@ -57,7 +56,6 @@ export default function VisionPage() {
     },
   };
 
-  // R&BD 조기 사업화 박스 오른쪽에서 나타나는 Variant
   const rndBoxRightInVariants = {
     hidden: { opacity: 0, x: 100 },
     visible: {
@@ -67,15 +65,29 @@ export default function VisionPage() {
     },
   };
 
-  // 진행도 이미지 왼쪽에서 나타나는 Variant
   const processLineVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: {
       opacity: 1,
       x: 0,
       transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } as Transition,
-    }, // 다른 박스보다 약간 늦게 시작
+    },
   };
+
+  // State to manage which section is being hovered
+  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+
+  // 제공된 SVG의 viewBox 값
+  // viewBox의 y 시작점을 0으로 유지하여 상단이 잘리지 않도록 합니다.
+  const svgViewBox = "0 0 1047 810";
+
+  // 제공된 SVG의 path 데이터
+  const path2024 =
+    "M241.259 141.379L48.189 204.165C-10.1302 328.285 -19.2576 429.502 48.2686 546.235L238.893 437.067C238.893 437.067 194.044 381.064 197.242 308.381C199.98 246.143 229.026 169.663 241.259 141.379Z";
+  const path2026 =
+    "M455.976 517.794C455.976 517.794 373.221 539.969 255.742 468.336L75.7278 601.697C75.7278 601.697 220.874 848.158 518.39 804.407L455.976 517.794Z";
+  const path2028 =
+    "M577.664 788.217L493.324 513.713C620.072 435.665 631.033 329.861 620.671 286.714C592.841 296.168 535.795 316.165 530.252 320.526C524.708 324.886 636.138 108.861 692.546 0.302551L1046.75 123.43L920.543 166.83C920.543 166.83 1035.51 627.202 577.664 788.217Z";
 
   return (
     <Layout>
@@ -85,10 +97,8 @@ export default function VisionPage() {
         backgroundImage="/images/vision-hero-bg.png"
       />
 
-      {/* 서브 내비게이션 (Breadcrumb) 섹션 - BreadcrumbSection 컴포넌트 사용 */}
-      <BreadcrumbSection path="HOME > 기업 비전" />
+      <BreadcrumbSection path="회사소개 > 기업 비전" />
 
-      {/* Vision 본문 섹션 - 배경 너비 통일 */}
       <section className="vision-section bg-white py-20 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-xl font-bold text-gray-800 mb-10 text-left">
@@ -110,13 +120,226 @@ export default function VisionPage() {
                 150억 달성
               </p>
             </div>
-            {/* 인포그래픽 이미지 영역 - 애니메이션 및 상단 모서리 둥글게 처리 제외 */}
-            <div className="md:w-1/2 flex justify-center">
-              <img
-                src="/images/vision-infographic.png"
-                alt="Vision Infographic"
-                className="max-w-full h-auto"
-              />
+            <div className="md:w-1/2 flex justify-center relative">
+              <svg
+                width="100%"
+                // height를 고정하여 잘리지 않도록 하고, viewBox에 맞게 조정
+                height="810px"
+                viewBox={svgViewBox} // 제공된 SVG의 viewBox 값 사용
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="vision-infographic-svg"
+              >
+                {/* SVG Definitions for linear gradients */}
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_0_1"
+                    x1="82.3517"
+                    y1="135.612"
+                    x2="182.724"
+                    y2="510.208"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#2152BC" />
+                    <stop offset="1" stopColor="#0F2556" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_0_1"
+                    x1="242.322"
+                    y1="471.932"
+                    x2="343.934"
+                    y2="851.153"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#2152BC" />
+                    <stop offset="1" stopColor="#0F2556" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_0_1"
+                    x1="685.277"
+                    y1="2.25018"
+                    x2="874.56"
+                    y2="708.664"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#2152BC" />
+                    <stop offset="1" stopColor="#0F2556" />
+                  </linearGradient>
+                </defs>
+
+                {/* 2024 Section */}
+                <g
+                  className="group cursor-pointer"
+                  onMouseEnter={() => setHoveredSection("2024")}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <path
+                    d={path2024} // 2024 영역의 정확한 path 데이터
+                    fill="url(#paint0_linear_0_1)" // 제공된 그라데이션 ID 사용
+                    className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                  />
+                  {/* hover 시 오버레이 효과 */}
+                  {hoveredSection === "2024" && (
+                    <path
+                      d={path2024}
+                      fill="rgba(37, 99, 235, 0.3)" // Tailwind blue-500에 해당하는 rgba 값
+                      className="transition-all duration-300 animate-pulse"
+                    />
+                  )}
+
+                  <text
+                    x="150" // 2024 영역 내 적절한 x 좌표 (조정 필요)
+                    y="250" // 2024 영역 내 적절한 y 좌표 (조정)
+                    fill="white"
+                    fontSize="40"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                    className="transition-all duration-300 group-hover:fill-gray-200"
+                  >
+                    2024
+                  </text>
+                  <text
+                    x="150" // 2024 영역 내 적절한 x 좌표 (조정 필요)
+                    y="290" // 2024 영역 내 적절한 y 좌표 (조정)
+                    fill="white"
+                    fontSize="24"
+                    textAnchor="middle"
+                    className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  >
+                    →
+                  </text>
+
+                  {/* Detailed text for 2024 */}
+                  {hoveredSection === "2024" && (
+                    <foreignObject x="80" y="320" width="140" height="80">
+                      {" "}
+                      {/* 위치 조정 */}
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        className="text-xs text-center text-white bg-black bg-opacity-70 p-2 rounded"
+                      >
+                        제2시험센터 구축
+                        <br />
+                        반도체 생산기공 분야 전환
+                      </div>
+                    </foreignObject>
+                  )}
+                </g>
+
+                {/* 2026 Section */}
+                <g
+                  className="group cursor-pointer"
+                  onMouseEnter={() => setHoveredSection("2026")}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <path
+                    d={path2026} // 2026 영역의 정확한 path 데이터
+                    fill="url(#paint1_linear_0_1)" // 제공된 그라데이션 ID 사용
+                    className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                  />
+                  {hoveredSection === "2026" && (
+                    <path
+                      d={path2026}
+                      fill="rgba(37, 99, 235, 0.3)"
+                      className="transition-all duration-300 animate-pulse"
+                    />
+                  )}
+                  <text
+                    x="300" // 2026 영역 내 적절한 x 좌표 (조정 필요)
+                    y="600" // 2026 영역 내 적절한 y 좌표 (조정)
+                    fill="white"
+                    fontSize="40"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                    className="transition-all duration-300 group-hover:fill-gray-200"
+                  >
+                    2026
+                  </text>
+                  <text
+                    x="300" // 2026 영역 내 적절한 x 좌표 (조정 필요)
+                    y="640" // 2026 영역 내 적절한 y 좌표 (조정)
+                    fill="white"
+                    fontSize="24"
+                    textAnchor="middle"
+                    className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  >
+                    →
+                  </text>
+
+                  {/* Detailed text for 2026 */}
+                  {hoveredSection === "2026" && (
+                    <foreignObject x="230" y="670" width="140" height="80">
+                      {" "}
+                      {/* 위치 조정 */}
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        className="text-xs text-center text-white bg-black bg-opacity-70 p-2 rounded"
+                      >
+                        전지모듈, 장비 및
+                        <br />
+                        모빌리티 분야 확장
+                      </div>
+                    </foreignObject>
+                  )}
+                </g>
+
+                {/* 2028 Section */}
+                <g
+                  className="group cursor-pointer"
+                  onMouseEnter={() => setHoveredSection("2028")}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <path
+                    d={path2028} // 2028 영역의 정확한 path 데이터
+                    fill="url(#paint2_linear_0_1)" // 제공된 그라데이션 ID 사용
+                    className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                  />
+                  {hoveredSection === "2028" && (
+                    <path
+                      d={path2028}
+                      fill="rgba(37, 99, 235, 0.3)"
+                      className="transition-all duration-300 animate-pulse"
+                    />
+                  )}
+                  <text
+                    x="750" // 2028 영역 내 적절한 x 좌표 (조정)
+                    y="250" // 2028 영역 내 적절한 y 좌표 (조정)
+                    fill="white"
+                    fontSize="40"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                    className="transition-all duration-300 group-hover:fill-gray-200"
+                  >
+                    2028
+                  </text>
+                  <text
+                    x="750" // 2028 영역 내 적절한 x 좌표 (조정)
+                    y="290" // 2028 영역 내 적절한 y 좌표 (조정)
+                    fill="white"
+                    fontSize="24"
+                    textAnchor="middle"
+                    className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  >
+                    →
+                  </text>
+
+                  {/* Detailed text for 2028 */}
+                  {hoveredSection === "2028" && (
+                    <foreignObject x="680" y="320" width="140" height="80">
+                      {" "}
+                      {/* 위치 조정 */}
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        className="text-xs text-center text-white bg-black bg-opacity-70 p-2 rounded"
+                      >
+                        매출 600억
+                        <br />
+                        순이익 150억 원 달성 목표
+                      </div>
+                    </foreignObject>
+                  )}
+                </g>
+              </svg>
             </div>
           </div>
         </div>
@@ -221,32 +444,27 @@ export default function VisionPage() {
         </div>
       </section>
 
-      {/* R&D 섹션 - 배경 및 제목/부제목 함께 아래에서 위로 올라오는 애니메이션 */}
+      {/* R&D 섹션 (이전과 동일) */}
       <motion.section
         className="rnd-section bg-blue-950 text-white py-20 px-4 md:px-8 rounded-t-3xl overflow-hidden"
         variants={rndSectionRiseVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }} // 뷰포트의 30% 보일 때 애니메이션 시작
+        viewport={{ once: true, amount: 0.3 }}
       >
         <div className="max-w-7xl mx-auto">
           {" "}
-          {/* max-w-7xl mx-auto 추가하여 너비 통일 */}
           <h2 className="text-xl font-bold mb-4 text-left">R&D</h2>
           <p className="text-3xl font-bold mb-12 text-left">
             끊임없는 연구개발과 스마트 공정 혁신을 통해
             <br />
             제조 효율의 새로운 기준을 만들어갑니다
           </p>
-          {/* R&D 콘텐츠 (박스들과 이미지) - 개별 애니메이션 적용 */}
           <div className="rnd-content flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="md:w-1/2 flex flex-col items-end pr-0">
               <motion.div
                 className="bg-blue-800 bg-opacity-70 rounded-lg p-6 mb-4 w-72"
                 variants={rndBoxLeftInVariants}
-                // initial="hidden" // 부모 섹션의 animate가 "visible"이 되면 자식들은 이 값을 상속받음
-                // whileInView="visible" // 부모 섹션에서 whileInView를 사용하므로 여기서는 제거
-                // viewport={{ once: true, amount: 0.3 }} // 부모 섹션에서 whileInView를 사용하므로 여기서는 제거
               >
                 <p className="text-xl font-semibold mb-2">R&D 기획</p>
                 <p className="text-sm text-gray-300">
@@ -265,15 +483,10 @@ export default function VisionPage() {
               </motion.div>
             </div>
 
-            {/* 진행도 이미지 추가 */}
             <motion.div
-              className="hidden md:flex flex-col justify-center items-center h-full" // 데스크톱에서만 보이도록 hidden md:flex
+              className="hidden md:flex flex-col justify-center items-center h-full"
               variants={processLineVariants}
-              // initial="hidden" // 부모 섹션의 animate가 "visible"이 되면 자식들은 이 값을 상속받음
-              // whileInView="visible" // 부모 섹션에서 whileInView를 사용하므로 여기서는 제거
-              // viewport={{ once: true, amount: 0.3 }} // 부모 섹션에서 whileInView를 사용하므로 여기서는 제거
             >
-              {/* process-line.png 이미지가 없으면 placeholder 사용 */}
               <img
                 src="/images/process-line.png"
                 alt="Process Line"
