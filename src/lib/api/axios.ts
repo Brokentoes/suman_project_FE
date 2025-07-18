@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://172.31.81.155:8000/api/', // API 주소. 여기를 변경하면 전체 api
+  baseURL: 'http://192.168.100.110:8000/api/', // API 주소. 여기를 변경하면 전체 api
   timeout: 5000,
   // headers: {
   //   'Content-Type': 'application/json',
