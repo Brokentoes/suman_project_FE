@@ -1,5 +1,4 @@
 // 헤더 우측 언어변경 기능 관련 함수(여기서 언어변경이 일어나면, langStore.ts에 변경 사항 저장)
-
 'use client';
 
 import { useState } from 'react';
