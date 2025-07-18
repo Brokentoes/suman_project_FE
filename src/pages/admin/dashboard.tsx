@@ -1,25 +1,53 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, BookOpenText } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/stores/useAuthStore';
 import AdminHeader from '@/components/AdminHeader';
+import { getAnalyticData } from '@/lib/api/analytic';
+
+interface AnalyticData {
+  total_users: number;
+  change_percentage: number;
+}
 
 export default function AdminDashboard() {
   const router = useRouter();
+  const [analytics, setAnalytics] = useState<AnalyticData | null>(null);
   const { isLoggedIn, init } = useAuthStore();
 
-    useEffect(() => {
-    init();
-  }, []);
+  //   useEffect(() => {
+  //   init();
+  // }, []);
 
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     router.replace('/admin/login');
+  //   }
+  // }, [isLoggedIn]);
+
+  // if (!isLoggedIn) return null;
+
+// 고객 분석 데이터 요청
   useEffect(() => {
-    if (!isLoggedIn) {
-      router.replace('/admin/login');
+  let mounted = true;
+  const fetchData = async () => {
+    try {
+      console.log('[📡 useEffect] 분석 데이터 요청 시작');
+      const data = await getAnalyticData();
+      if (mounted) {
+        setAnalytics(data);
+        console.log('[✅ useEffect] 분석 데이터 수신 완료:', data);
+      }
+    } catch (error) {
+      console.error('[❌ useEffect] 분석 데이터 요청 실패:', error);
     }
-  }, [isLoggedIn]);
+  };
+  fetchData();
 
-  if (!isLoggedIn) return null;
-
+  return () => {
+    mounted = false; // 컴포넌트 언마운트 시 안전처리
+  };
+}, []);
 
   const menuItems = [
     {
@@ -58,7 +86,7 @@ export default function AdminDashboard() {
 
   // 임시 방문자 수 - 수정필요.
   const stats = [
-    { label: '총 방문자', value: '12,345', change: '+12%', icon: Activity },
+    { label: '총 방문자', value: analytics?.total_users+' 명', change: analytics?.change_percentage+' %', icon: Activity },
     { label: '활성 채용공고', value: '8', change: '+2', icon: Users },
     { label: '미처리 문의', value: '23', change: '-5', icon: MessageSquare }
   ];
@@ -66,31 +94,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <div className="bg-black/20 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl">
-                <Shield className="h-8 w-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-white">관리자 대시보드</h1>
-                <p className="text-blue-200 mt-1">시스템 통합 관리 센터</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm text-gray-300">환영합니다, 관리자님</p>
-                <p className="text-xs text-gray-400">마지막 로그인: 2025.07.16 14:30</p>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">관</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <AdminHeader />
       <div className="max-w-7xl mx-auto px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

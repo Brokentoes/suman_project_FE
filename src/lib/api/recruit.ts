@@ -53,8 +53,9 @@ const handleApiError = (error: any, defaultMessage: string): ApiError => {
   return apiError;
 };
 
-
-// 전체 공고 조회
+// -------------------------------------
+//            전체 공고 조회
+// -------------------------------------
 export const fetchRecruitments = async (): Promise<Recruitment[]> => {
   try {
     const response = await instance.get<Recruitment[]>('recruit/');
@@ -66,8 +67,9 @@ export const fetchRecruitments = async (): Promise<Recruitment[]> => {
   }
 };
 
-
-// 신규 공고 등록
+// -------------------------------------
+//            신규 공고 등록
+// -------------------------------------
 export const createRecruitment = async (data: CreateRecruitmentData): Promise<Recruitment> => {
   try {
     // 입력값 검증
@@ -90,7 +92,9 @@ export const createRecruitment = async (data: CreateRecruitmentData): Promise<Re
   }
 };
 
-// 기존 공고 수정
+// -------------------------------------
+//            기존 공고 수정
+// -------------------------------------
 export const updateRecruitment = async (
   id: number,
   data: UpdateRecruitmentData
@@ -116,7 +120,9 @@ export const updateRecruitment = async (
   }
 };
 
-// 기존 공고 삭제
+// -------------------------------------
+//            기존 공고 삭제
+// -------------------------------------
 export const deleteRecruitment = async (id: number): Promise<void> => {
   try {
     await instance.delete(`/recruit/${id}/`);
