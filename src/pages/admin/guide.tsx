@@ -102,10 +102,11 @@ function CodeBlock({ title, language, children }: CodeBlockProps) {
 const AdminGuidePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/*Header*/}
       <AdminHeader />
       
       <div className="max-w-7xl mx-auto py-8 px-4">
-        {/* 헤더 */}
+        {/* 서브헤더 */}
         <div className="flex items-center mb-8">
           <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl mr-4">
             <Book className="h-8 w-8 text-white" />
@@ -117,7 +118,7 @@ const AdminGuidePage = () => {
         </div>
 
         {/* 빠른 시작 카드들 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <InfoCard 
             title="빠른 시작" 
             description="관리자 페이지의 기본 기능과 사용법을 알아보세요."
@@ -136,7 +137,7 @@ const AdminGuidePage = () => {
             icon={Code}
             color="purple"
           />
-        </div>
+        </div> */}
 
         {/* 가이드 섹션들 */}
         <div className="space-y-6">

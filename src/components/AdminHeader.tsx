@@ -1,10 +1,9 @@
 import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, ArrowLeft } from 'lucide-react';
 import { useRouter } from "next/router";
 
-
 export default function AdminHeader() {
-    const router = useRouter();
-    return (
+  const router = useRouter();
+  return (
     <header className="bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-7xl mx-auto px-8 py-6">
           <div className="flex items-center justify-between">

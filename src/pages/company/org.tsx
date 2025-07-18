@@ -20,7 +20,7 @@ export default function OrganizationChartPage() {
       <HeroSection
         title="조직도"
         subtitle="Organization Chart"
-        backgroundImage="/images/history-hero-bg.png" // 해당 페이지에 맞는 배경 이미지 경로
+        backgroundImage="/images/company_hero.png" // 해당 페이지에 맞는 배경 이미지 경로
       />
       {/* 서브 내비게이션 (Breadcrumb) 섹션: BreadcrumbSection 컴포넌트 사용 */}
       <BreadcrumbSection path="회사소개 > 조직도" />
@@ -36,7 +36,7 @@ export default function OrganizationChartPage() {
             variants={fadeInVariants}
           >
             <img
-              src="/images/organization-chart.png" // 실제 조직도 이미지 경로로 변경하세요
+              src="/images/organization_suman.png" // 실제 조직도 이미지 경로로 변경하세요
               alt="SUMAN Organization Chart"
               className="max-w-full h-auto object-contain shadow-lg rounded-lg"
             />

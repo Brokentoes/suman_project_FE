@@ -3,7 +3,39 @@ import Footer from "@/components/Footer";
 import { motion, type Transition } from "framer-motion";
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 
+import { useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
+
 export default function CeoPage() {
+  function ScrollToTopButton() {
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+      const toggleVisibility = () => {
+        setVisible(window.scrollY > 200);
+      };
+
+      window.addEventListener("scroll", toggleVisibility);
+      return () => window.removeEventListener("scroll", toggleVisibility);
+    }, []);
+
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    return (
+      visible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-30 right-6 z-50 bg-[#0c1221] text-white p-3 rounded shadow-md hover:opacity-90 transition-opacity"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp size={20} />
+        </button>
+      )
+    );
+  }
+  
   // Framer Motion Variants 정의는 그대로 유지
   const slideInLeft = {
     hidden: { opacity: 0, x: -50 },
@@ -41,14 +73,23 @@ export default function CeoPage() {
       <section
         className="hero-section relative bg-cover bg-center h-[300px] flex items-center text-white"
         style={{
-          backgroundImage: 'url("/images/history-hero-bg.png")', // You might want a different hero image for CEO
+          backgroundImage: 'url("/images/company_hero.png")', // You might want a different hero image for CEO
           backgroundPosition: "center top",
         }}
       >
+        
         <div className="absolute inset-0 bg-black opacity-60"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">CEO 인사말</h1>
-          <p className="text-lg md:text-xl font-medium">Greetings from CEO</p>
+
+        <div className="relative z-10 w-full flex items-center justify-start px-4 md:px-8">
+          <div className="text-left">
+            <p className="uppercase text-sm md:text-base font-semibold tracking-wider mb-2 text-white/90 ml-[25px]">
+            SUMAN
+            </p>
+            <h1 className="text-3xl md:text-5xl font-normal leading-tight text-white">
+              정밀한 기술이 만드는<br />
+              내일의 기업 <span className="text-white font-semibold">수만</span>
+            </h1>
+          </div>
         </div>
       </section>
 
@@ -66,32 +107,33 @@ export default function CeoPage() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-              미래를 선도하는 기술, <br />
-              변화와 혁신으로 함께 나아갑니다.
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-snug">
+              <span>
+                <span className="text-blue-600 font-bold">SUMAN</span>
+                <span className="text-black font-bold">을</span>
+              </span>
+              <br />
+              <span className="text-black font-bold">
+                찾아주신 고객 여러분, 반갑습니다.
+              </span>
             </h2>
             <p className="mb-4 text-lg">
-              안녕하십니까? (주)수만 그룹 대표이사 임태형입니다.
+              안녕하십니까.
             </p>
             <p className="mb-4">
-              저희 (주)수만 그룹은 창립 이래 끊임없는 **도전과 혁신**을 통해
-              미래 산업을 선도하는 기업으로 성장해 왔습니다. 급변하는 시장 환경
-              속에서도 고객 여러분의 기대를 뛰어넘는 **최고의 기술과 서비스**를
-              제공하기 위해 모든 임직원이 한마음 한뜻으로 노력하고 있습니다.
+              (주)수만 기업은 정밀 가공 기술을 기반으로 자동차, 전기전자, 이차전지 산업에<br />
+              필요한 부품과 모듈, 장비를 설계, 제조하는 전문 기업입니다.<br />
+              저희는 끊임없는 기술 혁신과 철저한 품질 관리를 통해 고객이 신뢰할 수 있는<br />
+              제품을 공급해왔으며, 산업의 변화 속에서도 유연하고 정직한 기술력으로<br />
+              지속 가능한 성장을 이어가고 있습니다.<br />
+              앞으로도 수만 기업은 고객여러분의 성공과 함께하는 든든한 파트너가 되겠습니다.<br />
+              변함없는 관심과 성원 부탁드립니다.
             </p>
             <p className="mb-4">
-              **품질, 신뢰, 그리고 지속 가능한 성장**은 저희 (주)수만 그룹의
-              핵심 가치입니다. 우리는 첨단 기술 개발과 끊임없는 연구 투자를 통해
-              산업의 새로운 지평을 열고, 사회에 긍정적인 영향을 미치는 기업이
-              되고자 합니다.
+              감사합니다.
             </p>
-            <p className="mb-4">
-              앞으로도 고객 여러분의 목소리에 귀 기울이고, 급변하는 시대의
-              요구에 부응하며, 더 나은 미래를 함께 만들어가는 **동반자**로서
-              최선을 다하겠습니다. 저희의 기술과 열정이 고객 여러분의 성공과
-              함께하는 든든한 파트너가 되겠습니다. 변함없는 관심과 성원
-              부탁드립니다. 감사합니다.
-            </p>
+            
+           
             {/* 서명 영역 (왼쪽 아래에서 나타나게) */}
             <motion.p
               className="signature-area text-lg font-semibold text-gray-800 mt-8"
@@ -135,6 +177,8 @@ export default function CeoPage() {
           </motion.div>
         </div>
       </main>
+
+      <ScrollToTopButton />
 
       <Footer />
     </>
