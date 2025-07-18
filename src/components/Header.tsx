@@ -1,48 +1,47 @@
-import Image from 'next/image';
+import Image from "next/image";
 import Link from "next/link";
-import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { useState } from 'react';
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useState } from "react";
 
 // Header Items
 const NAV_ITEMS = [
   {
-    label: '회사소개',
-    href: '/company/ceo',
+    label: "회사소개",
+    href: "/company/ceo",
     submenu: [
-      { label: 'CEO 인사말', href: '/company/ceo' },
-      { label: '기업 비전', href: '/company/vision' },
-      { label: '연혁', href: '/company/history' },
-      { label: '조직도', href: '/company/org' },
-      { label: 'CI', href: '/company/ci' },
-      { label: '오시는 길', href: '/company/location' },
+      { label: "CEO 인사말", href: "/company/ceo" },
+      { label: "기업 비전", href: "/company/vision" },
+      { label: "연혁", href: "/company/history" },
+      { label: "조직도", href: "/company/org" },
+      { label: "CI", href: "/company/ci" },
+      { label: "오시는 길", href: "/company/location" },
     ],
   },
   {
-    label: '사업분야',
-    href: '/business/service',
+    label: "사업분야",
+    href: "/business/service",
     submenu: [
-      { label: '서비스 소개', href: '/business/service' },
-      { label: '제품 소개', href: '/business/product' },
+      { label: "서비스 소개", href: "/business/service" },
+      { label: "제품 소개", href: "/business/product" },
     ],
   },
   {
-    label: '인재채용',
-    href: '/careers/philosophy',
+    label: "인재채용",
+    href: "/careers/philosophy",
     submenu: [
-      { label: '인재상', href: '/careers/philosophy' },
-      { label: '채용공고', href: '/careers/notice' },
+      { label: "인재상", href: "/careers/philosophy" },
+      { label: "채용공고", href: "/careers/notice" },
     ],
   },
   {
-    label: '고객지원',
-    href: '/support/faq',
+    label: "고객지원",
+    href: "/support/faq",
     submenu: [
-      { label: 'FAQ', href: '/support/faq' },
-      { label: '문의하기', href: '/support/contact' },
+      { label: "FAQ", href: "/support/faq" },
+      { label: "문의하기", href: "/support/contact" },
     ],
   },
 ];
-
 
 export default function Header() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -62,13 +61,10 @@ export default function Header() {
           />
         </Link>
 
-      {/* 메뉴 : 호버링시 하위 메뉴 토글*/}  
-        <nav className="flex space-x-25 text-sm font-medium text-gray-700">
+        {/* 메뉴 : 호버링시 하위 메뉴 토글*/}
+        <nav className="flex space-x-10 text-sm font-medium text-gray-700">
           {NAV_ITEMS.map((item, index) => (
-            <div
-              key={item.label}
-              onMouseEnter={() => setHoveredIndex(index)}
-            >
+            <div key={item.label} onMouseEnter={() => setHoveredIndex(index)}>
               <Link href={item.href} className="hover:text-blue-600">
                 {item.label}
               </Link>
@@ -77,7 +73,7 @@ export default function Header() {
         </nav>
 
         {/* 언어변경 버튼 */}
-        <LanguageSwitcher /> 
+        <LanguageSwitcher />
       </div>
 
       {/* 추가 하위 메뉴 영역 */}
