@@ -1,3 +1,4 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 @import "tailwindcss";
 
 :root {
@@ -24,7 +25,9 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  min-width: 320px; /* 웹사이트의 최소 가로 너비를 설정합니다. */
-  overflow-x: hidden; /* 가로 스크롤바가 생기는 것을 방지합니다. */
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
+    'Malgun Gothic', sans-serif;
+  min-width: 320px;
+  overflow-x: hidden;
 }
