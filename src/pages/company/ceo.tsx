@@ -73,7 +73,7 @@ export default function CeoPage() {
       <section
         className="hero-section relative bg-cover bg-center h-[300px] flex items-center text-white"
         style={{
-          backgroundImage: 'url("/images/history-hero-bg.png")', // You might want a different hero image for CEO
+          backgroundImage: 'url("/images/company_hero.png")', // You might want a different hero image for CEO
           backgroundPosition: "center top",
         }}
       >
