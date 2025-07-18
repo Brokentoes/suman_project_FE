@@ -44,7 +44,7 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function Headerv2() {
+export default function Header() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [scrollDir, setScrollDir] = useState<"up" | "down">("up");
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -61,8 +61,13 @@ export default function Headerv2() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
   
-  const bgColor = isHovered ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)";
-  const textColor = isHovered ? "text-black" : "text-white";
+
+  const isAtTop = lastScrollY === 0;
+  const isVisible = scrollDir === "up" || isHovered;
+  const isSolid = isHovered || (!isAtTop && scrollDir === "up"); 
+
+  const bgColor = isSolid ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)";
+  const textColor = isSolid ? "text-black" : "text-white";
 
   return (
     <AnimatePresence>
@@ -71,14 +76,16 @@ export default function Headerv2() {
         onMouseLeave={() => setHoveredIndex(null)}
         initial={false}
         animate={{
-          y: scrollDir === "down" && !isHovered ? -100 : 0,
+          y: isVisible ? 0 : -100,
           backgroundColor: bgColor,
           height: isHovered ? 120 : 64,
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
+
         {/* 메인 메뉴 영역 */}
-        <div className={`max-w-full mx-auto px-[120px] py-4 flex justify-between items-center text-lg font-medium ${textColor}`}>
+        <div className={`w-full mx-auto px-[120px] py-3 flex justify-between items-center text-lg font-medium ${textColor}`}>
+  
           {/* 로고 */}
           <div className = "flex-none">
             <Link href="/">
@@ -92,13 +99,15 @@ export default function Headerv2() {
             </Link>
           </div>
           {/* 메인 메뉴 */}
-          <nav className="flex-1 flex justify-center space-x-40 tracking-wide">
+          <nav className="flex flex-1 justify-center space-x-40 xl:space-x-40 lg:space-x-24 tracking-wide">
+
             {NAV_ITEMS.map((item, index) => (
               <div
                 key={item.label}
                 onMouseEnter={() => setHoveredIndex(index)}
+                className="hover:font-semibold"
               >
-                <Link href={item.href} className="hover:font-semibold">
+                <Link href={item.href}>
                   {item.label}
                 </Link>
               </div>
@@ -107,7 +116,7 @@ export default function Headerv2() {
           </nav>
 
           {/* 언어 변경 */}
-          <div className="flex-none">
+          <div className="flex-none flex items-center h-full">
             <LanguageSwitcher />
           </div>
         </div>
@@ -123,28 +132,30 @@ export default function Headerv2() {
             transition={{ duration: 0.25 }}
             className="w-full border-t border-gray-200 bg-white z-40"
           >
-            <div className="max-w-7xl mx-auto px-[120px] py-4 flex justify-between text-sm text-gray-600 tracking-wide">
-              {NAV_ITEMS.map((mainItem) => (
-                <div key={mainItem.label} className="flex flex-col items-start min-w-[150px]">
-                  <span className="font-semibold mb-2">{mainItem.label}</span>
-                  {mainItem.submenu.map((sub) => (
-                    <Link
-                      key={sub.label}
-                      href={sub.href}
-                      className="hover:font-medium py-1"
-                    >
-                      {sub.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
+            <div className="max-w-full mx-auto px-[120px] py-4 flex justify-between items-start">
+              <div className="w-[120px]" />
+
+              <div className="flex justify-center flex-1 space-x-19 text-base text-gray-600 tracking-wide">
+                {NAV_ITEMS.map((mainItem) => (
+                  <div key={mainItem.label} className="flex flex-col items-start min-w-[150px]">
+                    {mainItem.submenu.map((sub) => (
+                      <Link
+                        key={sub.label}
+                        href={sub.href}
+                        className="hover:font-medium py-1"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              <div className="w-[60px]" /> 
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-
-
 
       </motion.div>
     </AnimatePresence>

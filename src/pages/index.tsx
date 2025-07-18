@@ -1,9 +1,11 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { bannerImages, section1Text, section2, section3} from "@/data/home";
+import { bannerImages, section1Text, section3} from "@/data/home";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+
+
 export default function HomePage() {
   const [current, setCurrent] = useState(0);
 
@@ -101,37 +103,46 @@ export default function HomePage() {
           </div>
 
           {/*큰 타이틀*/}
-          <div className="text-left text-black mb-10 max-w-7xl mx-[120px] ">
+          
+          <div className="text-left text-black mb-20 max-w-7xl mx-[120px] ">
             <h2 className="text-4xl font-bold">{section3.title}</h2>
             <p className="mt-3 text-4xl font-bold">{section3.subtitle}</p>
           </div>
-          {/* 카드 그리드 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-15 max-w-7xl mx-auto">
-            {section3.cards.map((card, index) => (
-              <div
-                key={index}
-                className="relative flex flex-col justify-end rounded-xl overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-out min-h-[400px]"
-                style={{
-                  backgroundImage: `url(${card.img})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              >
-                {/* 하단 블랙 그라데이션 */}
-                <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-black via-black/90 to-transparent z-0" />
 
-                {/* 텍스트 */}
-                <div className="relative z-10 p-6 text-white">
-                  <p className="text-sm text-gray-300">{card.subtitle}</p> 
-                  <h3 className="text-lg font-bold">{card.title}</h3>
-                  <p className="text-sm mt-1">{card.description}</p>
+          <div className="w-full px-[160px]">
+            <div className="grid grid-cols-4 gap-20">
+              {section3.cards.map((card, index) => (
+                <div
+                  key={index}
+                  className="relative w-full h-[500px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
+                >
+                  {/* 이미지 영역 (원본 비율 유지) */}
+                  <div className="relative w-full h-[500px] "> {/* 비율 조절 가능 */}
+                    <Image
+                      src={card.img}
+                      alt={card.title}
+                      fill
+                      className="object-cover"
+                      sizes="100%"
+                      priority
+                    />
+                    {/* 하단 블랙 그라데이션 */}
+                    <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-black via-black/90 to-transparent z-10" />
+                  </div>
+
+                  {/* 텍스트 영역 */}
+                  <div className="absolute z-20 p-6 text-white bottom-1">
+                    <p className="text-lg  mb-3">{card.subtitle}</p>
+                    <h3 className="text-2xl font-bold mb-1">{card.title}</h3>
+                    <p className="text-base text-gray-300">{card.description}</p>
+                  </div>
                 </div>
-              </div>
-
-
-            ))}
+              ))}
+            </div>
           </div>
+
         </section>
+
       </main>
 
       <Footer />
