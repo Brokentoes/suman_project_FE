@@ -48,8 +48,8 @@ const locationsData = [
     addressSnippet: "대전광역시 대덕구 문평서로",
   },
   {
-    key: "천안사업장",
-    title: "천안사업장",
+    key: "천안지부",
+    title: "천안지부",
     addressSnippet: "G1 비즈캠퍼스 4F 401호",
   },
   {
