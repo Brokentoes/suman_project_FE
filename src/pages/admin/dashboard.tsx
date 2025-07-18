@@ -58,7 +58,7 @@ export default function AdminDashboard() {
 
   // 임시 방문자 수 - 수정필요.
   const stats = [
-    { label: '총 방문자', value: '12,345', change: '+12%', icon: Activity },
+    { label: '총 방문자', value: '3', change: '+12%', icon: Activity },
     { label: '활성 채용공고', value: '8', change: '+2', icon: Users },
     { label: '미처리 문의', value: '23', change: '-5', icon: MessageSquare }
   ];
@@ -66,30 +66,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <div className="bg-black/20 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl">
-                <Shield className="h-8 w-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-white">관리자 대시보드</h1>
-                <p className="text-blue-200 mt-1">시스템 통합 관리 센터</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm text-gray-300">환영합니다, 관리자님</p>
-                <p className="text-xs text-gray-400">마지막 로그인: 2025.07.16 14:30</p>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">관</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AdminHeader />
 
       <div className="max-w-7xl mx-auto px-8 py-8">
         {/* Stats Cards */}
