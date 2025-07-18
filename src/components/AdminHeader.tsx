@@ -1,7 +1,6 @@
 import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, ArrowLeft } from 'lucide-react';
 import { useRouter } from "next/router";
 
-
 export default function AdminHeader() {
   const router = useRouter();
   return (
