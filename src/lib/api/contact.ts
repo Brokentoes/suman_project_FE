@@ -1,7 +1,5 @@
 // 문의관련 api의 endpoint는 Inquiries/
 import axios from '@/lib/api/axios';
-import instance from '@/lib/api/axios';
-
 
 // -------------------------------------
 //      문의 전체 목록 조회 (GET 방식)
