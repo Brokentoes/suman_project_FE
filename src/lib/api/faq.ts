@@ -1,3 +1,4 @@
+// FAQ관련 API함수
 import instance from './axios';
 
 export interface FAQ {
@@ -21,8 +22,9 @@ export interface UpdateFAQData {
   category: string;
   is_published: boolean;
 }
-
-// 전체 FAQ 조회
+// -------------------------------------
+//            전체 FAQ 조회
+// -------------------------------------
 export const fetchFAQs = async (): Promise<FAQ[]> => {
   try {
     const response = await instance.get<FAQ[]>('faqs/');
@@ -33,7 +35,9 @@ export const fetchFAQs = async (): Promise<FAQ[]> => {
   }
 };
 
-// 신규 FAQ 등록
+// -------------------------------------
+//            신규 FAQ 등록
+// -------------------------------------
 export const createFAQ = async (data: CreateFAQData): Promise<FAQ> => {
   try {
     // 입력값 검증
@@ -61,7 +65,9 @@ export const createFAQ = async (data: CreateFAQData): Promise<FAQ> => {
   }
 };
 
-// 기존 FAQ 수정
+// -------------------------------------
+//            기존 FAQ 수정
+// -------------------------------------
 export const updateFAQ = async (
   id: number,
   data: UpdateFAQData
@@ -92,7 +98,9 @@ export const updateFAQ = async (
   }
 };
 
-// 기존 FAQ 삭제
+// -------------------------------------
+//            기존 FAQ 삭제
+// -------------------------------------
 export const deleteFAQ = async (id: number): Promise<void> => {
   try {
     await instance.delete(`faqs/${id}/`);
