@@ -37,36 +37,42 @@ export default function HistoryPage() {
   };
 
   return (
-    // Layout 컴포넌트로 전체 페이지 내용을 감쌉니다.
     <Layout>
+    // Layout 컴포넌트로 전체 페이지 내용을 감쌉니다.
+    
       {/* HeroSection 컴포넌트 사용 */}
       <HeroSection
-        title="연혁"
-        subtitle="History"
+        title={
+          <span className="text-xl font-semibold tracking-normal">SUMAN</span>}
+        subtitle={
+          <span className="text-5xl font-bold tracking-[0.25em]">연 혁</span>
+        }
         backgroundImage="/images/history-hero-bg.png" // 해당 페이지에 맞는 배경 이미지 경로
       />
+    
 
       {/* BreadcrumbSection 컴포넌트 사용 */}
       <BreadcrumbSection path="회사소개 > 연혁" />
 
       {/* 새로운 섹션 추가: "SUMAN은 끊임없는 혁신..." - DESIGN MODIFIED */}
       <section className="relative py-20 px-4 md:px-8 bg-[#2A3644] text-white overflow-hidden">
+        
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative z-10">
-          {/* 좌측 텍스트 내용 */}
+           {/* 좌측 텍스트 내용 */}
           <div>
             <h2 className="text-4xl font-bold mb-4">
               SUMAN은 <br />
               끊임없는 혁신과 신시장 개척을 통해 <br />
               신뢰성 있는 기업으로 성장하였습니다.
             </h2>
-            <ul className="text-lg space-y-4">
-              <li className="bg-white/5 p-3 rounded-full pl-6 pr-6">
-                신산업분야 가공/장비 및 모듈화 사업 진출
+            <ul className="text-lg flex-col items-start space-y-6">
+              <li className="relative w-fit bg-[#4A6178] text-white font-medium py-2 px-6 rounded-full z-10">
+                신산업분야 가공 / 장비 및 모듈화 사업 진출
               </li>
-              <li className="bg-white/5 p-3 rounded-full pl-6 pr-6">
-                자동차/전기전자 정밀가공/장비 분야 확대
+              <li className="relative w-fit bg-[#4A6178] text-white font-medium py-2 px-6 rounded-full z-10">
+                자동차 / 전기전자 정밀가공 / 장비 분야 확대
               </li>
-              <li className="bg-white/5 p-3 rounded-full pl-6 pr-6">
+              <li className="relative w-fit bg-[#4A6178] text-white font-medium py-2 px-6 rounded-full z-10">
                 자동차 정밀가공 사업 진출
               </li>
             </ul>

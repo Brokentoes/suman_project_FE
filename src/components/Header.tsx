@@ -63,7 +63,7 @@ export default function Header() {
         </Link>
 
       {/* 메뉴 : 호버링시 하위 메뉴 토글*/}  
-        <nav className="flex space-x-10 text-sm font-medium text-gray-700">
+        <nav className="flex space-x-25 text-sm font-medium text-gray-700">
           {NAV_ITEMS.map((item, index) => (
             <div
               key={item.label}
