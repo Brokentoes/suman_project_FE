@@ -1,65 +1,133 @@
-// pages/admin/login.tsx
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Eye, EyeOff, Lock, User } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/stores/useAuthStore';
 
-export default function AdminLogin() {
+export default function LoginScreen() {
   const router = useRouter();
-  const { isLoggedIn, login, init } = useAuthStore();
-
+  const { login } = useAuthStore();
+  // const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    init(); // localStorage 값으로 로그인 상태 초기화
-    if (isLoggedIn) {
+  const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
+  
+  // 로그인 로직은 API End point 여기서 수정하기
+  try {
+    const response = await fetch('http://192.168.100.110:8000/api/token/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      console.log('token:', data);
+      login(data.accessToken, data.refreshToken);
+      alert('환영합니다')
       router.replace('/admin/dashboard');
     }
-  }, [isLoggedIn]);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-
-
-
-    // 실제 서비스에서는 서버에서 인증해야 함 //
-            // 실제 서비스전 변경 필요//
-    // 실제 서비스에서는 서버에서 인증해야 함 //
-    if (username === 'admin' && password === '1234') {
-      login(); // Zustand + localStorage 업데이트
-      router.replace('/admin');
-    } else {
-      alert('아이디 또는 비밀번호가 올바르지 않습니다.');
-    }
-  };
-
-
-
+  } catch (error) {
+    console.error('Login failed:', error);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>관리자 로그인</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>아이디</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative z-10 w-full max-w-sm">
+        {/* Login Card */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-white/20">
+          {/* Logo Section */}
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <img
+                  src="/images/logo_suman.png"
+                  alt="수만"                />
+                <span className="text-lg font-bold text-white"></span>
+              </div>
+            </div>
+            <h1 className="text-2xl font-bold text-white mb-2">로그인</h1>
+            <p className="text-white/70 text-sm">관리자 계정으로 로그인하세요</p>
+          </div>
+
+          {/* Login Form */}
+          <div className="space-y-4">
+            {/* Username Field */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <User className="h-5 w-5 text-white/50" />
+              </div>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="아이디를 입력하세요"
+                className="w-full pl-12 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all duration-300"
+                required
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Lock className="h-5 w-5 text-white/50" />
+              </div>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="비밀번호를 입력하세요"
+                className="w-full pl-12 pr-12 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all duration-300"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-white/50 hover:text-white/70 transition-colors"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+
+
+
+            {/* Login Button */}
+            <button
+              onClick={handleLogin}
+              disabled={isLoading}
+              className={`w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 ${
+                isLoading ? 'opacity-50 cursor-not-allowed transform-none' : ''
+              }`}
+            >
+              {isLoading ? '로그인 중...' : '로그인'}
+            </button>
+          </div>
+
+
         </div>
-        <div>
-          <label>비밀번호</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">로그인</button>
-      </form>
+
+        {/* Decorative elements around card */}
+        <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl opacity-50"></div>
+        <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white/10 rounded-full blur-lg opacity-30"></div>
+      </div>
     </div>
   );
 }
