@@ -13,7 +13,7 @@ export default function HeroSection({
   backgroundImage,
 }: HeroSectionProps) {
   return (
-    <section className="hero-section relative h-[300px] flex items-center text-white overflow-hidden">
+    <section className="hero-section relative min-h-[300px] flex items-center text-white overflow-hidden">
       <Image
         src={backgroundImage}
         alt={`${title} 배경 이미지`}
