@@ -6,6 +6,7 @@ import Layout from "@/components/Layout";
 
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import Head from "next/head";
 
 
   
@@ -39,10 +40,17 @@ import { ArrowUp } from "lucide-react";
     },
   };
 
+
   export default function CeoPage() {
     return (
+      
+    <Head>
+      <title>CEO인사말 | 수만</title>
+    </Head>
+    
+      <Header />
+      
       <Layout>
-
       {/* 히어로 섹션 (재사용) - "CEO 인사말" 제목 */}
       <section
         className="hero-section relative bg-cover bg-center h-[300px] flex items-center text-white"
