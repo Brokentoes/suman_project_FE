@@ -1,10 +1,10 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { bannerImages, section1Text, section3} from "@/data/home";
+import { bannerImages, section1Text, section3, sectionCertifications} from "@/data/home";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-
+import {motion} from "framer-motion";
 
 export default function HomePage() {
   const [current, setCurrent] = useState(0);
@@ -17,9 +17,11 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleDotClick = (index: number) => {
-    setCurrent(index);
-  };
+  // const handleDotClick = (index: number) => {
+  //   setCurrent(index);
+  // };
+  const visibleCerts = sectionCertifications.certifications.slice(0, 8);
+
 
   return (
     <>
@@ -143,6 +145,70 @@ export default function HomePage() {
 
         </section>
 
+        {/*section3_certifications*/}
+        <section className="bg-white py-40 px-6">
+          <div className="flex items-center mb-10 w-full max-w-8xl px-[120px]">
+            <p className="text-2xl text-black font-semibold">Certifications</p>
+          </div>
+
+          <div className="text-left text-black whitespace-pre-line mb-5 max-w-7xl mx-[120px]">
+            <h2 className="text-4xl font-bold leading-normal ">{sectionCertifications.title}</h2>
+          </div>
+          <div className="flex gap-2 mt-4 px-[120px]">
+            {sectionCertifications.tags.map((tag, i) => (
+              <span 
+                key={i} 
+                className="bg-gray-100 text-blue-700 px-3 py-0.3 font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-15 mt-30 px-[120px]">
+              {[0, 1].map((rowIndex) => {
+                const certGroup = visibleCerts.slice(rowIndex * 4, rowIndex * 4 + 4);
+                const fromLeft = rowIndex % 2 === 0;
+
+                return (
+                  <motion.div
+                    key={rowIndex}
+                    className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-20"
+                    initial={{ x: fromLeft ? -200 : 200, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1.3 }}
+                    transition={{ duration: 1 }}
+                    viewport={{ once: true }}
+                  >
+                    {certGroup.map((cert, i) => (
+                      <div key={i} className="relative group text-center">
+                        <button
+                          title={cert.label}
+                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate"
+                        >
+                          {cert.label}
+                        </button>
+                        {cert.img && (
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block z-10">
+                            <img
+                              src={cert.img}
+                              alt={cert.label}
+                              className="w-64 rounded shadow-xl opacity-0 transition duration-300 group-hover:opacity-100"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </motion.div>
+                );
+              })}
+            </div>
+            <div className="mt-6 flex justify-end px-[120px]">
+              <p className="text-xs text-gray-400 mb-2">{sectionCertifications.legal}</p>
+              <button className="flex items-center gap-2 text-gray-800 bg-white px-4 py-2 rounded-full hover:font-semibold transition tracking-wide">
+                전체 업적 현황 보기 
+                <span className="text-xl">→</span>
+              </button>
+            
+            </div>
+        </section>
       </main>
 
       <Footer />
