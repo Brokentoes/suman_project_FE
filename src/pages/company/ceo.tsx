@@ -2,9 +2,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion, type Transition } from "framer-motion";
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
-
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import Head from "next/head";
 
 export default function CeoPage() {
   function ScrollToTopButton() {
@@ -67,6 +67,10 @@ export default function CeoPage() {
 
   return (
     <>
+    <Head>
+      <title>CEO인사말 | 수만</title>
+    </Head>
+    
       <Header />
 
       {/* 히어로 섹션 (재사용) - "CEO 인사말" 제목 */}
