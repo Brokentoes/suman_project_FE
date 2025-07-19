@@ -49,4 +49,21 @@ export const section3 = {
         img: '/images/main_mobility.png'
     },
   ]
-}
+};
+
+//section4
+export const sectionCertifications = {
+  title: '정부기관의 인증을 비롯해\nISO 품질·환경·안전경영 시스템을 모두 구축하여\n고객 중심의 고신뢰 생산 체계를 갖추고 있습니다.',
+  tags: ['Technology Certification', 'Quality Assurance'],
+  certifications: [
+    { label: 'ISO 9001', img: null },
+    { label: 'ISO 14001', img: null },
+    { label: 'ISO 45001', img: null },
+    { label: '벤처기업확인서', img: '/images/main_venture.png' },
+    { label: '소·부·장 전문기업', img: null },
+    { label: '뿌리기업확인서', img: null },
+    { label: '중소기업확인서', img: null },
+    { label: '품질환경안전', img: null }
+  ],
+  legal: '지식재산권·특허 등록 "피스톤링 제조장치 및 제조 방법"외 6건 보유'
+};
