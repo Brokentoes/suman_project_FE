@@ -162,7 +162,7 @@ export default function HistoryPage() {
                   className="timeline-item mb-10 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
-                  <p className="text-black">(주)수만 설립 (2014년 4월)</p>
+                  <p className="text-black">(주) 수만 설립 (2014년 4월)</p>
                 </motion.div>
 
                 {/* 2015~2020년 섹션 */}
@@ -189,7 +189,7 @@ export default function HistoryPage() {
                   variants={timelineItemVariants}
                 >
                   <p className="text-black">
-                    ● 사업분야 확대 자동차/전기전자 정밀가공/장비 분야 확대
+                    ● 사업분야 확대 자동차 / 전기전자 정밀가공 / 장비 분야 확대
                   </p>
                 </motion.div>
                 <motion.div
@@ -265,7 +265,7 @@ export default function HistoryPage() {
                   variants={timelineItemVariants}
                 >
                   <p className="text-black">
-                    ● 변화/구조혁신 신산업분야 가공/장비 및 모듈화 사업 진출
+                    ● 변화 / 구조혁신 신산업분야 가공 / 장비 및 모듈화 사업 진출
                   </p>
                 </motion.div>
                 <motion.div
@@ -295,20 +295,20 @@ export default function HistoryPage() {
                   className="timeline-item mb-2 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
-                  <p className="text-black">벤처기업인증 갱신(2022년)</p>
+                  <p className="text-black">벤처기업인증 갱신 (2022년)</p>
                 </motion.div>
                 <motion.div
                   className="timeline-item mb-2 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
-                  <p className="text-black">뿌리기업인증 갱신(2022년)</p>
+                  <p className="text-black">뿌리기업인증 갱신 (2022년)</p>
                 </motion.div>
                 <motion.div
                   className="timeline-item mb-2 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
                   <p className="text-black">
-                    소재부품장비 전문기업인증(2022년)
+                    소재부품장비 전문기업인증 (2022년)
                   </p>
                 </motion.div>
                 <motion.div
