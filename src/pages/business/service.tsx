@@ -45,9 +45,9 @@ export default function ServicePage() {
   };
 
   const equipmentList = [
-    { name: "85호기", image: "/images/equipment/85-machine.jpg" },
-    { name: "조각기", image: "/images/equipment/engraving-machine.jpg" },
-    { name: "MCT", image: "/images/equipment/mct.jpg" },
+    { name: "85호기", image: "/images/85_machine.png" },
+    { name: "조각기", image: "/images/engraving_machine.png" },
+    { name: "MCT", image: "/images/mct.png" },
     { name: "레이저마킹기", image: "/images/equipment/laser-marking.jpg" },
     { name: "자동포장기", image: "/images/equipment/auto-packaging.jpg" },
     { name: "CNC 가공기", image: "/images/equipment/cnc-machine.jpg" },
@@ -69,34 +69,34 @@ export default function ServicePage() {
   ];
 
   const measurementEquipmentList = [
-    { name: "BS호기", image: "/images/equipment/bs-machine-measurement.jpg" },
+    { name: "85호기", image: "/images/85_machine.png" },
     {
       name: "조각기",
-      image: "/images/equipment/engraving-machine-measurement.jpg",
+      image: "/images/engraving_machine.png",
     },
-    { name: "MCT", image: "/images/equipment/mct-measurement.jpg" },
+    { name: "MCT", image: "/images/mct.png" },
   ];
 
   const productCategories = [
     {
       name: "이차전지",
       subtitle: "정밀 부품 / 모듈 설계",
-      image: "/images/products/secondary-battery.jpg",
+      image: "/images/service_battery.png",
     },
     {
       name: "전기전자",
       subtitle: "정밀 부품 / 모듈 설계기술",
-      image: "/images/products/electrical-electronics.jpg",
+      image: "/images/service_electric.png",
     },
     {
       name: "반도체",
       subtitle: "정밀 부품 / 모듈 설계 / 자동화 기술 통합",
-      image: "/images/products/semiconductor.jpg",
+      image: "/images/service_semiconductor.png",
     },
     {
       name: "자동차",
       subtitle: "정밀 가공 기술",
-      image: "/images/products/automotive.jpg",
+      image: "/images/service_mobility.png",
     },
   ];
 
@@ -153,7 +153,7 @@ export default function ServicePage() {
             className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 transition-all duration-500 ease-in-out ${
               showAllEquipment
                 ? "max-h-[5000px] overflow-visible"
-                : "max-h-[300px] overflow-hidden"
+                : "max-h-[400px] overflow-hidden" // Changed from 300px to 400px to show second row
             }`}
           >
             {equipmentList
@@ -222,7 +222,9 @@ export default function ServicePage() {
                 variants={itemVariants}
               >
                 {equipment.image && (
-                  <div className="w-full h-24 relative mb-2">
+                  <div className="w-full h-48 relative mb-2">
+                    {" "}
+                    {/* h-24를 h-48로 수정 */}
                     <Image
                       src={equipment.image}
                       alt={equipment.name}
@@ -244,7 +246,7 @@ export default function ServicePage() {
       {/* 3. Process Section - 생산가공/조립 섹션 위에 겹쳐지도록 설정 */}
       {/* Product 섹션이 올라탈 공간을 위해 padding-bottom을 충분히 늘립니다. */}
       <motion.div
-        className="bg-red-700 py-20 px-4 md:px-8 text-white rounded-t-lg mt-[-150px] relative z-10 pb-[250px]" // mt-[음수값]과 pb-[양수값] 조절
+        className="bg-red-700 py-20 px-4 md:px-8 text-white rounded-t-xl mt-[-150px] relative z-10 pb-[250px]"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
@@ -261,21 +263,23 @@ export default function ServicePage() {
       </motion.div>
 
       {/* 4. Products Section - Process 섹션 위에 겹쳐지도록 설정 */}
+      {/* `max-w-7xl mx-auto` 클래스를 제거하여 좌우 끝까지 붙도록 수정 */}
       <motion.div
-        className="bg-gray-800 py-20 px-4 md:px-8 text-white rounded-t-lg mt-[-150px] relative z-20" // mt-[음수값] 조절 및 z-index 더 높게 설정
+        className="bg-gray-800 py-20 px-4 md:px-8 text-white rounded-t-xl mt-[-150px] relative z-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeInVariants}
       >
         <div className="max-w-7xl mx-auto">
+          {" "}
+          {/* This div needs to remain to center the content within the full-width section */}
           <h2 className="text-4xl font-bold mb-4">Products</h2>
           <p className="text-lg mb-12 leading-relaxed">
             정밀 부품, 모듈, 자동화 장비까지
             <br />
             미래 산업에 필요한 핵심 솔루션을 제조합니다
           </p>
-
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
             initial="hidden"
@@ -292,7 +296,7 @@ export default function ServicePage() {
             {productCategories.map((product, index) => (
               <motion.div
                 key={index}
-                className="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out group" /* Added 'group' class */
                 variants={itemVariants}
               >
                 <div className="relative w-full h-48">
@@ -303,16 +307,25 @@ export default function ServicePage() {
                     objectFit="cover"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                <div className="p-6 transition-colors duration-300 group-hover:bg-white">
+                  {" "}
+                  {/* Added hover:bg-white */}
+                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-black transition-colors duration-300">
+                    {" "}
+                    {/* Added group-hover:text-black */}
                     {product.name}
                   </h3>
-                  <p className="text-gray-400 text-sm">{product.subtitle}</p>
+                  <p className="text-gray-400 text-sm group-hover:text-gray-700 transition-colors duration-300">
+                    {" "}
+                    {/* Changed group-hover:text-gray-700 for better contrast */}
+                    {product.subtitle}
+                  </p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
-        </div>
+        </div>{" "}
+        {/* closing the max-w-7xl mx-auto div for centering content */}
       </motion.div>
     </Layout>
   );
