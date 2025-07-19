@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
 import { useState } from "react";
+import Head from "next/head";
 
 export default function VisionPage() {
   // Framer Motion Variants 정의 (이전과 동일)
@@ -109,6 +110,10 @@ export default function VisionPage() {
     "M577.664 788.217L493.324 513.713C620.072 435.665 631.033 329.861 620.671 286.714C592.841 296.168 535.795 316.165 530.252 320.526C524.708 324.886 636.138 108.861 692.546 0.302551L1046.75 123.43L920.543 166.83C920.543 166.83 1035.51 627.202 577.664 788.217Z";
 
   return (
+    <>
+    <Head>
+      <title>비전 | 수만</title>
+    </Head>
     <Layout>
       <HeroSection
         title="기업 비전"
@@ -659,5 +664,6 @@ export default function VisionPage() {
         </div>
       </motion.section>
     </Layout>
+    </>
   );
 }
