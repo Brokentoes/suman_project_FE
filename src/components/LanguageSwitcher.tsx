@@ -1,4 +1,5 @@
 // 헤더 우측 언어변경 기능 관련 함수(여기서 언어변경이 일어나면, langStore.ts에 변경 사항 저장)
+
 'use client';
 
 import { useState } from 'react';
@@ -7,7 +8,7 @@ import { useLangStore } from '@/stores/langStore';
 
 const LANGUAGES = ['KOR', 'ENG'];
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcherv2() {
   const [open, setOpen] = useState(false);
   const { lang, setLang } = useLangStore();
   const pathname = usePathname();
@@ -38,17 +39,19 @@ export default function LanguageSwitcher() {
       {/* 메인 언어변경 버튼 */}
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="cursor-pointer px-6 py-2 rounded-full flex items-center gap-1 font-semibold tracking-wide bg-gradient-to-br from-[#2F3542] to-[#1C1E26] text-white backdrop-blur-md shadow-md hover:from-[#3C4452] hover:to-[#22252C] transition-all duration-300"
+        className="cursor-pointer px-6 py-1 flex items-center gap-1 text-sm font-semibold tracking-wide text-gray-800 bg-white/80  hover:bg-white rounded-full transition duration-200 shadow-sm"
+
+        
       >
         {lang}
         <svg
           className={`w-3 h-3 transform transition-transform ${open ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
-          strokeWidth="3"
+          strokeWidth="2.5"
           viewBox="0 0 24 24"
         >
-          <path d="M19 9l-7 7-7-7" />
+          <path d="M19 9l-7 7-7-7"/>
         </svg>
       </button>
 
@@ -59,7 +62,7 @@ export default function LanguageSwitcher() {
             <button
               key={item}
               onClick={() => handleSelect(item as 'KOR' | 'ENG')}
-              className="cursor-pointer w-full text-left px-4 py-2 hover:bg-blue-100 text-sm text-black"
+              className="cursor-pointer w-full text-middle px-4 py-2 hover:bg-blue-100 text-sm text-black"
             >
               {item}
             </button>
