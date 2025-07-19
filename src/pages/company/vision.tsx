@@ -3,6 +3,8 @@ import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
 import { useState, useEffect } from "react"; // useEffect 임포트
+import Head from "next/head";
+
 
 export default function VisionPage() {
   // Framer Motion Variants 정의 (이전과 동일)
@@ -105,6 +107,10 @@ export default function VisionPage() {
   const svgViewBox = "0 0 1047 810";
 
   return (
+    <>
+    <Head>
+      <title>비전 | 수만</title>
+    </Head>
     <Layout>
       <HeroSection
         title="기업 비전"
@@ -596,5 +602,6 @@ export default function VisionPage() {
         </div>
       </motion.section>
     </Layout>
+    </>
   );
 }
