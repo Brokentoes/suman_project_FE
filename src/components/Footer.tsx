@@ -2,8 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import PopupModal from './PopupModal';
+import { PRIVACY_POLICY_TEXT, EMAIL_REFUSAL_TEXT } from '@/data/policy';
+import { useState } from "react";
 
 export default function Footer() {
+  const [popupType, setPopupType] = useState<'privacy' | 'email' | null>(null);
+
+  const getPopupContent = () => {
+    if (popupType === 'privacy') return { title: '개인정보 처리방침', content: PRIVACY_POLICY_TEXT };
+    if (popupType === 'email') return { title: '이메일 수집거부', content: EMAIL_REFUSAL_TEXT };
+    return null;
+  };
+
+  const popupContent = getPopupContent();
+
   return (
     <footer className="bg-white text-black text-sm mt-20">
       {/* 상단 레이아웃 */}
@@ -102,12 +115,24 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* 오른쪽 링크 */}
+        {/* 우측 하단 정보 거부 관련 */}
         <div className="flex flex-wrap gap-4 text-gray-500">
-          <Link href="/privacy">개인정보 보호정책</Link>
-          <Link href="/reject-email">이메일 무단 수집거부</Link>
-        </div>
+        <button onClick={() => setPopupType('privacy')} className="hover:underline">
+          개인정보 처리방침
+        </button>
+        <button onClick={() => setPopupType('email')} className="hover:underline">
+          이메일 수집거부
+        </button>
       </div>
+    </div>
+
+    {popupContent && (
+      <PopupModal
+        title={popupContent.title}
+        content={popupContent.content}
+        onClose={() => setPopupType(null)}
+      />
+    )}
     </footer>
   );
 }
