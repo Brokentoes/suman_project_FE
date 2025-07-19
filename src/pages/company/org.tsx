@@ -2,6 +2,7 @@ import Layout from "@/components/Layout"; // 새로운 Layout 컴포넌트 임�
 import HeroSection from "@/components/HeroSection"; // 새로운 HeroSection 컴포넌트 임포트
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트 (추가)
 import { motion, type Transition } from "framer-motion";
+import Head from "next/head";
 
 export default function OrganizationChartPage() {
   const fadeInVariants = {
@@ -14,6 +15,10 @@ export default function OrganizationChartPage() {
   };
 
   return (
+    <>
+    <Head>
+      <title>조직도 | 수만</title>
+    </Head>
     <Layout>
       {" "}
       {/* 모든 페이지 내용을 Layout 컴포넌트로 감쌉니다. */}
@@ -44,5 +49,6 @@ export default function OrganizationChartPage() {
         </div>
       </div>
     </Layout>
+    </>
   );
 }

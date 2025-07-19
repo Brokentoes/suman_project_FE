@@ -2,6 +2,7 @@ import Header from "@/components/Header"; // Header 컴포넌트 임포트
 import Footer from "@/components/Footer"; // Footer 컴포넌트 임포트
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Head from 'next/head';
 
 // Assuming these are defined in your data/home.ts file
 // export const bannerImages = ["/path/to/your/image1.jpg", "/path/to/your/image2.jpg"];
@@ -35,6 +36,10 @@ export default function HomePage() {
 
   return (
     <>
+    <Head>
+        <title>(주) 수만</title>
+        <link rel="icon" sizes="16x16" href="/images/logo.ico" />
+    </Head>
       {/* Header 컴포넌트 추가 */}
       <Header />
 
