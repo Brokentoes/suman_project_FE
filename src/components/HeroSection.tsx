@@ -1,4 +1,4 @@
-import { motion, type Transition } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image"; // 이미지 최적화를 위한 Next.js Image 컴포넌트 임포트
 
 interface HeroSectionProps {

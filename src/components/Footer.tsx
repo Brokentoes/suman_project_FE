@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="bg-white text-black text-sm mt-20">
       {/* 상단 레이아웃 */}
