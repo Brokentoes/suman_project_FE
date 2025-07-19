@@ -1,15 +1,9 @@
 // location.tsx
 import { motion, type Transition } from "framer-motion";
-import { useState, useEffect, useRef, useCallback } from "react";
-import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
-import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
-import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트 (추가)
-
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"; // <-- useMemo 추가
+import Layout from "@/components/Layout";
+import HeroSection from "@/components/HeroSection";
+import BreadcrumbSection from "@/components/BreadcrumbSection";
 
 // kakaoMapConfigs를 컴포넌트 외부로 분리
 const kakaoMapConfigs: {
@@ -26,7 +20,7 @@ const kakaoMapConfigs: {
     level: 3,
     address: "대전광역시 대덕구 문평동 43-10",
   },
-  천안사업장: {
+  천안지부: {
     latitude: 36.848807,
     longitude: 127.122367,
     level: 3,
@@ -50,6 +44,7 @@ const locationsData = [
   {
     key: "천안지부",
     title: "천안지부",
+    address: "충청남도 천안시 서북구 성성동 336-4 G1비즈캠퍼스 4F 401호",
     addressSnippet: "G1 비즈캠퍼스 4F 401호",
   },
   {
@@ -62,9 +57,12 @@ const locationsData = [
 export default function LocationPage() {
   const [openMap, setOpenMap] = useState<string | null>(null);
   const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  const kakaoMaps = useRef<{ [key: string]: any }>({});
-  const infoWindows = useRef<{ [key: string]: any }>({});
-  const currentOpenInfowindow = useRef<any>(null);
+  // `any` 대신 카카오 맵 객체 타입으로 변경
+  const kakaoMaps = useRef<{ [key: string]: kakao.maps.Map | null }>({});
+  const infoWindows = useRef<{ [key: string]: kakao.maps.InfoWindow | null }>(
+    {}
+  );
+  const currentOpenInfowindow = useRef<kakao.maps.InfoWindow | null>(null);
 
   const fadeInVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -75,12 +73,17 @@ export default function LocationPage() {
     },
   };
 
-  const mapTransition = {
-    type: "spring",
-    stiffness: 200,
-    damping: 20,
-    duration: 0.5,
-  };
+  // mapTransition 객체를 useMemo로 감싸서 메모이제이션
+  const mapTransition = useMemo(
+    () =>
+      ({
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
+        duration: 0.5,
+      } as Transition),
+    [] // 의존성 없음: 객체 내부의 값들이 변하지 않으므로 한 번만 생성.
+  );
 
   const KAKAO_MAP_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY;
 
@@ -95,7 +98,8 @@ export default function LocationPage() {
       }
 
       if (config && container && window.kakao && window.kakao.maps) {
-        const options = {
+        const options: kakao.maps.MapOptions = {
+          // MapOptions 타입 지정
           center: new window.kakao.maps.LatLng(
             config.latitude,
             config.longitude
@@ -152,8 +156,8 @@ export default function LocationPage() {
         );
       }
     },
-    [kakaoMapConfigs, KAKAO_MAP_APP_KEY]
-  ); // 의존성 배열
+    [] // <-- kakaoMapConfigs와 KAKAO_MAP_APP_KEY를 제거했습니다. 이들은 외부 상수이므로 의존성으로 불필요합니다.
+  );
 
   // useCallback 적용
   const handleToggleMap = useCallback(
@@ -168,18 +172,19 @@ export default function LocationPage() {
 
         if (nextOpenMap && kakaoMaps.current[nextOpenMap]) {
           setTimeout(() => {
-            kakaoMaps.current[nextOpenMap].relayout();
+            kakaoMaps.current[nextOpenMap]?.relayout(); // Optional chaining 추가
             const config = kakaoMapConfigs[nextOpenMap];
-            kakaoMaps.current[nextOpenMap].setCenter(
+            kakaoMaps.current[nextOpenMap]?.setCenter(
+              // Optional chaining 추가
               new window.kakao.maps.LatLng(config.latitude, config.longitude)
             );
-          }, mapTransition.duration * 1000 + 50);
+          }, (mapTransition.duration ?? 0.5) * 1000 + 50);
         }
         return nextOpenMap;
       });
     },
-    [mapTransition, kakaoMaps, kakaoMapConfigs, currentOpenInfowindow]
-  ); // 의존성 배열
+    [mapTransition, kakaoMaps, currentOpenInfowindow] // <-- kakaoMapConfigs를 제거했습니다. mapTransition은 useMemo로 감쌌으므로 여기에 포함해도 괜찮습니다.
+  );
 
   useEffect(() => {
     if (
@@ -188,7 +193,7 @@ export default function LocationPage() {
       !window.kakao?.maps
     ) {
       const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`; // libraries=services 추가
       script.async = true;
       script.onload = () => {
         window.kakao.maps.load(() => {
@@ -287,7 +292,10 @@ export default function LocationPage() {
                     style={{ minHeight: "100px" }}
                   >
                     <div
-                      ref={(el) => (mapRefs.current[location.key] = el)}
+                      // `ref` 콜백 함수 수정
+                      ref={(el) => {
+                        mapRefs.current[location.key] = el;
+                      }}
                       className="w-full h-full absolute top-0 left-0"
                       style={{ backgroundColor: "lightgray" }}
                     >
