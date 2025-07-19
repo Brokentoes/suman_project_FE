@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 import { motion, type Transition } from "framer-motion";
+import Head from 'next/head';
 
 export default function CIPage() {
   const fadeInVariants = {
@@ -15,6 +16,10 @@ export default function CIPage() {
   };
 
   return (
+    <>
+    <Head>
+      <title>CI | 수만</title>
+    </Head>
     <Layout>
       <HeroSection
         title="CI"
@@ -47,5 +52,6 @@ export default function CIPage() {
         </div>
       </div>
     </Layout>
+    </>
   );
 }
