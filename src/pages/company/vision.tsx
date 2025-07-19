@@ -2,8 +2,9 @@ import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // useEffect 임포트
 import Head from "next/head";
+
 
 export default function VisionPage() {
   // Framer Motion Variants 정의 (이전과 동일)
@@ -50,37 +51,36 @@ export default function VisionPage() {
 
   const rndBoxLeftInVariants = {
     hidden: {
-      opacity: 0, // 초기 상태: 박스 전체가 보이지 않음
+      opacity: 0,
       x: -100,
-      backgroundColor: "rgba(255, 255, 255, 0)", // 초기 배경은 완전 투명
+      backgroundColor: "rgba(255, 255, 255, 0)",
     },
     visible: {
-      opacity: 1, // 최종 상태: 박스 전체가 보이게 됨
+      opacity: 1,
       x: 0,
-      backgroundColor: "rgba(255, 255, 255, 0.4)", // 최종 배경은 70% 불투명한 흰색
+      backgroundColor: "rgba(255, 255, 255, 0.4)",
       transition: {
-        duration: 0.4, // 애니메이션 지속 시간
+        duration: 0.4,
         ease: "easeOut",
-        when: "beforeChildren", // 부모 애니메이션이 끝난 후 자식 애니메이션 시작 (선택 사항)
-        // 또는 staggerChildren: 0.1 과 같은 방식으로 자식 요소를 지연시킬 수도 있습니다.
+        when: "beforeChildren",
       } as Transition,
     },
   };
 
   const rndBoxRightInVariants = {
     hidden: {
-      opacity: 0, // 초기 상태: 박스 전체가 보이지 않음
-      x: 100, // 오른쪽에서 나타나므로 x 시작 값은 양수
-      backgroundColor: "rgba(0, 0, 0, 0)", // 초기 배경은 완전 투명 (이미지이므로 필요 없을 수 있지만 일관성을 위해 추가)
+      opacity: 0,
+      x: 100,
+      backgroundColor: "rgba(0, 0, 0, 0)",
     },
     visible: {
-      opacity: 1, // 최종 상태: 박스 전체가 보이게 됨
+      opacity: 1,
       x: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.7)", // 배경 이미지 위에 텍스트 오버레이가 있으므로, 오버레이의 투명도 조절용 (필요시 조정)
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
       transition: {
-        duration: 0.4, // 애니메이션 지속 시간
+        duration: 0.4,
         ease: "easeOut",
-        when: "beforeChildren", // 부모 애니메이션이 끝난 후 자식 애니메이션 시작 (텍스트가 이미지 위에 나타나므로 유용)
+        when: "beforeChildren",
       } as Transition,
     },
   };
@@ -96,18 +96,15 @@ export default function VisionPage() {
 
   // State to manage which section is being hovered
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+  // 클라이언트에서 컴포넌트가 마운트되었는지 확인하는 상태
+  const [isClient, setIsClient] = useState(false);
 
-  // 제공된 SVG의 viewBox 값
-  // viewBox의 y 시작점을 0으로 유지하여 상단이 잘리지 않도록 합니다.
+  // 컴포넌트가 클라이언트에서 마운트될 때 isClient 상태를 true로 설정
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const svgViewBox = "0 0 1047 810";
-
-  // 제공된 SVG의 path 데이터
-  const path2024 =
-    "M241.259 141.379L48.189 204.165C-10.1302 328.285 -19.2576 429.502 48.2686 546.235L238.893 437.067C238.893 437.067 194.044 381.064 197.242 308.381C199.98 246.143 229.026 169.663 241.259 141.379Z";
-  const path2026 =
-    "M455.976 517.794C455.976 517.794 373.221 539.969 255.742 468.336L75.7278 601.697C75.7278 601.697 220.874 848.158 518.39 804.407L455.976 517.794Z";
-  const path2028 =
-    "M577.664 788.217L493.324 513.713C620.072 435.665 631.033 329.861 620.671 286.714C592.841 296.168 535.795 316.165 530.252 320.526C524.708 324.886 636.138 108.861 692.546 0.302551L1046.75 123.43L920.543 166.83C920.543 166.83 1035.51 627.202 577.664 788.217Z";
 
   return (
     <>
@@ -126,10 +123,10 @@ export default function VisionPage() {
       {/* Vision 섹션에 Framer Motion 적용 */}
       <motion.section
         className="vision-section bg-white py-20 px-4 md:px-8"
-        variants={fadeInRiseVariants} // 정의된 fadeInRiseVariants 사용
-        initial="hidden" // 초기 상태는 hidden
-        whileInView="visible" // 뷰포트에 들어오면 visible 상태로 전환
-        viewport={{ once: true, amount: 0.3 }} // 한 번만 애니메이션, 30% 보이면 실행
+        variants={fadeInRiseVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
       >
         <div className="max-w-7xl mx-auto">
           <h2 className="text-xl font-bold text-gray-800 text-left">Vision</h2>
@@ -137,7 +134,7 @@ export default function VisionPage() {
           <div className="vision-neo-area -mt-30 flex flex-col md:flex-row items-center justify-between ">
             <div className="md:w-1/2 text-left">
               <p className="text-gray-800 font-semibold text-[30px] mb-2">
-                NEO '24 5th 6015
+                NEO &apos;24 5th 6015
               </p>
               <h3 className="text-4xl font-bold text-blue-600 text-[50px] leading-tight">
                 확신의 종합 솔루션 서비스
@@ -153,240 +150,196 @@ export default function VisionPage() {
             <div className="md:w-1/2 flex justify-center relative">
               <svg
                 width="100%"
-                // height를 고정하여 잘리지 않도록 하고, viewBox에 맞게 조정
                 height="810px"
-                viewBox={svgViewBox} // 제공된 SVG의 viewBox 값 사용
+                viewBox={svgViewBox}
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="vision-infographic-svg"
               >
-                {/* SVG Definitions for linear gradients */}
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_0_1"
-                    x1="82.3517"
-                    y1="135.612"
-                    x2="182.724"
-                    y2="510.208"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#2152BC" />
-                    <stop offset="1" stopColor="#0F2556" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint1_linear_0_1"
-                    x1="242.322"
-                    y1="471.932"
-                    x2="343.934"
-                    y2="851.153"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#2152BC" />
-                    <stop offset="1" stopColor="#0F2556" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint2_linear_0_1"
-                    x1="685.277"
-                    y1="2.25018"
-                    x2="874.56"
-                    y2="708.664"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#2152BC" />
-                    <stop offset="1" stopColor="#0F2556" />
-                  </linearGradient>
-                </defs>
-
-                {/* 2024 Section */}
-                <g
-                  className="group cursor-pointer"
-                  onMouseEnter={() => setHoveredSection("2024")}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <path
-                    d={path2024} // 2024 영역의 정확한 path 데이터
-                    fill="url(#paint0_linear_0_1)" // 제공된 그라데이션 ID 사용
-                    className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
-                  />
-                  {/* hover 시 오버레이 효과 */}
-                  {hoveredSection === "2024" && (
-                    <path
-                      d={path2024}
-                      fill="rgba(37, 99, 235, 0.3)" // Tailwind blue-500에 해당하는 rgba 값
-                      className="transition-all duration-300 animate-pulse"
-                    />
-                  )}
-
-                  <text
-                    x="110" // 2024 영역 내 적절한 x 좌표 (조정 필요)
-                    y="350" // 2024 영역 내 적절한 y 좌표 (조정)
-                    fill="white"
-                    fontSize="50"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                    className="transition-all duration-300 group-hover:fill-gray-200"
-                  >
-                    2024
-                  </text>
-                  <text
-                    x="110" // 2024 영역 내 적절한 x 좌표 (조정 필요)
-                    y="380" // 2024 영역 내 적절한 y 좌표 (조정)
-                    fill="white"
-                    fontSize="24"
-                    textAnchor="middle"
-                    className={`transition-opacity duration-300 ${
-                      hoveredSection === "2024" ? "opacity-0" : "opacity-100"
-                    }`}
-                  >
-                    →
-                  </text>
-
-                  {/* Detailed text for 2024 */}
-                  <foreignObject
-                    x="40"
-                    y="380"
-                    width="140"
-                    height="80"
-                    className={`transition-opacity duration-300 ${
-                      hoveredSection === "2024" ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    <div
-                      xmlns="http://www.w3.org/1999/xhtml"
-                      className="font-size-60 text-center text-white" // 배경색 제거
+                {/* isClient가 true일 때만 인터랙티브 SVG 그룹을 렌더링 */}
+                {isClient && (
+                  <>
+                    {/* 2024 Section - SVG path 대신 이미지 삽입 */}
+                    <g
+                      className="group cursor-pointer"
+                      onMouseEnter={() => setHoveredSection("2024")}
+                      onMouseLeave={() => setHoveredSection(null)}
                     >
-                      제2시험센터 구축
-                      <br />
-                      반도체 정밀가공분야 진입
-                    </div>
-                  </foreignObject>
-                </g>
+                      <image
+                        href="/images/vision_arrow3.png" // 실제 이미지 경로
+                        x="15" // 이미지 x 시작 위치 (조정 필요)
+                        y="160" // 이미지 y 시작 위치 (조정 필요)
+                        width="260" // 이미지 너비 (조정 필요)
+                        height="405" // 이미지 높이 (조정 필요)
+                        className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                      />
+                      <text
+                        x="110" // 2024 영역 내 적절한 x 좌표 (이미지 위에 맞게 조정 필요)
+                        y="350" // 2024 영역 내 적절한 y 좌표 (이미지 위에 맞게 조정)
+                        fill="white"
+                        fontSize="50"
+                        fontWeight="bold"
+                        textAnchor="middle"
+                        className="transition-all duration-300 group-hover:fill-gray-200"
+                      >
+                        2024
+                      </text>
+                      <text
+                        x="110" // 2024 영역 내 적절한 x 좌표 (이미지 위에 맞게 조정 필요)
+                        y="380" // 2024 영역 내 적절한 y 좌표 (이미지 위에 맞게 조정)
+                        fill="white"
+                        fontSize="24"
+                        textAnchor="middle"
+                        className={`transition-opacity duration-300 ${
+                          hoveredSection === "2024"
+                            ? "opacity-0"
+                            : "opacity-100"
+                        }`}
+                      >
+                        →
+                      </text>
 
-                {/* 2026 Section */}
-                <g
-                  className="group cursor-pointer"
-                  onMouseEnter={() => setHoveredSection("2026")}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <path
-                    d={path2026} // 2026 영역의 정확한 path 데이터
-                    fill="url(#paint1_linear_0_1)" // 제공된 그라데이션 ID 사용
-                    className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
-                  />
-                  {hoveredSection === "2026" && (
-                    <path
-                      d={path2026}
-                      fill="rgba(37, 99, 235, 0.3)"
-                      className="transition-all duration-300 animate-pulse"
-                    />
-                  )}
-                  <text
-                    x="310" // 2026 영역 내 적절한 x 좌표 (조정 필요)
-                    y="650" // 2026 영역 내 적절한 y 좌표 (조정)
-                    fill="white"
-                    fontSize="60"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                    className="transition-all duration-300 group-hover:fill-gray-200"
-                  >
-                    2026
-                  </text>
-                  <text
-                    x="310" // 2026 영역 내 적절한 x 좌표 (조정 필요)
-                    y="680" // 2026 영역 내 적절한 y 좌표 (조정)
-                    fill="white"
-                    fontSize="24"
-                    textAnchor="middle"
-                    className={`transition-opacity duration-300 ${
-                      hoveredSection === "2026" ? "opacity-0" : "opacity-100"
-                    }`}
-                  >
-                    →
-                  </text>
+                      {/* Detailed text for 2024 */}
+                      <foreignObject
+                        x="40" // 위치 조정
+                        y="380" // 위치 조정
+                        width="140"
+                        height="80"
+                        className={`transition-opacity duration-300 ${
+                          hoveredSection === "2024"
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                      >
+                        <div className="font-size-60 text-center text-white">
+                          제2시험센터 구축
+                          <br />
+                          반도체 정밀가공분야 진입
+                        </div>
+                      </foreignObject>
+                    </g>
 
-                  {/* Detailed text for 2026 */}
-                  <foreignObject
-                    x="240"
-                    y="670"
-                    width="140"
-                    height="80"
-                    className={`transition-opacity duration-300 ${
-                      hoveredSection === "2026" ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    <div
-                      xmlns="http://www.w3.org/1999/xhtml"
-                      className="font-size-60 text-center text-white" // 배경색 제거
+                    {/* 2026 Section - SVG path 대신 이미지 삽입 */}
+                    <g
+                      className="group cursor-pointer"
+                      onMouseEnter={() => setHoveredSection("2026")}
+                      onMouseLeave={() => setHoveredSection(null)}
                     >
-                      전지모듈, 장비 및
-                      <br />
-                      모빌리티 분야 확장
-                    </div>
-                  </foreignObject>
-                </g>
+                      <image
+                        href="/images/vision_arrow2.png" // 실제 이미지 경로
+                        x="90" // 이미지 x 시작 위치 (조정 필요)
+                        y="490" // 이미지 y 시작 위치 (조정 필요)
+                        width="440" // 이미지 너비 (조정 필요)
+                        height="380" // 이미지 높이 (조정 필요)
+                        className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                      />
+                      <text
+                        x="310" // 2026 영역 내 적절한 x 좌표 (이미지 위에 맞게 조정 필요)
+                        y="650" // 2026 영역 내 적절한 y 좌표 (이미지 위에 맞게 조정)
+                        fill="white"
+                        fontSize="60"
+                        fontWeight="bold"
+                        textAnchor="middle"
+                        className="transition-all duration-300 group-hover:fill-gray-200"
+                      >
+                        2026
+                      </text>
+                      <text
+                        x="310" // 2026 영역 내 적절한 x 좌표 (이미지 위에 맞게 조정 필요)
+                        y="680" // 2026 영역 내 적절한 y 좌표 (이미지 위에 맞게 조정)
+                        fill="white"
+                        fontSize="24"
+                        textAnchor="middle"
+                        className={`transition-opacity duration-300 ${
+                          hoveredSection === "2026"
+                            ? "opacity-0"
+                            : "opacity-100"
+                        }`}
+                      >
+                        →
+                      </text>
 
-                {/* 2028 Section */}
-                <g
-                  className="group cursor-pointer"
-                  onMouseEnter={() => setHoveredSection("2028")}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <path
-                    d={path2028} // 2028 영역의 정확한 path 데이터
-                    fill="url(#paint2_linear_0_1)" // 제공된 그라데이션 ID 사용
-                    className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
-                  />
-                  {hoveredSection === "2028" && (
-                    <path
-                      d={path2028}
-                      fill="rgba(37, 99, 235, 0.3)"
-                      className="transition-all duration-300 animate-pulse"
-                    />
-                  )}
-                  <text
-                    x="750" // 2028 영역 내 적절한 x 좌표 (조정)
-                    y="400" // 2028 영역 내 적절한 y 좌표 (조정)
-                    fill="white"
-                    fontSize="70"
-                    fontWeight="bold"
-                    textAnchor="middle"
-                    className="transition-all duration-300 group-hover:fill-gray-200"
-                  >
-                    2028
-                  </text>
-                  <text
-                    x="750" // 2028 영역 내 적절한 x 좌표 (조정)
-                    y="430" // 2028 영역 내 적절한 y 좌표 (조정)
-                    fill="white"
-                    fontSize="24"
-                    textAnchor="middle"
-                    className={`transition-opacity duration-300 ${
-                      hoveredSection === "2028" ? "opacity-0" : "opacity-100"
-                    }`}
-                  >
-                    →
-                  </text>
+                      {/* Detailed text for 2026 */}
+                      <foreignObject
+                        x="240" // 위치 조정
+                        y="670" // 위치 조정
+                        width="140"
+                        height="80"
+                        className={`transition-opacity duration-300 ${
+                          hoveredSection === "2026"
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                      >
+                        <div className="font-size-60 text-center text-white">
+                          전지모듈, 장비 및
+                          <br />
+                          모빌리티 분야 확장
+                        </div>
+                      </foreignObject>
+                    </g>
 
-                  {/* Detailed text for 2028 */}
-                  <foreignObject
-                    x="690"
-                    y="420" // 위치 조정
-                    width="140"
-                    height="80"
-                    className={`transition-opacity duration-300 ${
-                      hoveredSection === "2028" ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    <div
-                      xmlns="http://www.w3.org/1999/xhtml"
-                      className="font-size-60 text-center text-white " // 배경색 제거
+                    {/* 2028 Section - SVG path 대신 이미지 삽입 */}
+                    <g
+                      className="group cursor-pointer"
+                      onMouseEnter={() => setHoveredSection("2028")}
+                      onMouseLeave={() => setHoveredSection(null)}
                     >
-                      매출 600억
-                      <br />
-                      순이익 150억원 목표
-                    </div>
-                  </foreignObject>
-                </g>
+                      <image
+                        href="/images/vision_arrow1.png" // 실제 이미지 경로
+                        x="500" // 이미지 x 시작 위치 (조정 필요)
+                        y="0" // 이미지 y 시작 위치 (조정 필요)
+                        width="550" // 이미지 너비 (조정 필요)
+                        height="788" // 이미지 높이 (조정 필요)
+                        className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                      />
+                      <text
+                        x="750" // 2028 영역 내 적절한 x 좌표 (이미지 위에 맞게 조정)
+                        y="400" // 2028 영역 내 적절한 y 좌표 (이미지 위에 맞게 조정)
+                        fill="white"
+                        fontSize="70"
+                        fontWeight="bold"
+                        textAnchor="middle"
+                        className="transition-all duration-300 group-hover:fill-gray-200"
+                      >
+                        2028
+                      </text>
+                      <text
+                        x="750" // 2028 영역 내 적절한 x 좌표 (이미지 위에 맞게 조정)
+                        y="430" // 2028 영역 내 적절한 y 좌표 (이미지 위에 맞게 조정)
+                        fill="white"
+                        fontSize="24"
+                        textAnchor="middle"
+                        className={`transition-opacity duration-300 ${
+                          hoveredSection === "2028"
+                            ? "opacity-0"
+                            : "opacity-100"
+                        }`}
+                      >
+                        →
+                      </text>
+
+                      {/* Detailed text for 2028 */}
+                      <foreignObject
+                        x="690" // 위치 조정
+                        y="420" // 위치 조정
+                        width="140"
+                        height="80"
+                        className={`transition-opacity duration-300 ${
+                          hoveredSection === "2028"
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                      >
+                        <div className="font-size-60 text-center text-white">
+                          매출 600억
+                          <br />
+                          순이익 150억원 목표
+                        </div>
+                      </foreignObject>
+                    </g>
+                  </>
+                )}
               </svg>
             </div>
           </div>
@@ -405,37 +358,31 @@ export default function VisionPage() {
           </p>
 
           <motion.div
-            className="core-value-boxes grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-8" // gap-8을 gap-x-12 (가로 간격)로 늘림
+            className="core-value-boxes grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-8"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            {/* 각 Core Value 박스에 배경 이미지 및 텍스트 오버레이 적용 */}
             <motion.div
-              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]" // min-h를 350px로 늘림
+              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
               variants={itemRiseVariants}
               style={{
-                backgroundImage: 'url("/images/vision_Flex.png")', // 이미지 경로
+                backgroundImage: 'url("/images/vision_Flex.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                // clipPath 다시 추가 및 픽셀 값 30px로 증가
                 clipPath:
                   "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
               }}
             >
-              {/* 이미지 위에 어두운 오버레이 추가 (텍스트 가독성 향상) */}
               <div
                 className="absolute inset-0 bg-black opacity-40 rounded-lg"
                 style={{
-                  // 오버레이에도 동일한 clipPath 적용
                   clipPath:
                     "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
                 }}
               ></div>
               <div className="relative text-white">
-                {" "}
-                {/* 텍스트를 이미지 위에 올리기 위해 relative */}
                 <h3 className="text-[25px] font-semibold mb-2">유연조직</h3>
                 <p className="text-[15px]">
                   급변하는 시장에 유연하게 반응하며
@@ -446,13 +393,12 @@ export default function VisionPage() {
             </motion.div>
 
             <motion.div
-              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]" // min-h를 350px로 늘림
+              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
               variants={itemRiseVariants}
               style={{
-                backgroundImage: 'url("/images/vision_pro.png")', // 이미지 경로
+                backgroundImage: 'url("/images/vision_pro.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                // clipPath 다시 추가 및 픽셀 값 30px로 증가
                 clipPath:
                   "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
               }}
@@ -460,7 +406,6 @@ export default function VisionPage() {
               <div
                 className="absolute inset-0 bg-black opacity-40 rounded-lg"
                 style={{
-                  // 오버레이에도 동일한 clipPath 적용
                   clipPath:
                     "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
                 }}
@@ -478,13 +423,12 @@ export default function VisionPage() {
             </motion.div>
 
             <motion.div
-              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]" // min-h를 350px로 늘림
+              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
               variants={itemRiseVariants}
               style={{
-                backgroundImage: 'url("/images/vision_tek.png")', // 이미지 경로
+                backgroundImage: 'url("/images/vision_tek.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                // clipPath 다시 추가 및 픽셀 값 30px로 증가
                 clipPath:
                   "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
               }}
@@ -492,7 +436,6 @@ export default function VisionPage() {
               <div
                 className="absolute inset-0 bg-black opacity-40 rounded-lg"
                 style={{
-                  // 오버레이에도 동일한 clipPath 적용
                   clipPath:
                     "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
                 }}
@@ -510,13 +453,12 @@ export default function VisionPage() {
             </motion.div>
 
             <motion.div
-              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]" // min-h를 350px로 늘림
+              className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
               variants={itemRiseVariants}
               style={{
-                backgroundImage: 'url("/images/vision_rnbd.png")', // 이미지 경로
+                backgroundImage: 'url("/images/vision_rnbd.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                // clipPath 다시 추가 및 픽셀 값 30px로 증가
                 clipPath:
                   "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
               }}
@@ -524,7 +466,6 @@ export default function VisionPage() {
               <div
                 className="absolute inset-0 bg-black opacity-40 rounded-lg"
                 style={{
-                  // 오버레이에도 동일한 clipPath 적용
                   clipPath:
                     "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
                 }}
@@ -549,7 +490,7 @@ export default function VisionPage() {
         variants={rndSectionRiseVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }} // once: false로 설정
+        viewport={{ once: false, amount: 0.3 }}
         style={{
           backgroundImage: 'url("/images/vision_R&D_bg.png")',
           backgroundSize: "cover",
@@ -557,10 +498,7 @@ export default function VisionPage() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* z-0 추가 */}
         <div className="max-w-7xl mx-auto relative z-10">
-          {" "}
-          {/* z-10 추가하여 콘텐츠가 오버레이 위로 오게 함 */}{" "}
           <h2 className="text-xl font-bold mb-4 text-left">R&D</h2>
           <p className="text-[40px] font-bold mb-12 text-left">
             끊임없는 연구개발과 스마트 공정 혁신을 통해
@@ -570,7 +508,7 @@ export default function VisionPage() {
           <div className="rnd-content flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="md:w-1/2 flex flex-col items-end pr-0">
               <motion.div
-                className="bg-white/40 rounded-lg p-6 mb-4 w-72 backdrop-blur-sm" // 배경을 흰색 투명도로 변경
+                className="bg-white/40 rounded-lg p-6 mb-4 w-72 backdrop-blur-sm"
                 variants={rndBoxLeftInVariants}
               >
                 <p className="text-[25px] text-white font-semibold mb-2">
@@ -582,7 +520,7 @@ export default function VisionPage() {
               </motion.div>
 
               <motion.div
-                className="bg-white/40 rounded-lg p-6 w-72 backdrop-blur-sm" // 배경을 흰색 투명도로 변경
+                className="bg-white/40 rounded-lg p-6 w-72 backdrop-blur-sm"
                 variants={rndBoxLeftInVariants}
               >
                 <p className="text-[25px] text-white font-semibold mb-2">R&D</p>
@@ -644,7 +582,7 @@ export default function VisionPage() {
             <div className="md:w-1/2 flex flex-col justify-center pl-0">
               <motion.div
                 className="relative w-full h-[400px] bg-cover bg-center rounded-lg overflow-hidden"
-                style={{ backgroundImage: 'url("/images/vision_dev.png")' }} // 이 부분은 기존 이미지이므로 그대로 둠
+                style={{ backgroundImage: 'url("/images/vision_dev.png")' }}
                 variants={rndBoxRightInVariants}
               >
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent p-4">
