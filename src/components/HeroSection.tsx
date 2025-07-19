@@ -2,8 +2,8 @@ import { motion, type Transition } from "framer-motion";
 import Image from "next/image"; // 이미지 최적화를 위한 Next.js Image 컴포넌트 임포트
 
 interface HeroSectionProps {
-  title: string; // 히어로 섹션의 메인 제목
-  subtitle: string; // 히어로 섹션의 서브 제목
+  title: React.ReactNode; // 히어로 섹션의 메인 제목
+  subtitle?: React.ReactNode; // 히어로 섹션의 서브 제목
   backgroundImage: string; // 배경 이미지 경로
 }
 
