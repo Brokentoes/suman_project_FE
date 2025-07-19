@@ -3,6 +3,7 @@ import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
 import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 import { motion, type Transition } from "framer-motion";
+import Head from "next/head";
 
 export default function HistoryPage() {
   // Framer Motion variants
@@ -37,6 +38,10 @@ export default function HistoryPage() {
   };
 
   return (
+    <>
+    <Head>
+      <title>연혁 | 수만</title>
+    </Head>
     <Layout>
     {/* Layout 컴포넌트로 전체 페이지 내용을 감쌉니다.*/}
     
@@ -342,5 +347,6 @@ export default function HistoryPage() {
         </section>
       </div>
     </Layout>
+    </>
   );
 }

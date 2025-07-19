@@ -13,7 +13,7 @@ export default function HeroSection({
   backgroundImage,
 }: HeroSectionProps) {
   return (
-    <section className="hero-section relative min-h-[300px] flex items-center text-white overflow-hidden">
+    <section className="hero-section relative h-[300px] flex items-center text-white overflow-hidden">
       <Image
         src={backgroundImage}
         alt={`${title} 배경 이미지`}
@@ -21,7 +21,8 @@ export default function HeroSection({
         priority // 이 이미지를 우선적으로 로드 (LCP 최적화)
         className="object-cover object-center" // 이미지가 섹션에 꽉 차도록 설정
       />
-      <div className="absolute inset-0"></div> {/* 어둡게 오버레이 */}
+
+      {/* 어둡게 오버레이 */}
       <motion.div
         className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full"
         initial="hidden"
