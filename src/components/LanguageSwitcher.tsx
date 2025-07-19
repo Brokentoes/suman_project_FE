@@ -38,7 +38,7 @@ export default function LanguageSwitcher() {
       {/* 메인 언어변경 버튼 */}
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="cursor-pointer px-6 py-2 rounded-full flex items-center gap-1 font-medium bg-[#0c1221]/80 text-white backdrop-blur-sm shadow-md hover:bg-[#0c1221]/90 transition-all duration-200"
+        className="cursor-pointer px-6 py-2 rounded-full flex items-center gap-1 font-semibold tracking-wide bg-gradient-to-br from-[#2F3542] to-[#1C1E26] text-white backdrop-blur-md shadow-md hover:from-[#3C4452] hover:to-[#22252C] transition-all duration-300"
       >
         {lang}
         <svg
