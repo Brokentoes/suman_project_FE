@@ -2,41 +2,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion, type Transition } from "framer-motion";
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
+import Layout from "@/components/Layout";
 
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import Head from "next/head";
 
-export default function CeoPage() {
-  function ScrollToTopButton() {
-    const [visible, setVisible] = useState(false);
 
-    useEffect(() => {
-      const toggleVisibility = () => {
-        setVisible(window.scrollY > 200);
-      };
-
-      window.addEventListener("scroll", toggleVisibility);
-      return () => window.removeEventListener("scroll", toggleVisibility);
-    }, []);
-
-    const scrollToTop = () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    return (
-      visible && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-30 right-6 z-50 bg-[#0c1221] text-white p-3 rounded shadow-md hover:opacity-90 transition-opacity"
-          aria-label="Scroll to top"
-        >
-          <ArrowUp size={20} />
-        </button>
-      )
-    );
-  }
   
-  // Framer Motion Variants 정의는 그대로 유지
+  
+  // Ceo인사말 좌측에서 날아오는 애니메이션
   const slideInLeft = {
     hidden: { opacity: 0, x: -50 },
     visible: {
@@ -45,7 +20,7 @@ export default function CeoPage() {
       transition: { duration: 0.8, ease: "easeOut" } as Transition,
     },
   };
-
+  // Ceo 이미지 우측에서 날아오는 애니메이션
   const slideInRight = {
     hidden: { opacity: 0, x: 50 },
     visible: {
@@ -54,7 +29,7 @@ export default function CeoPage() {
       transition: { duration: 0.8, ease: "easeOut" } as Transition,
     },
   };
-
+  // 대표이사 서명 좌측하단에서 날아오는 애니메이션
   const slideInLeftBottom = {
     hidden: { opacity: 0, x: -50, y: 50 },
     visible: {
@@ -65,10 +40,17 @@ export default function CeoPage() {
     },
   };
 
-  return (
-    <>
-      <Header />
 
+  export default function CeoPage() {
+    return (
+      
+    <Head>
+      <title>CEO인사말 | 수만</title>
+    </Head>
+    
+      <Header />
+      
+      <Layout>
       {/* 히어로 섹션 (재사용) - "CEO 인사말" 제목 */}
       <section
         className="hero-section relative bg-cover bg-center h-[300px] flex items-center text-white"
@@ -101,7 +83,7 @@ export default function CeoPage() {
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center md:items-start space-y-10 md:space-y-0 md:space-x-12">
           {/* 텍스트 컬럼 */}
           <motion.div
-            className="ceo-text-column md:w-3/5 text-gray-700 leading-relaxed"
+            className="ceo-text-column md:w-[48%] text-gray-700 leading-relaxed"
             variants={slideInLeft}
             initial="hidden"
             whileInView="visible"
@@ -133,7 +115,7 @@ export default function CeoPage() {
               감사합니다.
             </p>
             
-           
+          
             {/* 서명 영역 (왼쪽 아래에서 나타나게) */}
             <motion.p
               className="signature-area text-lg font-semibold text-gray-800 mt-8"
@@ -150,10 +132,14 @@ export default function CeoPage() {
               />
             </motion.p>
           </motion.div>
+    
+    
+            {/*Ceo 인사말과 Ceo이미지 사이 회색 실선 */}
+            <div className="hidden md:block w-px min-h-[700px] bg-gray-300 self-stretch mr-8" />
 
           {/* 이미지 플레이스홀더 */}
           <motion.div
-            className="ceo-image-column md:w-2/5 flex items-center justify-center"
+            className="ceo-image-column md:w-[48%] flex items-center justify-center"
             variants={slideInRight}
             initial="hidden"
             whileInView="visible"
@@ -177,10 +163,6 @@ export default function CeoPage() {
           </motion.div>
         </div>
       </main>
-
-      <ScrollToTopButton />
-
-      <Footer />
-    </>
+    </Layout>
   );
 }

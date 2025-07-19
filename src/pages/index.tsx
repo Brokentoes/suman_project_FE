@@ -4,7 +4,13 @@ import Footer from "@/components/Footer";
 import { bannerImages, section1Text, section3, sectionCertifications} from "@/data/home";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+
 import {motion} from "framer-motion";
+import Head from 'next/head';
+// Assuming these are defined in your data/home.ts file
+// export const bannerImages = ["/path/to/your/image1.jpg", "/path/to/your/image2.jpg"];
+// export const section1Text = { subtitle: "귀사의 비즈니스 성공을 위한 혁신적인 솔루션과 최적의 서비스를 제공합니다." };
+
 
 export default function HomePage() {
   const [current, setCurrent] = useState(0);
@@ -25,6 +31,12 @@ export default function HomePage() {
 
   return (
     <>
+
+    <Head>
+        <title>(주) 수만</title>
+        <link rel="icon" sizes="16x16" href="/images/logo.ico" />
+    </Head>
+
       <Header />
 
       <main>
