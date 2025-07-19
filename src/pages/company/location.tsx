@@ -223,104 +223,106 @@ export default function LocationPage() {
   return (
     // Layout 컴포넌트로 전체 페이지 내용을 감쌈
     <>
-    <Head>
-      <title>오시는길 | 수만</title>
-    </Head>
-    <Layout>
-      {/* HeroSection 컴포넌트 사용 */}
-      <HeroSection
-        title="시설 위치"
-        subtitle="Location"
-        backgroundImage="/images/history-hero-bg.png" // 해당 페이지에 맞는 배경 이미지 경로
-      />
+      <Head>
+        <title>오시는길 | 수만</title>
+      </Head>
+      <Layout>
+        {/* HeroSection 컴포넌트 사용 */}
+        <HeroSection
+          title="시설 위치"
+          subtitle="Location"
+          backgroundImage="/images/company_hero.png" // 해당 페이지에 맞는 배경 이미지 경로
+        />
 
-      {/* 서브 내비게이션 (Breadcrumb) 섹션: BreadcrumbSection 컴포넌트 사용 */}
-      <BreadcrumbSection path="회사소개 > 시설 위치 / 찾아오시는 길" />
+        {/* 서브 내비게이션 (Breadcrumb) 섹션: BreadcrumbSection 컴포넌트 사용 */}
+        <BreadcrumbSection path="회사소개 > 시설 위치 / 찾아오시는 길" />
 
-      {/* org.tsx와 동일하게 <main> 태그 대신 <div>로 변경 */}
-      <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInVariants}
-          >
-            <h2 className="text-3xl font-bold mb-8">찾아오시는 길</h2>
+        {/* org.tsx와 동일하게 <main> 태그 대신 <div>로 변경 */}
+        <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={fadeInVariants}
+            >
+              <h2 className="text-3xl font-bold mb-8">찾아오시는 길</h2>
 
-            <div className="space-y-6">
-              {/* locationsData 배열을 사용하여 반복되는 JSX를 렌더링 */}
-              {locationsData.map((location) => (
-                <div
-                  key={location.key}
-                  className="border border-gray-300 rounded-lg p-6"
-                >
+              <div className="space-y-6">
+                {/* locationsData 배열을 사용하여 반복되는 JSX를 렌더링 */}
+                {locationsData.map((location) => (
                   <div
-                    className="flex justify-between items-center cursor-pointer"
-                    onClick={() => handleToggleMap(location.key)}
-                  >
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2">
-                        {location.title}
-                      </h3>
-                      <p className="text-gray-700">{location.addressSnippet}</p>
-                    </div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className={`w-8 h-8 text-blue-600 transition-transform duration-300 ${
-                        openMap === location.key ? "rotate-180" : ""
-                      }`}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
-                        clipRule="evenodd"
-                      />
-                      <path
-                        fillRule="evenodd"
-                        d="M11.47 11.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 1 1-1.06 1.06L12 13.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <motion.div
-                    initial={false}
-                    animate={{
-                      height: openMap === location.key ? "250px" : "100px",
-                      opacity: openMap === location.key ? 1 : 0.6,
-                      filter:
-                        openMap === location.key ? "blur(0px)" : "blur(3px)",
-                    }}
-                    transition={mapTransition}
-                    className="mt-4 rounded-md overflow-hidden relative"
-                    style={{ minHeight: "100px" }}
+                    key={location.key}
+                    className="border border-gray-300 rounded-lg p-6"
                   >
                     <div
-                      // `ref` 콜백 함수 수정
-                      ref={(el) => {
-                        mapRefs.current[location.key] = el;
-                      }}
-                      className="w-full h-full absolute top-0 left-0"
-                      style={{ backgroundColor: "lightgray" }}
+                      className="flex justify-between items-center cursor-pointer"
+                      onClick={() => handleToggleMap(location.key)}
                     >
-                      {/* 투명 오버레이 추가 */}
-                      {openMap !== location.key && (
-                        <div
-                          className="absolute inset-0 z-10"
-                          style={{ pointerEvents: "auto" }}
-                        ></div>
-                      )}
+                      <div>
+                        <h3 className="text-xl font-semibold mb-2">
+                          {location.title}
+                        </h3>
+                        <p className="text-gray-700">
+                          {location.addressSnippet}
+                        </p>
+                      </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className={`w-8 h-8 text-blue-600 transition-transform duration-300 ${
+                          openMap === location.key ? "rotate-180" : ""
+                        }`}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
+                          clipRule="evenodd"
+                        />
+                        <path
+                          fillRule="evenodd"
+                          d="M11.47 11.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 1 1-1.06 1.06L12 13.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
                     </div>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        height: openMap === location.key ? "250px" : "100px",
+                        opacity: openMap === location.key ? 1 : 0.6,
+                        filter:
+                          openMap === location.key ? "blur(0px)" : "blur(3px)",
+                      }}
+                      transition={mapTransition}
+                      className="mt-4 rounded-md overflow-hidden relative"
+                      style={{ minHeight: "100px" }}
+                    >
+                      <div
+                        // `ref` 콜백 함수 수정
+                        ref={(el) => {
+                          mapRefs.current[location.key] = el;
+                        }}
+                        className="w-full h-full absolute top-0 left-0"
+                        style={{ backgroundColor: "lightgray" }}
+                      >
+                        {/* 투명 오버레이 추가 */}
+                        {openMap !== location.key && (
+                          <div
+                            className="absolute inset-0 z-10"
+                            style={{ pointerEvents: "auto" }}
+                          ></div>
+                        )}
+                      </div>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
     </>
   );
 }
