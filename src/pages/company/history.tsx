@@ -3,6 +3,7 @@ import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
 import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 import { motion, type Transition } from "framer-motion";
+import Head from "next/head";
 
 export default function HistoryPage() {
   // Framer Motion variants
@@ -37,6 +38,10 @@ export default function HistoryPage() {
   };
 
   return (
+    <>
+    <Head>
+      <title>연혁 | 수만</title>
+    </Head>
     <Layout>
     {/* Layout 컴포넌트로 전체 페이지 내용을 감쌉니다.*/}
     
@@ -162,7 +167,7 @@ export default function HistoryPage() {
                   className="timeline-item mb-10 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
-                  <p className="text-black">(주)수만 설립 (2014년 4월)</p>
+                  <p className="text-black">(주) 수만 설립 (2014년 4월)</p>
                 </motion.div>
 
                 {/* 2015~2020년 섹션 */}
@@ -189,7 +194,7 @@ export default function HistoryPage() {
                   variants={timelineItemVariants}
                 >
                   <p className="text-black">
-                    ● 사업분야 확대 자동차/전기전자 정밀가공/장비 분야 확대
+                    ● 사업분야 확대 자동차 / 전기전자 정밀가공 / 장비 분야 확대
                   </p>
                 </motion.div>
                 <motion.div
@@ -265,7 +270,7 @@ export default function HistoryPage() {
                   variants={timelineItemVariants}
                 >
                   <p className="text-black">
-                    ● 변화/구조혁신 신산업분야 가공/장비 및 모듈화 사업 진출
+                    ● 변화 / 구조혁신 신산업분야 가공 / 장비 및 모듈화 사업 진출
                   </p>
                 </motion.div>
                 <motion.div
@@ -295,20 +300,20 @@ export default function HistoryPage() {
                   className="timeline-item mb-2 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
-                  <p className="text-black">벤처기업인증 갱신(2022년)</p>
+                  <p className="text-black">벤처기업인증 갱신 (2022년)</p>
                 </motion.div>
                 <motion.div
                   className="timeline-item mb-2 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
-                  <p className="text-black">뿌리기업인증 갱신(2022년)</p>
+                  <p className="text-black">뿌리기업인증 갱신 (2022년)</p>
                 </motion.div>
                 <motion.div
                   className="timeline-item mb-2 relative ml-[90px] md:ml-[115px]"
                   variants={timelineItemVariants}
                 >
                   <p className="text-black">
-                    소재부품장비 전문기업인증(2022년)
+                    소재부품장비 전문기업인증 (2022년)
                   </p>
                 </motion.div>
                 <motion.div
@@ -342,5 +347,6 @@ export default function HistoryPage() {
         </section>
       </div>
     </Layout>
+    </>
   );
 }

@@ -40,6 +40,8 @@ export default function LanguageSwitcherv2() {
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="cursor-pointer px-6 py-1 flex items-center gap-1 text-sm font-semibold tracking-wide text-gray-800 bg-white/80  hover:bg-white rounded-full transition duration-200 shadow-sm"
+
+        
       >
         {lang}
         <svg
