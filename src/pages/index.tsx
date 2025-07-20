@@ -7,12 +7,44 @@ import Image from "next/image";
 
 import {motion} from "framer-motion";
 import Head from 'next/head';
-// Assuming these are defined in your data/home.ts file
-// export const bannerImages = ["/path/to/your/image1.jpg", "/path/to/your/image2.jpg"];
-// export const section1Text = { subtitle: "귀사의 비즈니스 성공을 위한 혁신적인 솔루션과 최적의 서비스를 제공합니다." };
+import { GetStaticProps } from 'next';
+
+// Props 타입 정의
+interface HomePageProps {
+  bannerImages: string[];
+  section1Text: {
+    subtitle: string;
+  };
+  section3: {
+    title: string;
+    subtitle: string;
+    cards: Array<{
+      img: string;
+      title: string;
+      subtitle: string;
+      description: string;
+    }>;
+  };
+  sectionCertifications: {
+    title: string;
+    tags: string[];
+    certifications: Array<{
+      label: string;
+      img?: string | null;
+    }>;
+    legal: string;
+  };
+}
 
 
-export default function HomePage() {
+export default function HomePage(props: HomePageProps) {
+  // props에서 데이터를 받아오되, 클라이언트에서는 기존 import 사용
+  const pageData = {
+    bannerImages: props.bannerImages || bannerImages,
+    section1Text: props.section1Text || section1Text,
+    section3: props.section3 || section3,
+    sectionCertifications: props.sectionCertifications || sectionCertifications
+  };
   const [current, setCurrent] = useState(0);
 
   // 자동 슬라이드 (5초마다)
@@ -34,6 +66,11 @@ export default function HomePage() {
 
     <Head>
         <title>(주) 수만</title>
+        <meta name="description" content="정밀한 기술이 만드는 내일의 기업, 수만. 혁신적인 솔루션과 최적의 서비스를 제공합니다." />
+        <meta name="keywords" content="수만, SUMAN, 기업솔루션, 혁신기술, 정밀기술" />
+        <meta property="og:title" content="(주) 수만" />
+        <meta property="og:description" content="정밀한 기술이 만드는 내일의 기업" />
+        <meta property="og:type" content="website" />
         <link rel="icon" sizes="16x16" href="/images/logo.ico" />
     </Head>
 
@@ -227,3 +264,20 @@ export default function HomePage() {
     </>
   );
 }
+
+// SSG를 위한 getStaticProps 함수
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  // 빌드 타임에 데이터를 가져옴
+  const { bannerImages, section1Text, section3, sectionCertifications } = await import('@/data/home');
+  
+  return {
+    props: {
+      bannerImages,
+      section1Text,
+      section3,
+      sectionCertifications,
+    },
+    // Optional: ISR (Incremental Static Regeneration) 설정
+    // revalidate: 3600, // 1시간마다 재생성 (필요한 경우에만 주석 해제)
+  };
+};

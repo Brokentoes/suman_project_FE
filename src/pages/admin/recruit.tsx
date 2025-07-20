@@ -39,21 +39,21 @@ export default function RecruitPage() {
   const [newData, setNewData] = useState<FormData>({ title: '', description: '' });
 
   // 인증 체크
-  useEffect(() => {
-    init();
-  }, [init]);
+  // useEffect(() => {
+  //   init();
+  // }, [init]);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.replace('/admin/login');
-    }
-  }, [isLoggedIn, router]);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     router.replace('/admin/login');
+  //   }
+  // }, [isLoggedIn, router]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      loadRecruitments();
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     loadRecruitments();
+  //   }
+  // }, [isLoggedIn]);
 
   // 에러 처리 헬퍼
   const handleError = useCallback((error: unknown, fallbackMessage: string) => {
@@ -107,7 +107,7 @@ export default function RecruitPage() {
     try {
       const createData: CreateRecruitmentData = {
         title: newData.title.trim(),
-        description: newData.description.trim()
+        content: newData.description.trim()
       };
       
       await createRecruitment(createData);
@@ -130,7 +130,7 @@ export default function RecruitPage() {
     try {
       const updateData: UpdateRecruitmentData = {
         title: editData.title.trim(),
-        description: editData.description.trim()
+        content: editData.description.trim()
       };
       
       await updateRecruitment(selected.id, updateData);
@@ -168,7 +168,7 @@ export default function RecruitPage() {
   const handleView = (item: Recruitment, edit = false) => {
     setSelected(item);
     setEditMode(edit);
-    setEditData({ title: item.title, description: item.description });
+    setEditData({ title: item.title, description: item.content });
   };
 
   // 모달 닫기
@@ -189,7 +189,12 @@ export default function RecruitPage() {
     loadRecruitments();
   };
 
-  if (!isLoggedIn) return null;
+  // 페이지 접속시 GET요청
+  useEffect(() => {
+  loadRecruitments();
+}, [loadRecruitments]);
+
+  // if (!isLoggedIn) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
@@ -274,10 +279,10 @@ export default function RecruitPage() {
                 <div className="flex items-center space-x-2 text-slate-400 mb-4">
                   <Calendar className="h-4 w-4" />
                   <p className="text-sm">
-                    게시일: {new Date(item.posted_date).toLocaleDateString('ko-KR')}
+                    게시일: {new Date(item.postedAt).toLocaleDateString('ko-KR')}
                   </p>
                 </div>
-                <p className="text-slate-300 mb-6 line-clamp-3 text-sm leading-relaxed">{item.description}</p>
+                <p className="text-slate-300 mb-6 line-clamp-3 text-sm leading-relaxed">{item.content}</p>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleView(item, false)}
@@ -389,13 +394,13 @@ export default function RecruitPage() {
                     <h3 className="text-sm font-medium text-slate-400 mb-3">게시일</h3>
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4 text-slate-400" />
-                      <p className="text-slate-300">{new Date(selected.posted_date).toLocaleDateString('ko-KR')}</p>
+                      <p className="text-slate-300">{new Date(selected.postedAt).toLocaleDateString('ko-KR')}</p>
                     </div>
                   </div>
                   <div className="mb-8">
                     <h3 className="text-sm font-medium text-slate-400 mb-3">내용</h3>
                     <div className="whitespace-pre-wrap text-slate-200 bg-slate-700/30 p-6 rounded-xl border border-slate-600/30 leading-relaxed">
-                      {selected.description}
+                      {selected.content}
                     </div>
                   </div>
                   <div className="flex justify-end">
