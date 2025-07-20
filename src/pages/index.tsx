@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import { bannerImages, section1Text, section3, sectionCertifications} from "@/data/home";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-
 import {motion} from "framer-motion";
 import Head from 'next/head';
 import { GetStaticProps } from 'next';
@@ -45,7 +44,7 @@ export default function HomePage(props: HomePageProps) {
     section3: props.section3 || section3,
     sectionCertifications: props.sectionCertifications || sectionCertifications
   };
-  const [current, setCurrent] = useState(0);
+  const [, setCurrent] = useState(0);
 
   // 자동 슬라이드 (5초마다)
   useEffect(() => {

@@ -1,7 +1,7 @@
 // pages/admin/recruit.tsx
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { useAuthStore } from '@/stores/useAuthStore';
+// import { useRouter } from 'next/router';
+// import { useAuthStore } from '@/stores/useAuthStore';
 import {
   fetchRecruitments,
   createRecruitment,
@@ -13,7 +13,7 @@ import {
   ApiError
 } from '@/lib/api/recruit';
 import AdminHeader from '@/components/AdminHeader';
-import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, Plus, RefreshCw, Eye, Edit3, Trash2, X, Calendar, FileText } from 'lucide-react';
+import { Users, Activity, Plus, RefreshCw, Eye, Edit3, Trash2, X, Calendar, FileText } from 'lucide-react';
 
 interface FormData {
   title: string;
@@ -21,8 +21,8 @@ interface FormData {
 }
 
 export default function RecruitPage() {
-  const router = useRouter();
-  const { isLoggedIn, init } = useAuthStore();
+  // const router = useRouter();
+  // const { isLoggedIn, init } = useAuthStore();
 
   // 상태 관리
   const [recruitments, setRecruitments] = useState<Recruitment[]>([]);

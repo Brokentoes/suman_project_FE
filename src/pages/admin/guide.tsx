@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, Book, ChevronDown, ChevronRight, Code, FileText, Globe, Database, Lock, Zap, LucideIcon } from 'lucide-react';
+import { Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, Book, ChevronDown, ChevronRight, Code, FileText, Globe, Database, Lock, Zap, LucideIcon } from 'lucide-react';
 import AdminHeader from '@/components/AdminHeader';
 
 // 섹션 컴포넌트
@@ -50,29 +50,29 @@ interface InfoCardProps {
   color?: "blue" | "green" | "purple" | "red" | "orange";
 }
 
-function InfoCard({ title, description, icon: Icon, color = "blue" }: InfoCardProps) {
-  const colorClasses = {
-    blue: "from-blue-500/20 to-blue-600/20 border-blue-500/30 text-blue-400",
-    green: "from-green-500/20 to-green-600/20 border-green-500/30 text-green-400",
-    purple: "from-purple-500/20 to-purple-600/20 border-purple-500/30 text-purple-400",
-    red: "from-red-500/20 to-red-600/20 border-red-500/30 text-red-400",
-    orange: "from-orange-500/20 to-orange-600/20 border-orange-500/30 text-orange-400"
-  };
+// function InfoCard({ title, description, icon: Icon, color = "blue" }: InfoCardProps) {
+//   const colorClasses = {
+//     blue: "from-blue-500/20 to-blue-600/20 border-blue-500/30 text-blue-400",
+//     green: "from-green-500/20 to-green-600/20 border-green-500/30 text-green-400",
+//     purple: "from-purple-500/20 to-purple-600/20 border-purple-500/30 text-purple-400",
+//     red: "from-red-500/20 to-red-600/20 border-red-500/30 text-red-400",
+//     orange: "from-orange-500/20 to-orange-600/20 border-orange-500/30 text-orange-400"
+//   };
 
-  return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-all duration-200">
-      <div className="flex items-start space-x-4">
-        <div className={`p-3 bg-gradient-to-r ${colorClasses[color]} rounded-lg border`}>
-          <Icon className="h-6 w-6" />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
-          <p className="text-slate-300 leading-relaxed">{description}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-all duration-200">
+//       <div className="flex items-start space-x-4">
+//         <div className={`p-3 bg-gradient-to-r ${colorClasses[color]} rounded-lg border`}>
+//           <Icon className="h-6 w-6" />
+//         </div>
+//         <div className="flex-1">
+//           <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+//           <p className="text-slate-300 leading-relaxed">{description}</p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 // 코드 블록 컴포넌트
 interface CodeBlockProps {
