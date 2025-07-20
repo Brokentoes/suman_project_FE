@@ -1,19 +1,20 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { bannerImages, section1Text, section3, sectionCertifications} from "@/data/home";
+import { bannerImages, section1Text, section3, sectionCertifications, footer_banner} from "@/data/home";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import {motion} from "framer-motion";
+import {motion, AnimatePresence} from "framer-motion";
 import Head from 'next/head';
-// Assuming these are defined in your data/home.ts file
-// export const bannerImages = ["/path/to/your/image1.jpg", "/path/to/your/image2.jpg"];
-// export const section1Text = { subtitle: "귀사의 비즈니스 성공을 위한 혁신적인 솔루션과 최적의 서비스를 제공합니다." };
-
 
 export default function HomePage() {
   const [current, setCurrent] = useState(0);
+  const [showMore, setShowMore] = useState(false);
+  const handleToggleMore = () => setShowMore(prev => !prev);
+
+  const visibleCerts = sectionCertifications.certifications.slice(0,8);
+  const moreCerts = sectionCertifications.certifications.slice(8);
 
   // 자동 슬라이드 (5초마다)
   useEffect(() => {
@@ -23,20 +24,13 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  // const handleDotClick = (index: number) => {
-  //   setCurrent(index);
-  // };
-  const visibleCerts = sectionCertifications.certifications.slice(0, 8);
-
 
   return (
     <>
-
     <Head>
         <title>(주) 수만</title>
         <link rel="icon" sizes="16x16" href="/images/logo.ico" />
     </Head>
-
       <Header />
 
       <main>
@@ -159,13 +153,24 @@ export default function HomePage() {
 
         {/*section3_certifications*/}
         <section className="bg-white py-40 px-6">
-          <div className="flex items-center mb-10 w-full max-w-8xl px-[120px]">
+          <div className="flex items-center mb-10 w-full px-[120px]">
             <p className="text-2xl text-black font-semibold">Certifications</p>
+
+            <div className="flex-grow " />
+
+            <button
+              onClick = {handleToggleMore}
+              className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-2xl text-gray-700"
+              title="더보기"
+            >
+              {showMore ? "-" : "+"}
+            </button>
           </div>
 
           <div className="text-left text-black whitespace-pre-line mb-5 max-w-7xl mx-[120px]">
-            <h2 className="text-4xl font-bold leading-normal ">{sectionCertifications.title}</h2>
+            <p className="text-4xl font-bold leading-normal ">{sectionCertifications.title}</p>
           </div>
+
           <div className="flex gap-2 mt-4 px-[120px]">
             {sectionCertifications.tags.map((tag, i) => (
               <span 
@@ -193,7 +198,7 @@ export default function HomePage() {
                       <div key={i} className="relative group text-center">
                         <button
                           title={cert.label}
-                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate"
+                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
                         >
                           {cert.label}
                         </button>
@@ -212,17 +217,115 @@ export default function HomePage() {
                 );
               })}
             </div>
-            <div className="mt-6 flex justify-end px-[120px]">
-              <p className="text-xs text-gray-400 mb-2">{sectionCertifications.legal}</p>
-              <button className="flex items-center gap-2 text-gray-800 bg-white px-4 py-2 rounded-full hover:font-semibold transition tracking-wide">
-                전체 업적 현황 보기 
-                <span className="text-xl">→</span>
-              </button>
-            
-            </div>
-        </section>
-      </main>
 
+            {/*플러스 버튼*/}
+            {/* <div className="flex justify-center mt-10">
+              <button
+                onClick={handleToggleMore}
+                className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-2xl text-gray-700"
+                title="더보기"
+              >
+                {showMore ? "-" : "+"}
+              </button>
+            </div> */}
+
+            {/*추가 인증 출력*/}
+            <AnimatePresence initial={false}>
+              {showMore && (
+                <motion.div
+                  className="overflow-hidden px-[120px] mt-10"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                >
+                  <div className="grid grid-cols-4 gap-20">
+                    {moreCerts.slice(0, 4).map((cert, i) => (
+                      <div key={i} className="relative group text-center col-span-1">
+                        <button
+                          title={cert.label}
+                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
+                        >
+                          {cert.label}
+                        </button>
+                        {cert.img && (
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block z-10">
+                            <img
+                              src={cert.img}
+                              alt={cert.label}
+                              className="w-64 rounded shadow-xl opacity-0 transition duration-300 group-hover:opacity-100"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-4 gap-20 mt-10 pb-6">
+                    {moreCerts[4] && (
+                      <div className="relative group text-center col-span-1">
+                        <button
+                          title={moreCerts[4].label}
+                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
+                        >
+                          {moreCerts[4].label}
+                        </button>
+                        {moreCerts[4].img && (
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block z-10">
+                            <img
+                              src={moreCerts[4].img}
+                              alt={moreCerts[4].label}
+                              className="w-64 rounded shadow-xl opacity-0 transition duration-300 group-hover:opacity-100"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <div className="mt-6 px-[120px] flex flex-col items-end gap-2">
+              {!showMore && (
+                <p className="text-xs text-gray-400 tracking-wide mt-6">
+                  {sectionCertifications.legal}
+                </p>
+              )}
+
+              <button
+                onClick={handleToggleMore}
+                className="flex items-center gap-2 text-gray-800 bg-white px-4 py-2 rounded-full hover:font-semibold transition tracking-wide"
+              >
+                {showMore ? '접기' : '전체 업적 현황 보기'}
+                <span className="text-xl">{showMore ? '↑' : '→'}</span>
+              </button>
+            </div>
+
+          </section>
+      
+{/* section5_footer_banner */}
+<section className="relative w-full">
+  <img
+    src={footer_banner[0]}
+    alt="footer banner"
+    className="w-full object-cover"
+    style={{ aspectRatio: '1440 / 300', display: 'block' }}
+  />
+  <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-6 pointer-events-none">
+    <h2 className="text-4xl font-bold mb-7 tracking-wide">Contact us</h2>
+    <button className="pointer-events-auto border border-gray-300 text-white px-8 py-1 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
+      문의하기 <span className="text-xl">→</span>
+    </button>
+  </div>
+</section>
+
+
+
+
+
+
+
+       </main>
       <Footer />
     </>
   );

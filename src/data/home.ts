@@ -7,6 +7,7 @@ export const bannerImages = [
 
 // section1 서브 문구
 export const section1Text = {
+  title: '정밀한 기술이 만드는 내일의 기업',
   subtitle: '수만은 정밀 제조 분야의 깊은 know-how를 바탕으로, 고객 맞춤형 솔루션을 제공합니다.',
 };
 
@@ -63,7 +64,18 @@ export const sectionCertifications = {
     { label: '소·부·장 전문기업', img: null },
     { label: '뿌리기업확인서', img: null },
     { label: '중소기업확인서', img: null },
-    { label: '품질환경안전', img: null }
+    { label: '품질환경안전', img: null },
+
+    { label: '특허등록 1', img: null },
+    { label: '특허등록 2', img: null },
+    { label: '특허등록 3', img: null },
+    { label: '특허등록 4', img: null },
+    { label: '특허등록 5', img: null },
   ],
   legal: '지식재산권·특허 등록 "피스톤링 제조장치 및 제조 방법"외 6건 보유'
 };
+
+//section5_footer_Banner
+export const footer_banner = [
+  '/images/main_banner.png'
+];
