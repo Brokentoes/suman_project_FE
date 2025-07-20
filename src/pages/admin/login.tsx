@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, User } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/stores/useAuthStore';
+import Image from 'next/image';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -54,9 +55,12 @@ export default function LoginScreen() {
           <div className="text-center mb-6">
             <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg">
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                <img
+                <Image
                   src="/images/logo_suman.png"
-                  alt="수만"                />
+                  alt="수만" 
+                  width={100}
+                  height={100}               
+                  />
                 <span className="text-lg font-bold text-white"></span>
               </div>
             </div>

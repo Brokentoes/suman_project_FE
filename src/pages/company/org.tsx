@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection"; // 새로운 HeroSection 컴
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트 (추가)
 import { motion, type Transition } from "framer-motion";
 import Head from "next/head";
+import Image from "next/image";
 
 export default function OrganizationChartPage() {
   const fadeInVariants = {
@@ -40,10 +41,12 @@ export default function OrganizationChartPage() {
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInVariants}
           >
-            <img
+            <Image
               src="/images/organization_suman.png" // 실제 조직도 이미지 경로로 변경하세요
               alt="SUMAN Organization Chart"
               className="max-w-full h-auto object-contain shadow-lg rounded-lg"
+              width={100}
+              height={100}
             />
           </motion.div>
         </div>

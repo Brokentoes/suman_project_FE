@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 import { motion, type Transition } from "framer-motion";
 import Head from "next/head";
+import Image from "next/image";
 
 export default function CIPage() {
   const fadeInVariants = {
@@ -39,10 +40,12 @@ export default function CIPage() {
               viewport={{ once: true, amount: 0.3 }}
               variants={fadeInVariants}
             >
-              <img
+              <Image
                 src="/images/ci-full-content.png"
                 alt="SUMAN Corporate Identity"
                 className="max-w-full h-auto object-contain shadow-lg rounded-lg"
+                width={100}
+                height={100}
               />
               <p className="mt-8 text-lg text-gray-700 text-center">
                 수만(SUMAN)의 CI는 기업의 핵심 가치인 신뢰, 기술, 경쟁력을

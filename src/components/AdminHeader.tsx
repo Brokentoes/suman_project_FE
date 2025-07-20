@@ -1,4 +1,4 @@
-import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, ArrowLeft } from 'lucide-react';
+import { Shield, ArrowLeft } from 'lucide-react';
 import { useRouter } from "next/router";
 
 // 관리자 페이지 전용 헤더

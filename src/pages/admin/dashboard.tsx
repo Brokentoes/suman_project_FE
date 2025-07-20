@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, BookOpenText } from 'lucide-react';
+import { Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, BookOpenText } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/stores/useAuthStore';
 import AdminHeader from '@/components/AdminHeader';
@@ -13,7 +13,7 @@ interface AnalyticData {
 export default function AdminDashboard() {
   const router = useRouter();
   const [analytics, setAnalytics] = useState<AnalyticData | null>(null);
-  const { isLoggedIn, init } = useAuthStore();
+  // const { isLoggedIn, init } = useAuthStore();
 
   //   useEffect(() => {
   //   init();

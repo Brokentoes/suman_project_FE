@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchInquiries, markInquiryAsRead } from '@/lib/api/contact';
-import { Shield, MessageSquare, Mail, User, Building, FileText, CheckCircle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
+import { MessageSquare, Mail, User, Building, FileText, CheckCircle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
 import  AdminHeader from '@/components/AdminHeader';
 
 interface Inquiry {
