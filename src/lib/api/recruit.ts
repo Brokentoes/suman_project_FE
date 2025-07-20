@@ -1,21 +1,22 @@
 // /lib/api/recruit.ts
 import instance from './axios';
+import axios from 'axios';
 
 export interface Recruitment {
   id: number;
   title: string;
-  description: string;
-  posted_date: string;
+  content: string;
+  postedAt: string;
 }
 
 export interface CreateRecruitmentData {
   title: string;
-  description: string;
+  content: string;
 }
 
 export interface UpdateRecruitmentData {
   title: string;
-  description: string;
+  content: string;
 }
 
 // API 에러 타입 정의
@@ -58,7 +59,7 @@ const handleApiError = (error: any, defaultMessage: string): ApiError => {
 // -------------------------------------
 export const fetchRecruitments = async (): Promise<Recruitment[]> => {
   try {
-    const response = await instance.get<Recruitment[]>('recruit/');
+    const response = await axios.get<Recruitment[]>('https://virtserver.swaggerhub.com/bluemoon-d6e/hello/1.0.0/recruitments');
     console.log(response)
     return response.data;
   } catch (error: any) {
@@ -76,13 +77,13 @@ export const createRecruitment = async (data: CreateRecruitmentData): Promise<Re
     if (!data.title?.trim()) {
       throw new Error('제목을 입력해주세요.');
     }
-    if (!data.description?.trim()) {
+    if (!data.content?.trim()) {
       throw new Error('내용을 입력해주세요.');
     }
 
     const response = await instance.post<Recruitment>('/recruit/', {
       title: data.title.trim(),
-      description: data.description.trim()
+      description: data.content.trim()
     });
     
     return response.data;
@@ -104,13 +105,13 @@ export const updateRecruitment = async (
     if (!data.title?.trim()) {
       throw new Error('제목을 입력해주세요.');
     }
-    if (!data.description?.trim()) {
+    if (!data.content?.trim()) {
       throw new Error('내용을 입력해주세요.');
     }
 
     const response = await instance.put<Recruitment>(`/recruit/${id}/`, {
       title: data.title.trim(),
-      description: data.description.trim()
+      description: data.content.trim()
     });
     return response.data;
     
