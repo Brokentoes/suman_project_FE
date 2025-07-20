@@ -43,14 +43,15 @@ import Head from "next/head";
 
   export default function CeoPage() {
     return (
-      
+      <Layout>
+
     <Head>
       <title>CEO인사말 | 수만</title>
     </Head>
     
       <Header />
       
-      <Layout>
+      
       {/* 히어로 섹션 (재사용) - "CEO 인사말" 제목 */}
       <section
         className="hero-section relative bg-cover bg-center h-[300px] flex items-center text-white"
@@ -78,7 +79,7 @@ import Head from "next/head";
       {/* 서브 내비게이션 (Breadcrumb) 섹션 (재사용) - BreadcrumbSection 컴포넌트 사용 */}
       <BreadcrumbSection path="회사소개 > CEO 인사말" />
 
-      {/* CEO 인사말 섹션 */}
+      {/* CEO 인사말  섹션 */}
       <main className="content-wrapper py-20 px-4 md:px-8 bg-white flex justify-center items-center">
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center md:items-start space-y-10 md:space-y-0 md:space-x-12">
           {/* 텍스트 컬럼 */}

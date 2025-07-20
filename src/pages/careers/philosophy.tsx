@@ -3,6 +3,36 @@ import HeroSection from "@/components/HeroSection";
 import { motion, type Transition } from "framer-motion";
 import Image from "next/image";
 
+// 카드 개별 컴포넌트
+function TalentCard({ traitData, bgImage }: { traitData: { title: string; desc: string }, bgImage: string }) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="relative flex flex-col justify-end p-6 rounded-lg shadow-md overflow-hidden min-h-[500px]"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        clipPath:
+          "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
+      }}
+    >
+      <div
+        className="absolute inset-0 bg-black opacity-40 rounded-lg"
+        style={{
+          clipPath:
+            "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
+        }}
+      ></div>
+      <div className="relative z-10 text-white">
+        <h3 className="text-2xl font-bold mb-2 whitespace-pre-line">{traitData.title}</h3>
+        <p className="text-sm whitespace-pre-line leading-relaxed">{traitData.desc}</p>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function TalentPage() {
   const fadeInVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -18,8 +48,8 @@ export default function TalentPage() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // 자식 요소들이 0.2초 간격으로 나타남
-        delayChildren: 0.3, // 컨테이너 애니메이션 후 0.3초 뒤 자식 애니메이션 시작
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
       },
     },
   };
@@ -33,22 +63,48 @@ export default function TalentPage() {
     },
   };
 
+  const traits = [
+    {
+      key: "sincerity",
+      title: "성실한 인재",
+      desc: "맡은 바 책임을 다하며\n성실하게 일하는 자세를 지닌 인재",
+    },
+    {
+      key: "challenge",
+      title: "도전하는 인재",
+      desc: "새로운 가능성을 탐구하고\n끊임없이 도전하는 인재",
+    },
+    {
+      key: "creativity",
+      title: "창의적인 인재",
+      desc: "유연한 사고로\n새로운 가치를 창출하는 인재",
+    },
+    {
+      key: "communication",
+      title: "소통하는 인재",
+      desc: "열린 마음으로 소통하고\n팀워크를 중시하는 인재",
+    },
+    {
+      key: "passion",
+      title: "열정적인 인재",
+      desc: "자신의 일에 몰입하고\n뜨거운 열정으로 성과를 내는 인재",
+    },
+  ];
+
   return (
     <Layout>
       <HeroSection
         title="인재상"
         subtitle="Our Talent"
-        backgroundImage="/images/talent-hero-bg.jpg" // 적절한 배경 이미지로 변경
+        backgroundImage="/images/talent-hero-bg.jpg"
       />
 
-      {/* 서브 내비게이션 (Breadcrumb) 섹션 */}
       <section className="breadcrumb-section bg-gray-700 py-4 px-4 md:px-8 text-white">
         <div className="max-w-7xl mx-auto">
           <p className="text-md">회사소개 &gt; 인재상</p>
         </div>
       </section>
 
-      {/* 인재상 본문 섹션 */}
       <div className="content-wrapper py-20 px-4 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -67,118 +123,49 @@ export default function TalentPage() {
             </p>
           </motion.div>
 
-          {/* 인재상 카드 섹션 */}
+          {/* 카드 그리드 */}
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+            className="grid grid-cols-12 gap-8"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={staggerContainerVariants}
           >
-            {/* Talent Card 1: 도전하는 인재 (Challenging Talent) */}
-            <motion.div
-              className="flex flex-col items-center p-8 bg-blue-50 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-              variants={itemRiseVariants}
-            >
-              <div className="bg-blue-600 p-4 rounded-full mb-6 text-white text-3xl">
-                <svg
-                  className="w-10 h-10"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 4h6m-3 0V4m0 0l3 3m-3-3L9 7"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                도전하는 인재
-              </h3>
-              <p className="text-gray-600 text-center">
-                새로운 가능성을 탐구하고 <br />
-                변화를 두려워하지 않으며 <br />
-                끊임없이 목표에 도전합니다.
-              </p>
-            </motion.div>
+            {/* 위 3개 카드 */}
+            {traits.slice(0, 3).map((trait) => (
+              <motion.div key={trait.key} className="col-span-12 md:col-span-4" variants={itemRiseVariants}>
+                <TalentCard
+                  traitData={{ title: trait.title, desc: trait.desc }}
+                  bgImage={`/images/talent_${trait.key}.jpg`}
+                />
+              </motion.div>
+            ))}
 
-            {/* Talent Card 2: 혁신하는 인재 (Innovative Talent) */}
-            <motion.div
-              className="flex flex-col items-center p-8 bg-green-50 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-              variants={itemRiseVariants}
-            >
-              <div className="bg-green-600 p-4 rounded-full mb-6 text-white text-3xl">
-                <svg
-                  className="w-10 h-10"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 6l3 1m0 0l-3 9a5.25 5.25 0 001.06 4.943l14.288-14.288A5.25 5.25 0 0019 3l-9 3m0 0l-3 1m3-1l.716-.358m1.427-.714a.75.75 0 00-.714-.714L10 6m.714.714l1.428-1.428M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                혁신하는 인재
-              </h3>
-              <p className="text-gray-600 text-center">
-                창의적인 사고와 유연한 자세로 <br />
-                새로운 가치를 창출하고 <br />
-                기술 발전을 이끌어갑니다.
-              </p>
+            {/* 아래 2개 카드 (중앙 정렬 교차 배치) */}
+            <motion.div className="col-span-12 md:col-start-3 md:col-span-4" variants={itemRiseVariants}>
+              <TalentCard
+                traitData={{ title: traits[3].title, desc: traits[3].desc }}
+                bgImage={`/images/talent_${traits[3].key}.jpg`}
+              />
             </motion.div>
-
-            {/* Talent Card 3: 협력하는 인재 (Collaborative Talent) */}
-            <motion.div
-              className="flex flex-col items-center p-8 bg-purple-50 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-              variants={itemRiseVariants}
-            >
-              <div className="bg-purple-600 p-4 rounded-full mb-6 text-white text-3xl">
-                <svg
-                  className="w-10 h-10"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M17 20h2a2 2 0 002-2V4a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2M7 20v-2a3 3 0 013-3h4a3 3 0 013 3v2M9 9h6m-3 0v6"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                협력하는 인재
-              </h3>
-              <p className="text-gray-600 text-center">
-                열린 마음으로 소통하고 <br />
-                다양성을 존중하며 <br />
-                함께 시너지를 창출합니다.
-              </p>
+            <motion.div className="col-span-12 md:col-span-4" variants={itemRiseVariants}>
+              <TalentCard
+                traitData={{ title: traits[4].title, desc: traits[4].desc }}
+                bgImage={`/images/talent_${traits[4].key}.jpg`}
+              />
             </motion.div>
           </motion.div>
 
-          {/* 인재상 이미지 (예시) */}
+          {/* 인재상 관련 이미지 */}
           <motion.div
-            className="flex justify-center items-center mb-10"
+            className="flex justify-center items-center mt-20"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInVariants}
           >
             <Image
-              src="/images/talent-group.png" // 실제 팀 이미지 또는 인재상 관련 이미지 경로로 변경
+              src="/images/talent-group.png"
               alt="SUMAN Team"
               width={800}
               height={450}
