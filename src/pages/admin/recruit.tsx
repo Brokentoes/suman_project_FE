@@ -168,7 +168,7 @@ export default function RecruitPage() {
   const handleView = (item: Recruitment, edit = false) => {
     setSelected(item);
     setEditMode(edit);
-    setEditData({ title: item.title, description: item.content });
+    setEditData({ title: item.title, description: item.description });
   };
 
   // 모달 닫기
@@ -282,7 +282,7 @@ export default function RecruitPage() {
                     게시일: {new Date(item.postedAt).toLocaleDateString('ko-KR')}
                   </p>
                 </div>
-                <p className="text-slate-300 mb-6 line-clamp-3 text-sm leading-relaxed">{item.content}</p>
+                <p className="text-slate-300 mb-6 line-clamp-3 text-sm leading-relaxed">{item.description}</p>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleView(item, false)}
@@ -400,7 +400,7 @@ export default function RecruitPage() {
                   <div className="mb-8">
                     <h3 className="text-sm font-medium text-slate-400 mb-3">내용</h3>
                     <div className="whitespace-pre-wrap text-slate-200 bg-slate-700/30 p-6 rounded-xl border border-slate-600/30 leading-relaxed">
-                      {selected.content}
+                      {selected.description}
                     </div>
                   </div>
                   <div className="flex justify-end">
