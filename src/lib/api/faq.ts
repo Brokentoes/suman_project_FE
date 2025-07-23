@@ -1,6 +1,5 @@
 // FAQ관련 API함수
 import instance from './axios';
-import axios from 'axios';
 
 export interface FAQ {
   id: number;
@@ -28,7 +27,7 @@ export interface UpdateFAQData {
 // -------------------------------------
 export const fetchFAQs = async (): Promise<FAQ[]> => {
   try {
-    const response = await axios.get<FAQ[]>('https://virtserver.swaggerhub.com/bluemoon-d6e/hello/1.0.0/faq/');
+    const response = await instance.get<FAQ[]>('faqs/');
     return response.data;
   } catch (error: any) {
     console.error('FAQ 조회 실패:', error);

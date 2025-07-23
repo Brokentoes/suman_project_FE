@@ -1,6 +1,6 @@
 // contact.tsx
 import { useState } from "react";
-import axios from "axios";
+import instance from "@/lib/api/axios";
 import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
 import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
@@ -24,10 +24,13 @@ export default function InquiryFormPage() {
     setForm({ ...form, [name]: value });
   };
 
+  // -------------------------------------------
+  //               문의 등록 (POST)
+  // -------------------------------------------
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://192.168.100.106:8000/api/Inquiries/", form);
+      await instance.post("Inquiries/", form);
       alert("문의가 등록되었습니다.");
       // 폼 초기화
       setForm({
