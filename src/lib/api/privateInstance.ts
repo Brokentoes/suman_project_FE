@@ -38,7 +38,7 @@ privateInstance.interceptors.response.use(
       try {
         // refresh 요청
         const refreshToken = localStorage.getItem('refreshToken');
-        const res = await axios.post('http://suman-project-cap5.onrender.com/api/token/refresh/', {
+        const res = await axios.post('http://https://suman-project-cap5.onrender.com/api/token/refresh/', {
           refresh: refreshToken,
         });
 
@@ -46,7 +46,7 @@ privateInstance.interceptors.response.use(
 
         // 저장 및 갱신
         localStorage.setItem('accessToken', newAccessToken);
-        useAuthStore.getState().updateAccessToken(newAccessToken); // zustand 상태도 갱신
+        useAuthStore.getState().updateAccessToken(newAccessToken); // zustand 상태 갱신
 
         // 기존 요청에 새로운 토큰 붙여 재시도
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
