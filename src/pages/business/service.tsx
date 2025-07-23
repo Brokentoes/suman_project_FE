@@ -113,7 +113,7 @@ export default function ServicePage() {
 
       <BreadcrumbSection path="사업분야 > 기술소개" />
 
-      {/* 1. Main Equipment Section - 독립적인 섹션으로 분리 */}
+      {/* 1. Main Equipment Section  */}
       <div className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.h2
@@ -140,11 +140,9 @@ export default function ServicePage() {
       </div>
 
       {/* 2. 생산가공 / 조립 Section */}
-      {/* Process 섹션이 올라탈 공간을 위해 padding-bottom을 충분히 늘립니다. */}
-      {/* 이미지에서 보이는 위에 파란색 배경처럼 보입니다. */}
+
       <div className="bg-gray-800 pt-20 pb-[250px] relative z-0">
         {" "}
-        {/* 이 값을 조절하여 Process 섹션의 겹치는 양을 조절하세요 */}
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <h3 className="text-2xl font-semibold text-white mb-8">
             생산가공 / 조립
@@ -153,7 +151,7 @@ export default function ServicePage() {
             className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 transition-all duration-500 ease-in-out ${
               showAllEquipment
                 ? "max-h-[5000px] overflow-visible"
-                : "max-h-[400px] overflow-hidden" // Changed from 300px to 400px to show second row
+                : "max-h-[400px] overflow-hidden" 
             }`}
           >
             {equipmentList
@@ -198,7 +196,7 @@ export default function ServicePage() {
             </div>
           )}
 
-          {/* 신뢰성 (측정 / 분석) 섹션 - 생산가공/조립 섹션과 같은 배경을 사용 */}
+          {/* 신뢰성 (측정 / 분석) 섹션 */}
           <h3 className="text-2xl font-semibold text-white mt-12 mb-8">
             신뢰성 (측정 / 분석)
           </h3>
@@ -224,7 +222,7 @@ export default function ServicePage() {
                 {equipment.image && (
                   <div className="w-full h-48 relative mb-2">
                     {" "}
-                    {/* h-24를 h-48로 수정 */}
+                  
                     <Image
                       src={equipment.image}
                       alt={equipment.name}
@@ -243,10 +241,10 @@ export default function ServicePage() {
         </div>
       </div>
 
-      {/* 3. Process Section - 생산가공/조립 섹션 위에 겹쳐지도록 설정 */}
-      {/* Product 섹션이 올라탈 공간을 위해 padding-bottom을 충분히 늘립니다. */}
+      {/* 3. Process Section */}
+
       <motion.div
-        className="bg-red-700 py-20 px-4 md:px-8 text-white rounded-t-xl mt-[-150px] relative z-10 pb-[250px]"
+        className="bg-white py-20 px-4 md:px-8 text-black rounded-t-xl mt-[-150px] relative z-10 pb-[250px]"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
@@ -259,6 +257,65 @@ export default function ServicePage() {
             <br />
             제품의 신뢰성과 고객 만족을 보장하도록 설계되어 있습니다
           </p>
+
+   
+          <div className="mt-16 flex flex-col items-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 w-full">
+              {/* 1단계: 컨셉 및 개발 / 가공설계*/}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 relative mb-4">
+                  <Image src="/images/service_design.png" alt="컨셉 및 개발 / 가공설계" layout="fill" objectFit="contain" />
+                </div>
+                <p className="text-lg font-semibold">컨셉 및 개발 / 가공설계</p>
+              </div>
+              <div className="hidden lg:flex items-center justify-center">
+                <span className="text-4xl text-gray-400">→</span>
+              </div>
+
+              {/* 2단계: 발주 (소재/부품)*/}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 relative mb-4">
+                  <Image src="/images/service_order.png" alt="발주 (소재/부품)" layout="fill" objectFit="contain" />
+                </div>
+                <p className="text-lg font-semibold">발주<br/>(소재/부품)</p>
+              </div>
+              <div className="hidden lg:flex items-center justify-center">
+                <span className="text-4xl text-gray-400">→</span>
+              </div>
+
+              {/* 3단계: 가공/제작*/}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 relative mb-4">
+                  <Image src="/images/service_product.png" alt="가공/제작" layout="fill" objectFit="contain" />
+                </div>
+                <p className="text-lg font-semibold">가공/제작</p>
+              </div>
+              <div className="hidden lg:flex items-center justify-center">
+                <span className="text-4xl text-gray-400">→</span>
+              </div>
+
+              {/* 4단계: 최종검사*/}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 relative mb-4">
+                  <Image src="/images/service_test.png" alt="최종검사" layout="fill" objectFit="contain" />
+                </div>
+                <p className="text-lg font-semibold">최종검사</p>
+              </div>
+              <div className="hidden lg:flex items-center justify-center">
+                <span className="text-4xl text-gray-400">→</span>
+              </div>
+
+              {/* 5단계: 납품 및 피드백*/}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 relative mb-4">
+                  <Image src="/images/service_deliver.png" alt="납품 및 피드백" layout="fill" objectFit="contain" />
+                </div>
+                <p className="text-lg font-semibold">납품 및 피드백</p>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </motion.div>
 
