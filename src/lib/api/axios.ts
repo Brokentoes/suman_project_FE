@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://192.168.100.110:8000/api/', // API 주소. 여기를 변경하면 전체 api
+  baseURL: 'https://suman-project-cap5.onrender.com/api/', // API 주소.
   timeout: 5000,
   // headers: {
   //   'Content-Type': 'application/json',

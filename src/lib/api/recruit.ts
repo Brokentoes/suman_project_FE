@@ -1,6 +1,5 @@
 // /lib/api/recruit.ts
 import instance from './axios';
-import axios from 'axios';
 
 export interface Recruitment {
   id: number;
@@ -59,7 +58,7 @@ const handleApiError = (error: any, defaultMessage: string): ApiError => {
 // -------------------------------------
 export const fetchRecruitments = async (): Promise<Recruitment[]> => {
   try {
-    const response = await axios.get<Recruitment[]>('https://virtserver.swaggerhub.com/bluemoon-d6e/hello/1.0.0/recruitments');
+    const response = await instance.get<Recruitment[]>('recruit/');
     console.log(response)
     return response.data;
   } catch (error: any) {
@@ -81,7 +80,7 @@ export const createRecruitment = async (data: CreateRecruitmentData): Promise<Re
       throw new Error('내용을 입력해주세요.');
     }
 
-    const response = await instance.post<Recruitment>('/recruit/', {
+    const response = await instance.post<Recruitment>('recruit/', {
       title: data.title.trim(),
       description: data.content.trim()
     });
@@ -109,7 +108,7 @@ export const updateRecruitment = async (
       throw new Error('내용을 입력해주세요.');
     }
 
-    const response = await instance.put<Recruitment>(`/recruit/${id}/`, {
+    const response = await instance.put<Recruitment>(`recruit/${id}/`, {
       title: data.title.trim(),
       description: data.content.trim()
     });
@@ -126,7 +125,7 @@ export const updateRecruitment = async (
 // -------------------------------------
 export const deleteRecruitment = async (id: number): Promise<void> => {
   try {
-    await instance.delete(`/recruit/${id}/`);
+    await instance.delete(`recruit/${id}/`);
   } catch (error: any) {
     const apiError = handleApiError(error, '채용공고 삭제에 실패했습니다.');
     throw apiError;
