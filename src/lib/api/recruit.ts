@@ -4,7 +4,7 @@ import instance from './axios';
 export interface Recruitment {
   id: number;
   title: string;
-  content: string;
+  description: string;
   postedAt: string;
 }
 

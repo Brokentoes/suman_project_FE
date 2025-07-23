@@ -1,4 +1,4 @@
-import instance from "./axios"; '@/lib/api/axios';
+import instance from "@/lib/api/axios";
 
 // --------------------------
 //     분석 데이터 요청 (GET)
