@@ -1,4 +1,3 @@
-// pages/admin/recruit.tsx
 import { useEffect, useState, useCallback } from 'react';
 // import { useRouter } from 'next/router';
 // import { useAuthStore } from '@/stores/useAuthStore';
@@ -279,7 +278,7 @@ export default function RecruitPage() {
                 <div className="flex items-center space-x-2 text-slate-400 mb-4">
                   <Calendar className="h-4 w-4" />
                   <p className="text-sm">
-                    게시일: {new Date(item.postedAt).toLocaleDateString('ko-KR')}
+                    게시일: {new Date(item.posted_date).toLocaleDateString('ko-KR')}
                   </p>
                 </div>
                 <p className="text-slate-300 mb-6 line-clamp-3 text-sm leading-relaxed">{item.description}</p>
@@ -394,7 +393,7 @@ export default function RecruitPage() {
                     <h3 className="text-sm font-medium text-slate-400 mb-3">게시일</h3>
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4 text-slate-400" />
-                      <p className="text-slate-300">{new Date(selected.postedAt).toLocaleDateString('ko-KR')}</p>
+                      <p className="text-slate-300">{new Date(selected.posted_date).toLocaleDateString('ko-KR')}</p>
                     </div>
                   </div>
                   <div className="mb-8">

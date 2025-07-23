@@ -1,11 +1,12 @@
 // /lib/api/recruit.ts
-import instance from './axios';
+import publicInstance from './publicInstance';
+import privateInstance from './privateInstance';
 
 export interface Recruitment {
   id: number;
   title: string;
   description: string;
-  postedAt: string;
+  posted_date: string;
 }
 
 export interface CreateRecruitmentData {
@@ -54,11 +55,11 @@ const handleApiError = (error: any, defaultMessage: string): ApiError => {
 };
 
 // -------------------------------------
-//            전체 공고 조회
+//     전체 공고 조회 - publicInstance
 // -------------------------------------
 export const fetchRecruitments = async (): Promise<Recruitment[]> => {
   try {
-    const response = await instance.get<Recruitment[]>('recruit/');
+    const response = await publicInstance.get<Recruitment[]>('recruit/');
     console.log(response)
     return response.data;
   } catch (error: any) {
@@ -68,7 +69,7 @@ export const fetchRecruitments = async (): Promise<Recruitment[]> => {
 };
 
 // -------------------------------------
-//            신규 공고 등록
+//      신규 공고 등록 - privateInstance
 // -------------------------------------
 export const createRecruitment = async (data: CreateRecruitmentData): Promise<Recruitment> => {
   try {
@@ -80,7 +81,7 @@ export const createRecruitment = async (data: CreateRecruitmentData): Promise<Re
       throw new Error('내용을 입력해주세요.');
     }
 
-    const response = await instance.post<Recruitment>('recruit/', {
+    const response = await privateInstance.post<Recruitment>('recruit/', {
       title: data.title.trim(),
       description: data.content.trim()
     });
@@ -93,7 +94,7 @@ export const createRecruitment = async (data: CreateRecruitmentData): Promise<Re
 };
 
 // -------------------------------------
-//            기존 공고 수정
+//     기존 공고 수정 - privateInstance
 // -------------------------------------
 export const updateRecruitment = async (
   id: number,
@@ -108,7 +109,7 @@ export const updateRecruitment = async (
       throw new Error('내용을 입력해주세요.');
     }
 
-    const response = await instance.put<Recruitment>(`recruit/${id}/`, {
+    const response = await privateInstance.put<Recruitment>(`recruit/${id}/`, {
       title: data.title.trim(),
       description: data.content.trim()
     });
@@ -121,107 +122,13 @@ export const updateRecruitment = async (
 };
 
 // -------------------------------------
-//            기존 공고 삭제
+//    기존 공고 삭제 - privateInstance
 // -------------------------------------
 export const deleteRecruitment = async (id: number): Promise<void> => {
   try {
-    await instance.delete(`recruit/${id}/`);
+    await privateInstance.delete(`recruit/${id}/`);
   } catch (error: any) {
     const apiError = handleApiError(error, '채용공고 삭제에 실패했습니다.');
     throw apiError;
   }
 };
-
-// // 전체 공고 조회
-// export const fetchRecruitments = async (): Promise<Recruitment[]> => {
-//   try {
-//     const response = await baseURL.get<Recruitment[]>('recruit/');
-//     console.log(response)
-//     return response.data;
-//   } catch (error: any) {
-//     const apiError = handleApiError(error, '채용공고를 불러오지 못했습니다.');
-//     throw apiError;
-//   }
-// };
-
-
-// // 신규 공고 등록
-// export const createRecruitment = async (data: CreateRecruitmentData): Promise<Recruitment> => {
-//   try {
-//     // 입력값 검증
-//     if (!data.title?.trim()) {
-//       throw new Error('제목을 입력해주세요.');
-//     }
-//     if (!data.description?.trim()) {
-//       throw new Error('내용을 입력해주세요.');
-//     }
-
-//     const response = await baseURL.post<Recruitment>('/recruit/', {
-//       title: data.title.trim(),
-//       description: data.description.trim()
-//     });
-    
-//     return response.data;
-//   } catch (error: any) {
-//     const apiError = handleApiError(error, '채용공고 등록에 실패했습니다.');
-//     throw apiError;
-//   }
-// };
-
-// // 기존 공고 수정
-// export const updateRecruitment = async (
-//   id: number,
-//   data: UpdateRecruitmentData
-// ): Promise<Recruitment> => {
-//   try {
-//     // 입력값 검증
-//     if (!data.title?.trim()) {
-//       throw new Error('제목을 입력해주세요.');
-//     }
-//     if (!data.description?.trim()) {
-//       throw new Error('내용을 입력해주세요.');
-//     }
-
-//     const response = await baseURL.put<Recruitment>(`/recruit/${id}/`, {
-//       title: data.title.trim(),
-//       description: data.description.trim()
-//     });
-//     return response.data;
-    
-//   } catch (error: any) {
-//     const apiError = handleApiError(error, '채용공고 수정에 실패했습니다.');
-//     throw apiError;
-//   }
-// };
-
-// // 기존 공고 삭제
-// export const deleteRecruitment = async (id: number): Promise<void> => {
-//   try {
-//     await baseURL.delete(`/recruit/${id}/`);
-//   } catch (error: any) {
-//     const apiError = handleApiError(error, '채용공고 삭제에 실패했습니다.');
-//     throw apiError;
-//   }
-// };
-
-// 공고 검색 (필요시 사용)
-// export const searchRecruitments = async (keyword: string): Promise<Recruitment[]> => {
-//   try {
-//     const response = await baseURL.get<Recruitment[]>(`/recruit/?search=${encodeURIComponent(keyword)}`);
-//     return response.data;
-//   } catch (error: any) {
-//     const apiError = handleApiError(error, '채용공고 검색에 실패했습니다.');
-//     throw apiError;
-//   }
-// };
-
-// 공고 상태별 조회 (필요시 사용)
-// export const fetchRecruitmentsByStatus = async (status: string): Promise<Recruitment[]> => {
-//   try {
-//     const response = await baseURL.get<Recruitment[]>(`/recruit/?status=${status}`);
-//     return response.data;
-//   } catch (error: any) {
-//     const apiError = handleApiError(error, '채용공고를 불러오지 못했습니다.');
-//     throw apiError;
-//   }
-// };

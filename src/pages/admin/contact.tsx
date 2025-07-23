@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchInquiries, markInquiryAsRead } from '@/lib/api/contact';
 import { MessageSquare, Mail, User, Building, FileText, CheckCircle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
 import  AdminHeader from '@/components/AdminHeader';
+import { withAdminAuth } from '@/components/WithAdminAuth';
 
 interface Inquiry {
   id: number;
@@ -169,4 +170,4 @@ const AdminContactPage = () => {
   );
 };
 
-export default AdminContactPage;
+export default withAdminAuth(AdminContactPage);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, Book, ChevronDown, ChevronRight, Code, FileText, Globe, Database, Lock, Zap, LucideIcon } from 'lucide-react';
 import AdminHeader from '@/components/AdminHeader';
+import { withAdminAuth } from '@/components/WithAdminAuth';
 
 // 섹션 컴포넌트
 interface GuideSectionProps {
@@ -401,4 +402,4 @@ DELETE /api/admin/users/:id`}
   );
 };
 
-export default AdminGuidePage;
+export default withAdminAuth(AdminGuidePage);
