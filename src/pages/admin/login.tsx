@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, User } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { loginUser } from '@/lib/api/auth';
 import Image from 'next/image';
 
 export default function LoginScreen() {
   const router = useRouter();
   const { login } = useAuthStore();
-  // const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState('');
@@ -17,27 +17,17 @@ export default function LoginScreen() {
   e.preventDefault();
   setIsLoading(true);
   
-  // 로그인 로직은 API End point 여기서 수정하기
-  try {
-    const response = await fetch('http://192.168.100.110:8000/api/token/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      console.log('token:', data);
-      login(data.accessToken, data.refreshToken);
-      alert('환영합니다')
+   try {
+      const { access, refresh } = await loginUser(username, password);
+      login(access, refresh);
+      alert('환영합니다');
       router.replace('/admin/dashboard');
+    } catch (error) {
+      alert(error instanceof Error ? error.message : '로그인 실패');
+    } finally {
+      setIsLoading(false);
     }
-  } catch (error) {
-    console.error('Login failed:', error);
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
@@ -69,7 +59,7 @@ export default function LoginScreen() {
           </div>
 
           {/* Login Form */}
-          <div className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4">
             {/* Username Field */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -111,11 +101,9 @@ export default function LoginScreen() {
               </button>
             </div>
 
-
-
             {/* Login Button */}
             <button
-              onClick={handleLogin}
+              type="submit"
               disabled={isLoading}
               className={`w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50 ${
                 isLoading ? 'opacity-50 cursor-not-allowed transform-none' : ''
@@ -123,7 +111,7 @@ export default function LoginScreen() {
             >
               {isLoading ? '로그인 중...' : '로그인'}
             </button>
-          </div>
+          </form>
 
 
         </div>

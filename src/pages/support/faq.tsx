@@ -7,7 +7,7 @@ interface FAQ {
   id: number;
   question: string;
   answer: string;
-  category: string;
+  category: number;
   is_published: boolean;
 }
 
@@ -18,23 +18,22 @@ const FAQPage = () => {
   const [openItems, setOpenItems] = useState<Set<number>>(new Set());
   const [displayCount, setDisplayCount] = useState(5);
 
-  useEffect(() => {
-    const loadFAQs = async () => {
+  useEffect(() => {   
+    loadFAQs();
+  }, []);
+
+  const loadFAQs = async () => {
       try {
         setLoading(true);
+        setError(null);
         const data = await fetchFAQs();
-        // is_published가 true인 FAQ만 필터링
-        const publishedFAQs = data.filter(faq => faq.is_published);
-        setFaqs(publishedFAQs);
+        setFaqs(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'FAQ를 불러오는데 실패했습니다.');
       } finally {
         setLoading(false);
       }
     };
-
-    loadFAQs();
-  }, []);
 
   const toggleItem = (id: number) => {
     const newOpenItems = new Set(openItems);

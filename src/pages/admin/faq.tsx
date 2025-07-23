@@ -2,27 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Save, X, Edit, Trash2, Eye, EyeOff, ChevronDown, HelpCircle } from 'lucide-react';
 import { fetchFAQs, createFAQ, updateFAQ, deleteFAQ } from '@/lib/api/faq';
 import AdminHeader from '@/components/AdminHeader';
+import { withAdminAuth } from '@/components/WithAdminAuth';
 
 // FAQ 인터페이스 정의
 interface FAQ {
   id: number;
   question: string;
   answer: string;
-  category: string;
+  category: number;
   is_published: boolean;
 }
 
 interface CreateFAQData {
   question: string;
   answer: string;
-  category: string;
+  category: number;
   is_published: boolean;
 }
 
 interface UpdateFAQData {
   question: string;
   answer: string;
-  category: string;
+  category: number;
   is_published: boolean;
 }
 
@@ -39,7 +40,7 @@ const AdminFAQPage = () => {
   const [newFAQ, setNewFAQ] = useState<CreateFAQData>({
     question: '',
     answer: '',
-    category: '',
+    category: 0,
     is_published: true
   });
 
@@ -47,10 +48,13 @@ const AdminFAQPage = () => {
   const [editFAQ, setEditFAQ] = useState<UpdateFAQData>({
     question: '',
     answer: '',
-    category: '',
+    category: 0,
     is_published: true
   });
 
+  // ---------------------------------
+  //         FAQ 불러오기 (loadFAQs)
+  // ---------------------------------
   useEffect(() => {
     loadFAQs();
   }, []);
@@ -68,8 +72,11 @@ const AdminFAQPage = () => {
     }
   };
 
+  // ------------------------------------
+  //          FAQ 신규 등록, 수정
+  // ------------------------------------
   const handleCreate = async () => {
-    if (!newFAQ.question.trim() || !newFAQ.answer.trim() || !newFAQ.category.trim()) {
+    if (!newFAQ.question.trim() || !newFAQ.answer.trim() || !newFAQ.category) {
       alert('모든 필드를 입력해주세요.');
       return;
     }
@@ -78,7 +85,7 @@ const AdminFAQPage = () => {
       setActionLoading(-1);
       const createdFAQ = await createFAQ(newFAQ);
       setFaqs([createdFAQ, ...faqs]);
-      setNewFAQ({ question: '', answer: '', category: '', is_published: true });
+      setNewFAQ({ question: '', answer: '', category: 0, is_published: true });
       setIsCreating(false);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'FAQ 등록에 실패했습니다.');
@@ -98,7 +105,7 @@ const AdminFAQPage = () => {
   };
 
   const handleUpdate = async () => {
-    if (!editFAQ.question.trim() || !editFAQ.answer.trim() || !editFAQ.category.trim()) {
+    if (!editFAQ.question.trim() || !editFAQ.answer.trim() || !editFAQ.category) {
       alert('모든 필드를 입력해주세요.');
       return;
     }
@@ -107,6 +114,7 @@ const AdminFAQPage = () => {
       setActionLoading(editingId!);
       const updatedFAQ = await updateFAQ(editingId!, editFAQ);
       setFaqs(faqs.map(faq => faq.id === editingId ? updatedFAQ : faq));
+      alert('수정이 완료되었습니다.')
       setEditingId(null);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'FAQ 수정에 실패했습니다.');
@@ -190,7 +198,7 @@ const AdminFAQPage = () => {
                 <input
                   type="text"
                   value={newFAQ.category}
-                  onChange={(e) => setNewFAQ({...newFAQ, category: e.target.value})}
+                  onChange={(e) => setNewFAQ({...newFAQ, category: Number(e.target.value)})}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400 backdrop-blur-sm"
                   placeholder="카테고리를 입력하세요"
                 />
@@ -243,7 +251,7 @@ const AdminFAQPage = () => {
                 <button
                   onClick={() => {
                     setIsCreating(false);
-                    setNewFAQ({ question: '', answer: '', category: '', is_published: true });
+                    setNewFAQ({ question: '', answer: '', category: 0, is_published: true });
                   }}
                   className="flex items-center px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-all duration-200 shadow-lg"
                 >
@@ -268,7 +276,7 @@ const AdminFAQPage = () => {
                       <input
                         type="text"
                         value={editFAQ.category}
-                        onChange={(e) => setEditFAQ({...editFAQ, category: e.target.value})}
+                        onChange={(e) => setEditFAQ({...editFAQ, category: Number(e.target.value) })}
                         className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400 backdrop-blur-sm"
                       />
                     </div>
@@ -415,4 +423,4 @@ const AdminFAQPage = () => {
   );
 };
 
-export default AdminFAQPage;
+export default withAdminAuth(AdminFAQPage);
