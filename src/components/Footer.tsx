@@ -18,8 +18,10 @@ export default function Footer() {
   const popupContent = getPopupContent();
 
   return (
+    
     <footer className="bg-white text-black text-sm mt-20">
       {/* 상단 레이아웃 */}
+
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between gap-10">
         {/* 왼쪽: 로고 + 슬로건 */}
         <div className="flex flex-col items-start space-y-3">

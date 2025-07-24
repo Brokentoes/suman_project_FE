@@ -1,186 +1,284 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { bannerImages, section1Text, section3, sectionCertifications, footer_banner} from "@/data/home";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-
+import { section1Text, section2, section3, sectionCertifications, footer_banner} from "@/data/home";
+import { useState } from "react";
 import {motion, AnimatePresence} from "framer-motion";
+import Image from "next/image";
 import Head from 'next/head';
+import Link from "next/link";
 
 export default function HomePage() {
-  const [current, setCurrent] = useState(0);
   const [showMore, setShowMore] = useState(false);
   const handleToggleMore = () => setShowMore(prev => !prev);
 
   const visibleCerts = sectionCertifications.certifications.slice(0,8);
   const moreCerts = sectionCertifications.certifications.slice(8);
 
-  // 자동 슬라이드 (5초마다)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % bannerImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
+  const labelClass = "text-base sm:text-lg lg:text-2xl font-semibold text-black";
+  const buttonClass = "text-sm sm:text-base bg-gray-100 text-gray-800 rounded-full px-4 py-2 hover:bg-gray-300 transition";
 
   return (
     <>
-    <Head>
-        <title>(주) 수만</title>
-        <link rel="icon" sizes="16x16" href="/images/logo.ico" />
-    </Head>
+      <Head>
+          <title>(주) 수만</title>
+          <link rel="icon" sizes="16x16" href="/images/logo.ico" />
+      </Head>
       <Header />
 
       <main>
         {/* Section 1 */}
-        <section className="relative w-full h-screen overflow-hidden justify-center">
+        <section className="relative h-screen">
           {/* 영상 배경 */}
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute w-full h-full object-cover"
-          >
+          <video autoPlay muted loop playsInline className="absolute w-full h-full object-cover">
             <source src="/videos/main_banner_1.mp4" type="video/mp4" />
             브라우저가 video 태그를 지원하지 않습니다.
           </video>
 
           {/* 텍스트 (기존과 동일) */}
-          <div className="absolute inset-0 flex flex-col justify-center text-white z-10">
-            <h1 className = "text-3xl font-bold mb-4 ml-30"> SUMAN </h1>
-            <h2 className="text-6xl font-bold mb-7 ml-30 leading-[1.3]">
-              정밀한 기술이 만드는
-              <br />
-              내일의 기업
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl ml-30">
+          <div className="absolute inset-0 flex flex-col justify-center text-white z-10 px-6 md:px-30 text-center md:text-left items-center md:items-start">
+            <motion.h1 
+              className = "text-xl md:text-3xl font-bold mb-3 md:mb-4  tracking-wide"
+              initial={{opacity:0, y:20}}
+              animate={{opacity:1, y:0}}
+              transition={{duration:1}}
+              viewport={{once:true}}
+            > 
+              SUMAN 
+            </motion.h1>
+            <motion.h2 
+              className="text-4xl md:text-6xl font-bold mb-5 md:mb-7 leading-snug md:leading-[1.3] tracking-wide whitespace-pre-line"
+              initial={{opacity:0, y: 30}}
+              animate={{opacity:1, y: 0}}
+              transition={{duration:1.2}}
+              viewport={{once:true}}
+            >
+              {section1Text.title}
+            </motion.h2>
+            <motion.p 
+              className="text-base md:text-xl text-gray-300 mas-w-90% md:max-w-3xl"
+              initial={{opacity:0, y: 20}}
+              animate={{opacity:1, y: 0}}
+              transition={{duration:1.4}}
+              viewport={{once:true}}
+            >
               {section1Text.subtitle}
-            </p>
+            </motion.p>
           </div>
         </section>
-
+        
 
         {/* 섹션 2 */}
-        {/* <section
-          className="relative w-full h-[600px] bg-cover bg-center text-white"
-          style={{ 
-            backgroundImage: `url('${section2.bgImage}')` }}
-        > */}
-          {/* 어두운 반투명 오버레이 */}
-          {/* <div className="absolute inset-0 bg-black/40" /> */}
+        <section
+          className="relative w-full  min-h-[900px] bg-cover bg-center text-white  px-6"
+          style={{ aspectRatio: '1440/400' }}
+        >
+          {/* 배경 이미지 */}
+          <Image
+            src={section2.bgImage}
+            alt="배경"
+            fill
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          />
 
-          {/* 좌측 상단 SUMAN */}
-          {/* <div className="absolute top-8 left-30 z-10">
-            <span className="text-xl font-semibold">Suman</span>
-          </div> */}
+          {/* Vision + 버튼 */}
+          <motion.div 
+            className="relative z-20 w-full pt-20 px-6 md:px-[120px] flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0 mb-10"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true ,amount:0.3}}
+          >
+            <p className={"text-base sm:text-lg lg:text-2xl font-semibold text-white"}>Vision</p>
+            <div className="flex-grow" />
+            <Link href="/company/vision">
+              <button className="text-sm sm:text-base bg-gray-600 text-gray-00 rounded-full px-4 py-2 hover:bg-gray-300 transition">
+                {section2.buttonLabel}
+              </button>
+            </Link>
+          </motion.div>
 
-          {/*우측 상단 ceo 인사말 버튼 */}
-          {/* <div className="absolute top-8 right-12 z-10">
-            <button className="cursor-pointer px-4 py-2 bg-gray-500 text-black text-sm rounded-full shadow hover:bg-gray-200">
-              CEO 인사말 →
-            </button>
-          </div> */}
+          {/* 본문 텍스트 */}
+          <div className="relative z-20 w-full px-6 md:px-[60px] lg:px-[120px] flex flex-col md:flex-row items-start md:items-center justify-between gap-12 h-auto md:h-[550px]">
+            {/* 왼쪽 텍스트 */}
+            <motion.div 
+              className="w-full md:w-[55%] max-w-full md:max-w-3xl"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <h2 className="text-xl md:text-2xl lg:text-4xl font-bold mb-4 md:mb-7 tracking-wide text-white">
+                {section2.title}
+              </h2>
+              <p className="text-sm md:text-sm lg:text-xl text-white/70 leading-relaxed whitespace-pre-line tracking-wide">
+                {section2.description}
+              </p>
+            </motion.div>
 
-          {/* 가운데 텍스트 */}
-          {/* <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
-            <h2 className="text-3xl md:text-5xl font-semibold mb-4">
-              {section2.title}
-            </h2>
-            <p className="text-sm md:text-base max-w-3xl text-white/90 leading-relaxed whitespace-pre-line">
-              {section2.description}
-            </p>
+            {/* 오른쪽 동그라미 */}
+            <motion.div 
+              className="w-full md:w-[50%] flex flex-wrap gap-6 justify-start md:justify-end"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true ,amount:0.3 }}
+            >
+              {section2.keywords.map((title, idx) => (
+                <motion.div
+                  key={idx}
+                  className="w-28 h-28 md:w-28 h-28 lg:w-36 lg:h-36 rounded-full bg-white/10 border border-white/10 flex flex-col justify-center items-center text-sm md:text-base text-white backdrop-blur-sm hover:bg-white/20 transition"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: idx * 0.3, ease: "easeOut" }}
+                  viewport={{ once: true, amount: 0.3 }}
+                >
+                  <p className="font-bold text-base md:text-lg lg:text-xl tracking-wide">{title}</p>
+                  <p className="text-xs md:text-xs lg:text-base tracking-wide">{section2.translations[idx]}</p>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
-        </section> */}
+
+        </section>
 
         {/* 섹션 3 */}
-        <section className="bg-white py-25 px-6 ">
+        <motion.section 
+          className="relative z-30 -mt-40 bg-white py-25 px-4 md:px-6 rounded-t-[40px] md:rounded-t-[60px]"
+          initial={{ opacity:1,  y: 100}}
+          whileInView={{ opacity: 1 , y: 0}}
+          transition={{ duration: 1.2 , ease:"easeOut"}}
+          viewport={{ once: true , amount:0.3}}
+          >
           {/*상단 라벨 + 버튼 */}
-          <div className="flex items-center mb-10 w-full max-w-8xl px-[120px]">
-              <p className="text-2xl text-black font-semibold">Solutions</p>
-
-              {/* 중앙 여백 */}
-              <div className="flex-grow" />
-
-              {/* 버튼 */}
-              <button className="text-base border text-black border-gray-400 rounded-full px-4 py-2 hover:bg-gray-100 transition">
+          <motion.div 
+            className="relative z-20 w-full pt-20 px-6 md:px-[120px] flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0 mb-10"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true,amount:0.3 }}
+          >
+            <p className={labelClass}>Solutions</p>
+            <div className="flex-grow" />
+            <Link href="/business/service">
+              <motion.button 
+                className={buttonClass}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                viewport={{ once: true ,amount:0.3}}
+              >              
                 제품 및 설비 바로가기 →
-              </button>
-          </div>
+              </motion.button>
+            </Link>
+          </motion.div>
 
           {/*큰 타이틀*/}
           
-          <div className="text-left text-black mb-20 max-w-7xl mx-[120px] ">
-            <h2 className="text-4xl font-bold">{section3.title}</h2>
-            <p className="mt-3 text-4xl font-bold">{section3.subtitle}</p>
-          </div>
+          <motion.div 
+            className="text-left text-black mb-20 max-w-7xl mx-[30px] md:mx-[120px]"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1}} 
+            viewport={{ once: true,amount:0.3 }}
+          >
+            <h2 className="text-xl md:text-2xl lg:text-4xl font-bold mb-0 md:mb-3 tracking-wide text-black">{section3.title}</h2>
+            <p className=" text-xl md:text-2xl lg:text-4xl font-bold tracking-wide">{section3.subtitle}</p>
+          </motion.div>
 
-          <div className="w-full px-[160px]">
-            <div className="grid grid-cols-4 gap-20">
+          <div className="w-full px-[60px] md:px-[120px] lg:px-[160px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-20">
               {section3.cards.map((card, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="relative w-full h-[500px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
+                  className="relative w-full h-[150px] md:h-[200px] lg:h-[550px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
+                  initial={{ x: -100, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  viewport={{ once: true ,amount:0.3}}
                 >
                   {/* 이미지 영역 (원본 비율 유지) */}
-                  <div className="relative w-full h-[500px] "> {/* 비율 조절 가능 */}
+                  <div className="relative w-full h-full"> {/* 비율 조절 가능 */}
                     <Image
-                      src={card.img}
+                      src={card.image}
                       alt={card.title}
                       fill
                       className="object-cover"
                       sizes="100%"
                       priority
                     />
+
                     {/* 하단 블랙 그라데이션 */}
-                    <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-black via-black/90 to-transparent z-10" />
+                    <div className="absolute bottom-0 w-full h-2/3 bg-gradient-to-t from-black via-black/90 to-transparent z-10" />
                   </div>
 
                   {/* 텍스트 영역 */}
-                  <div className="absolute z-20 p-6 text-white bottom-1">
-                    <p className="text-lg  mb-3">{card.subtitle}</p>
-                    <h3 className="text-2xl font-bold mb-1">{card.title}</h3>
-                    <p className="text-base text-gray-300">{card.description}</p>
+                  <div className="absolute bottom-0 z-20 w-full px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-white text-[10px] sm:text-xs md:text-sm lg:text-base leading-tight sm:leading-snug">
+                    <p className="text-xs md:text-sm lg:text-xl mb-1 md:mb-2 lg:mb-8 ">{card.subtitle}</p>
+                    <h3 className="text-base md:text-lg lg:text-3xl font-bold mb-1 md:mb-1 lg:mb-2">{card.title}</h3>
+                    <p className="text-xs md:text-xs lg:text-lg text-gray-300">{card.description}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
+        </motion.section>
 
-        </section>
 
-        {/*section3_certifications*/}
-        <section className="bg-white py-40 px-6">
-          <div className="flex items-center mb-10 w-full px-[120px]">
-            <p className="text-2xl text-black font-semibold">Certifications</p>
 
-            <div className="flex-grow " />
-
+        {/*section4_certifications*/}
+        <section 
+          className="relative z-30 -mt-20 bg-white py-50 px-6"
+        >
+          {/*상단 라벨 + 버튼*/}
+          <motion.div 
+            className="relative z-20 w-full pt-20 px-6 md:px-[120px] flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0 mb-10"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true ,amount:0.3}}
+          >
+            <p className={labelClass}>Certifications</p>
+            <div className="flex-grow" />
             <button
-              onClick = {handleToggleMore}
-              className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-2xl text-gray-700"
+              onClick={handleToggleMore}
+              className={buttonClass}
               title="더보기"
             >
-              {showMore ? "-" : "+"}
+              전체 업적 현황
+              <span className="ml-2 text-lg">{showMore ? "-" : "+"}</span>
             </button>
-          </div>
+          </motion.div>
 
-          <div className="text-left text-black whitespace-pre-line mb-5 max-w-7xl mx-[120px]">
-            <p className="text-4xl font-bold leading-normal ">{sectionCertifications.title}</p>
-          </div>
+          {/*섹션 제목*/}
+          <motion.div
+            className="text-left text-black whitespace-pre-line mb-4 max-w-7xl mx-[30px] md:mx-[120px]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true ,amount:0.3}}
+          >
+            <p className="text-xl md:text-2xl lg:text-4xl font-bold mb-4 md:mb-7 tracking-wide text-black leading-[1.3]">{sectionCertifications.title}</p>
+          </motion.div>
 
-          <div className="flex gap-2 mt-4 px-[120px]">
+          {/*태그*/}
+          <motion.div
+            className="flex gap-2 mt-1 sm:mt-8 lg:mt-8 px-8 md:px-[120px] lg:px-[120px]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1}}
+            viewport={{ once: true,amount:0.3 }}
+          >
             {sectionCertifications.tags.map((tag, i) => (
-              <span 
-                key={i} 
-                className="bg-gray-100 text-blue-700 px-3 py-0.3 font-medium">
+              <span
+                key={i}
+                className="bg-gray-100 text-blue-700 px-3 py-0.3 text-xs lg:text-lg font-medium"
+              >
                 {tag}
               </span>
             ))}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-15 mt-30 px-[120px]">
+          </motion.div>
+          {/*주 8개 인증*/}
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-15 mt-30 px-[120px]">
               {[0, 1].map((rowIndex) => {
                 const certGroup = visibleCerts.slice(rowIndex * 4, rowIndex * 4 + 4);
                 const fromLeft = rowIndex % 2 === 0;
@@ -188,28 +286,43 @@ export default function HomePage() {
                 return (
                   <motion.div
                     key={rowIndex}
-                    className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-20"
+                    className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-20"
                     initial={{ x: fromLeft ? -200 : 200, opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1.3 }}
                     transition={{ duration: 1 }}
                     viewport={{ once: true }}
                   >
                     {certGroup.map((cert, i) => (
-                      <div key={i} className="relative group text-center">
-                        <button
-                          title={cert.label}
-                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
-                        >
-                          {cert.label}
-                        </button>
-                        {cert.img && (
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block z-10">
-                            <img
-                              src={cert.img}
-                              alt={cert.label}
-                              className="w-64 rounded shadow-xl opacity-0 transition duration-300 group-hover:opacity-100"
-                            />
-                          </div>
+                      <div key={i} className="group text-center">
+                        {!cert.image && (
+                          <button
+                            title={cert.label}
+                            className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
+                          >
+                            {cert.label}
+                          </button>
+                        )}
+
+                        {cert.image && (
+                          <>
+                            <button
+                              title={cert.label}
+                              className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide group-hover:hidden"
+                            >
+                              {cert.label}
+                            </button>
+
+                            <div className="w-48 mx-auto transition-all duration-500 ease-in-out max-h-0 overflow-hidden group-hover:max-h-96">
+                              <Image
+                                src={cert.image}
+                                alt={cert.label}
+                                width={192}
+                                height={192}
+                                style={{ height: "auto", width: "auto" }}
+                                className="rounded shadow-xl transform scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 mt-3"
+                              />
+                            </div>
+                          </>
                         )}
                       </div>
                     ))}
@@ -218,112 +331,88 @@ export default function HomePage() {
               })}
             </div>
 
-            {/*플러스 버튼*/}
-            {/* <div className="flex justify-center mt-10">
-              <button
-                onClick={handleToggleMore}
-                className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-2xl text-gray-700"
-                title="더보기"
-              >
-                {showMore ? "-" : "+"}
-              </button>
-            </div> */}
-
             {/*추가 인증 출력*/}
             <AnimatePresence initial={false}>
               {showMore && (
                 <motion.div
-                  className="overflow-hidden px-[120px] mt-10"
+                  className="overflow-visible px-[120px] mt-15"
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                 >
-                  <div className="grid grid-cols-4 gap-20">
-                    {moreCerts.slice(0, 4).map((cert, i) => (
-                      <div key={i} className="relative group text-center col-span-1">
-                        <button
-                          title={cert.label}
-                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
-                        >
-                          {cert.label}
-                        </button>
-                        {cert.img && (
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block z-10">
-                            <img
-                              src={cert.img}
-                              alt={cert.label}
-                              className="w-64 rounded shadow-xl opacity-0 transition duration-300 group-hover:opacity-100"
-                            />
-                          </div>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-20 mt-10 pb-6">
+                    {moreCerts.map((cert, i) => (
+                      <div key={i} className="group text-center col-span-1">
+                        {!cert.image && (
+                          <button
+                            title={cert.label}
+                            className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
+                          >
+                            {cert.label}
+                          </button>
+                        )}
+                        {cert.image && (
+                          <>
+                            <button
+                              title={cert.label}
+                              className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide group-hover:hidden"
+                            >
+                              {cert.label}
+                            </button>
+
+                            <div className="w-48 mx-auto transition-all duration-500 ease-in-out max-h-0 overflow-hidden group-hover:max-h-96">
+                              <Image
+                                src={cert.image}
+                                alt={cert.label}
+                                width={192}
+                                height={192}
+                                style={{ height: "auto", width: "auto" }}
+                                className="rounded shadow-xl transform scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 mt-3"
+                              />
+                            </div>
+                          </>
                         )}
                       </div>
                     ))}
                   </div>
-
-                  <div className="grid grid-cols-4 gap-20 mt-10 pb-6">
-                    {moreCerts[4] && (
-                      <div className="relative group text-center col-span-1">
-                        <button
-                          title={moreCerts[4].label}
-                          className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
-                        >
-                          {moreCerts[4].label}
-                        </button>
-                        {moreCerts[4].img && (
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden group-hover:block z-10">
-                            <img
-                              src={moreCerts[4].img}
-                              alt={moreCerts[4].label}
-                              className="w-64 rounded shadow-xl opacity-0 transition duration-300 group-hover:opacity-100"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
-            <div className="mt-6 px-[120px] flex flex-col items-end gap-2">
+
+            <motion.div className="px-4 sm:px-6 lg:px-[120px] flex flex-col items-end gap-2"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+            >
               {!showMore && (
-                <p className="text-xs text-gray-400 tracking-wide mt-6">
+                <p className="text-sm lg:text-base text-gray-400 tracking-wide mt-6">
                   {sectionCertifications.legal}
                 </p>
               )}
-
-              <button
-                onClick={handleToggleMore}
-                className="flex items-center gap-2 text-gray-800 bg-white px-4 py-2 rounded-full hover:font-semibold transition tracking-wide"
-              >
-                {showMore ? '접기' : '전체 업적 현황 보기'}
-                <span className="text-xl">{showMore ? '↑' : '→'}</span>
-              </button>
-            </div>
-
+            </motion.div>
           </section>
       
-{/* section5_footer_banner */}
-<section className="relative w-full">
-  <img
-    src={footer_banner[0]}
-    alt="footer banner"
-    className="w-full object-cover"
-    style={{ aspectRatio: '1440 / 300', display: 'block' }}
-  />
-  <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-6 pointer-events-none">
-    <h2 className="text-4xl font-bold mb-7 tracking-wide">Contact us</h2>
-    <button className="pointer-events-auto border border-gray-300 text-white px-8 py-1 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
-      문의하기 <span className="text-xl">→</span>
-    </button>
-  </div>
-</section>
-
-
-
-
-
-
+          {/* section5_footer_banner */}
+          <section className="relative w-full mt-20">
+            <Image
+              src={footer_banner[0]}
+              alt="footer banner"
+              width={1440}
+              height={220}
+              className="w-full object-cover"
+              style={{ aspectRatio: '1440 / 220', display: 'block' }}
+            />
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-6 pointer-events-none transfrom translate-x-20">
+              <h2 className="text-lg md:text-2xl lg:text-4xl font-semibold md:font-semibold lg:font-bold mb-2 md:mb-4 lg:mb-7 tracking-wide">Contact us</h2>
+              <Link href="/support/contact">
+                <button className="pointer-events-auto border border-gray-300 text-xs md:text-xs lg:text-sm text-white px-4 py-0.9 lg:px-13 lg:py-0.8 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
+                  문의하기 <span className="text-xs md:text-sm lg:text-base">→</span>
+                </button>
+              </Link>
+            </div>
+          </section>
 
        </main>
       <Footer />
