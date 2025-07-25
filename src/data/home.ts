@@ -72,7 +72,7 @@ export const homeContentEng = {
       '/images/banner3.png',
     ],
     section1Text: {
-      title: `Tomorrow's company that creates precision technology`,
+      title: 'Tomorrow company that creates precision technology',
       subtitle: 'With deep know-how in precision manufacturing, SUMAN provides customized solutions.',
     },
     
