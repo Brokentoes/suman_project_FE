@@ -46,6 +46,7 @@ export default function HomePage({ content }: HomePageProps) {
         <meta property="og:description" content="정밀한 기술이 만드는 내일의 기업" />
         <meta property="og:type" content="website" />
         <meta name="google-site-verification" content="iT2-OO3Wat9zt_bq-t7Y0F24HWiIyWTz_OsvEyvLd9c" />
+        <meta name="naver-site-verification" content="b90c2478a5b6431a748fa0e68d931f04dc9e4fa9" />
         <link rel="icon" sizes="16x16" href="/images/logo.ico" />
     </Head>
 
