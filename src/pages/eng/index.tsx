@@ -63,7 +63,7 @@ export default function HomePage({ content }: HomePageProps) {
             className="absolute w-full h-full object-cover"
           >
             <source src="/videos/main_banner_1.mp4" type="video/mp4" />
-            sorry, this browser can't provide video
+            sorry, this browser can not provide video
           </video>
 
           {/* 텍스트 (기존과 동일) */}
