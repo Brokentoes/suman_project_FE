@@ -62,7 +62,7 @@ export default function LoginScreen() {
               </div>
             </div>
             <h1 className="text-2xl font-bold text-white mb-2">수만 관리자 로그인</h1>
-            <p className="text-white/70 text-sm">관리자 계정으로 로그인하세요.</p>
+            <p className="text-white/70 text-sm">로그인이 안되면 새로고침 한번 해주세요.</p>
           </div>
 
           {/* Login Form */}

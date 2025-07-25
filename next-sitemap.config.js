@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://suman.co.kr',
+  siteUrl: 'https://www.suman.co.kr',
   generateRobotsTxt: true,
   sitemapSize: 5000,
   exclude: [
