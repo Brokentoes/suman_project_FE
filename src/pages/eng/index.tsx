@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import {motion} from "framer-motion";
 import Head from 'next/head';
-import { homeContentKor } from "@/data/home";
+import { homeContentEng } from "@/data/home";
 import { GetStaticProps } from 'next';
 import type { HomePageProps } from "@/types/home";
 
@@ -14,7 +14,7 @@ import type { HomePageProps } from "@/types/home";
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
-      content: homeContentKor
+      content: homeContentEng
     }
   }
 }
@@ -39,13 +39,12 @@ export default function HomePage({ content }: HomePageProps) {
     <>
 
     <Head>
-        <title>(주) 수만</title>
-        <meta name="description" content="정밀한 기술이 만드는 내일의 기업, 수만. 혁신적인 솔루션과 최적의 서비스를 제공합니다." />
-        <meta name="keywords" content="수만, SUMAN, 기업솔루션, 혁신기술, 정밀기술" />
-        <meta property="og:title" content="(주) 수만" />
-        <meta property="og:description" content="정밀한 기술이 만드는 내일의 기업" />
+        <title>SUMAN</title>
+        <meta name="description" content="Suman, the company shaping tomorrow with precision technology. We offer innovative solutions and optimal services." />
+        <meta name="keywords" content="Suman, corporate solutions, innovative technology, precision engineering" />
+        <meta property="og:title" content="Suman Co., Ltd." />
+        <meta property="og:description" content="A company shaping tomorrow with precision technology" />
         <meta property="og:type" content="website" />
-        <meta name="google-site-verification" content="iT2-OO3Wat9zt_bq-t7Y0F24HWiIyWTz_OsvEyvLd9c" />
         <link rel="icon" sizes="16x16" href="/images/logo.ico" />
     </Head>
 
@@ -63,7 +62,7 @@ export default function HomePage({ content }: HomePageProps) {
             className="absolute w-full h-full object-cover"
           >
             <source src="/videos/main_banner_1.mp4" type="video/mp4" />
-            브라우저가 video 태그를 지원하지 않습니다.
+            sorry, this browser can't provide video
           </video>
 
           {/* 텍스트 (기존과 동일) */}
@@ -122,7 +121,7 @@ export default function HomePage({ content }: HomePageProps) {
 
               {/* 버튼 */}
               <button className="text-base border text-black border-gray-400 rounded-full px-4 py-2 hover:bg-gray-100 transition">
-                제품 및 설비 바로가기 →
+                View all achievements →
               </button>
           </div>
 
@@ -225,7 +224,7 @@ export default function HomePage({ content }: HomePageProps) {
             <div className="mt-6 flex justify-end px-[120px]">
               <p className="text-xs text-gray-400 mb-2">{content.sectionCertifications.legal}</p>
               <button className="flex items-center gap-2 text-gray-800 bg-white px-4 py-2 rounded-full hover:font-semibold transition tracking-wide">
-                전체 업적 현황 보기 
+                Explore Products
                 <span className="text-xl">→</span>
               </button>
             
