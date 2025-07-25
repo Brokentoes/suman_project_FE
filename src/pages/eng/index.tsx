@@ -44,6 +44,7 @@ export default function HomePage({ content }: HomePageProps) {
         <meta name="keywords" content="Suman, corporate solutions, innovative technology, precision engineering" />
         <meta property="og:title" content="Suman Co., Ltd." />
         <meta property="og:description" content="A company shaping tomorrow with precision technology" />
+        <meta name="google-site-verification" content="iT2-OO3Wat9zt_bq-t7Y0F24HWiIyWTz_OsvEyvLd9c" />
         <meta property="og:type" content="website" />
         <link rel="icon" sizes="16x16" href="/images/logo.ico" />
     </Head>
