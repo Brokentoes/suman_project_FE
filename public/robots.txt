@@ -2,12 +2,8 @@
 User-agent: *
 Allow: /
 
-Disallow: /admin
-Disallow: /admin/
-Disallow: /admin/*
-
 # Host
-Host: https://suman.co.kr
+Host: https://www.suman.co.kr
 
 # Sitemaps
-Sitemap: https://suman.co.kr/sitemap.xml
+Sitemap: https://www.suman.co.kr/sitemap.xml

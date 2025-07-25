@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { Users, MessageSquare, HelpCircle, BarChart3, Activity, BookOpenText } from 'lucide-react';
 import { useRouter } from 'next/router';
 import AdminHeader from '@/components/AdminHeader';
-import { getAnalyticData } from '@/lib/api/analytic';
+import {fetchMonthlyVisitors } from '@/lib/api/analytic';
 import { withAdminAuth } from '@/components/WithAdminAuth';
+import  MonthlyVisitorsChart  from '@/components/VisitorsChart';
 
 interface AnalyticData {
   total_users: number;
@@ -12,29 +13,21 @@ interface AnalyticData {
 
 function AdminDashboard() {
   const router = useRouter();
-  const [analytics, setAnalytics] = useState<AnalyticData | null>(null);
+  const [data, setData] = useState<{ yearMonth: number; visitors: number }[]>([]);
 
-// 고객 분석 데이터 요청
+// 방문자 추이 분석 데이터 요청 - 페이지 접속시 요청
   useEffect(() => {
-  let mounted = true;
-  const fetchData = async () => {
-    try {
-      console.log('[📡 useEffect] 분석 데이터 요청 시작');
-      const data = await getAnalyticData();
-      if (mounted) {
-        setAnalytics(data);
-        console.log('[✅ useEffect] 분석 데이터 수신 완료:', data);
+    const loadData = async () => {
+      try {
+        const result = await fetchMonthlyVisitors();
+        setData(result);
+        console.log('방문자데이터: ',result);
+      } catch (err) {
+        console.error('Failed to load visitor data:', err);
       }
-    } catch (error) {
-      console.error('[❌ useEffect] 분석 데이터 요청 실패:', error);
-    }
-  };
-  fetchData();
-
-  return () => {
-    mounted = false; // 컴포넌트 언마운트 시 안전처리
-  };
-}, []);
+    };
+    loadData();
+  }, []);
 
   const menuItems = [
     {
@@ -71,12 +64,6 @@ function AdminDashboard() {
     }
   ];
 
-  // 임시 방문자 수 - 수정필요.
-  const stats = [
-    { label: '총 방문자', value: analytics?.total_users+' 명', change: analytics?.change_percentage+' %', icon: Activity },
-    { label: '활성 채용공고', value: '8', change: '+2', icon: Users },
-    { label: '미처리 문의', value: '23', change: '-5', icon: MessageSquare }
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
@@ -84,21 +71,11 @@ function AdminDashboard() {
       <AdminHeader />
       <div className="max-w-7xl mx-auto px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {stats.map((stat, index) => (
-            <div key={index} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-300 text-sm">{stat.label}</p>
-                  <p className="text-white text-2xl font-bold mt-1">{stat.value}</p>
-                  <p className="text-green-400 text-sm mt-1">{stat.change}</p>
-                </div>
-                <div className="p-3 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-xl">
-                  <stat.icon className="h-6 w-6 text-blue-400" />
-                </div>
-              </div>
+        <div className="grid grid-cols-1 gap-6 mb-8">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+              <h2 className="text-xl font-bold mb-4">월별 방문자 추이</h2>
+              <MonthlyVisitorsChart data={data} />
             </div>
-          ))}
         </div>
 
         {/* Main Menu */}
