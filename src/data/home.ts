@@ -119,6 +119,6 @@ export const homeContentEng = {
         { label: 'SME Certificate', img: null },
         { label: 'Quality/Environment/Safety', img: null },
       ],
-      legal: 'Holding 6 intellectual property rights including "Piston Ring Manufacturing Device and Method"',
+      legal: 'Holding 6 intellectual property rights including-Piston Ring Manufacturing Device and Method',
     },
 };
