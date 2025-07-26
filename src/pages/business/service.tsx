@@ -1,23 +1,14 @@
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
-import { motion, type Transition, type Variants } from "framer-motion";
+import { motion, type Transition } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function ServicePage() {
   const [showAllEquipment, setShowAllEquipment] = useState(false);
 
-  const fadeInVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" } as Transition,
-    },
-  };
-
-  const itemVariants: Variants = {
+  const itemVariants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: {
       opacity: 1,
@@ -26,16 +17,7 @@ export default function ServicePage() {
     },
   };
 
-  const sectionTitleVariants: Variants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.7, ease: "easeOut" } as Transition,
-    },
-  };
-
-  const leftAlignTextVariants: Variants = {
+  const leftAlignTextVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -44,12 +26,7 @@ export default function ServicePage() {
     },
   };
 
-  interface EquipmentItem {
-    name: string;
-    image: string;
-  }
-
-  const productionAndAssemblyEquipment: EquipmentItem[] = [
+  const equipmentList = [
     { name: "85호기", image: "/images/85_machine.png" },
     { name: "조각기", image: "/images/engraving_machine.png" },
     { name: "MCT", image: "/images/mct.png" },
@@ -73,27 +50,19 @@ export default function ServicePage() {
     { name: "CNC ROUTER", image: "/images/service_machine.png" },
   ];
 
-  const reliabilityEquipment: EquipmentItem[] = [
-    { name: "85호기 (측정)", image: "/images/85_machine.png" },
+  const measurementEquipmentList = [
+    { name: "3차원 측정기", image: "/images/85_machine.png" }, // Changed name
     {
-      name: "조각기 (측정)",
+      name: "2.5D 측정기", // Changed name
       image: "/images/engraving_machine.png",
     },
-    { name: "MCT (측정)", image: "/images/mct.png" },
+    { name: "현미경", image: "/images/mct.png" }, // Changed name
   ];
 
-  const allEquipmentList: EquipmentItem[] = [
-    ...productionAndAssemblyEquipment,
-    ...reliabilityEquipment,
-  ];
+  // Combine both lists for easier management of "show all" logic
+  const allEquipment = [...equipmentList, ...measurementEquipmentList];
 
-  interface ProductCategoryItem {
-    name: string;
-    subtitle: string;
-    image: string;
-  }
-
-  const productCategories: ProductCategoryItem[] = [
+  const productCategories = [
     {
       name: "이차전지",
       subtitle: "정밀 부품 / 모듈 설계",
@@ -116,7 +85,8 @@ export default function ServicePage() {
     },
   ];
 
-  const initialEquipmentCount = 10;
+  // 초기에 보여줄 설비 아이템 개수 (5열 2행)
+  const initialDisplayCount = 10; // This will now apply to the combined list
 
   return (
     <Layout>
@@ -136,7 +106,7 @@ export default function ServicePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            variants={sectionTitleVariants}
+            variants={leftAlignTextVariants}
           >
             Main Equipment
           </motion.h2>
@@ -154,29 +124,24 @@ export default function ServicePage() {
         </div>
       </div>
 
-      {/* 2. 생산가공 / 조립 및 신뢰성 섹션 통합 */}
+      {/* 2. 생산가공 / 조립 & 신뢰성 (측정 / 분석) Section */}
       <div className="bg-gray-800 pt-20 pb-[250px] relative z-0">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <h3 className="text-2xl font-semibold text-white mb-8">
-            생산가공 / 조립
-          </h3>
           <motion.div
-            className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 transition-all duration-500 ease-in-out ${
+            className={`transition-all duration-500 ease-in-out ${
               showAllEquipment
                 ? "max-h-[5000px] overflow-visible"
                 : "max-h-[400px] overflow-hidden"
             }`}
           >
-            {productionAndAssemblyEquipment
-              .slice(
-                0,
-                showAllEquipment
-                  ? productionAndAssemblyEquipment.length
-                  : initialEquipmentCount
-              )
-              .map((equipment, index) => (
+            {/* 생산가공 / 조립 */}
+            <h3 className="text-2xl font-semibold text-white mb-8">
+              생산가공 / 조립
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {equipmentList.map((equipment, index) => (
                 <motion.div
-                  key={`prod-${index}`}
+                  key={`prod-${index}`} // Unique key
                   className="bg-gray-700 rounded-lg overflow-hidden shadow-md flex flex-col items-center justify-center p-4"
                   variants={itemVariants}
                   initial="hidden"
@@ -199,42 +164,46 @@ export default function ServicePage() {
                   </p>
                 </motion.div>
               ))}
+            </div>
 
-            {showAllEquipment && (
-              <>
-                <h3 className="text-2xl font-semibold text-white mt-12 mb-8 col-span-full">
-                  신뢰성 (측정 / 분석)
-                </h3>
-                {reliabilityEquipment.map((equipment, index) => (
-                  <motion.div
-                    key={`meas-${index}`}
-                    className="bg-gray-700 rounded-lg overflow-hidden shadow-md flex flex-col items-center justify-center p-4"
-                    variants={itemVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                  >
-                    {equipment.image && (
-                      <div className="w-full h-24 relative mb-2">
-                        {" "}
-                        <Image
-                          src={equipment.image}
-                          alt={equipment.name}
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded"
-                        />
-                      </div>
-                    )}
-                    <p className="text-md font-medium text-white text-center">
-                      {equipment.name}
-                    </p>
-                  </motion.div>
-                ))}
-              </>
-            )}
+            {/* 신뢰성 (측정 / 분석) 섹션 */}
+            <h3 className="text-2xl font-semibold text-white mt-12 mb-8">
+              신뢰성 (측정 / 분석)
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {" "}
+              {/* Changed to lg:grid-cols-5 for consistency */}
+              {measurementEquipmentList.map((equipment, index) => (
+                <motion.div
+                  key={`meas-${index}`} // Unique key
+                  className="bg-gray-700 rounded-lg overflow-hidden shadow-md flex flex-col items-center justify-center p-4"
+                  variants={itemVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                >
+                  {equipment.image && (
+                    <div className="w-full h-24 relative mb-2">
+                      {" "}
+                      {/* Changed to h-24 for consistency */}
+                      <Image
+                        src={equipment.image}
+                        alt={equipment.name}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded"
+                      />
+                    </div>
+                  )}
+                  <p className="text-md font-medium text-white text-center">
+                    {equipment.name}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
-          {allEquipmentList.length > initialEquipmentCount && (
+
+          {allEquipment.length > initialDisplayCount && (
             <div className="mt-8 text-right">
               <button
                 onClick={() => setShowAllEquipment(!showAllEquipment)}
@@ -249,11 +218,10 @@ export default function ServicePage() {
 
       {/* 3. Process Section */}
       <motion.div
-        className="bg-white py-20 px-4 md:px-8 text-black rounded-t-xl mt-[-150px] relative z-10 pb-[250px]"
-        initial="hidden"
-        whileInView="visible"
+        className="bg-white py-20 px-4 md:px-8 text-black rounded-t-xl mt-[-200px] relative z-10 pb-[250px]"
+        initial={{ y: 300, opacity: 1 }} // y값을 더 크게 설정하여 화면 밖에서 시작, opacity는 1로 유지
+        whileInView={{ y: 0, transition: { duration: 0.8, ease: "easeOut" } }} // 원래 위치로 이동, opacity는 유지
         viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInVariants}
       >
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-4">Process</h2>
@@ -352,27 +320,32 @@ export default function ServicePage() {
 
       {/* 4. Products Section - Process 섹션 위에 겹쳐지도록 설정 */}
       <motion.div
-        className="py-20 px-4 md:px-8 text-white rounded-t-xl mt-[-150px] relative z-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInVariants}
-        style={{
-          // 기존 푸른색 배경을 Tailwind CSS의 bg-gray-800 대신 rgba 값으로 직접 지정
-          backgroundColor: "rgba(31, 41, 55, 1)",
-          // 그 위에 이미지를 추가. 'repeat' 속성을 사용하여 패턴처럼 반복 가능
-          backgroundImage: 'url("/images/service_product_bg.png")', // <--- 여기에 원하는 이미지 경로를 넣어주세요 (예: 작은 패턴, 노이즈 질감 등)
-          backgroundSize: "auto", // 'cover', 'contain', 'auto', '100% 100%' 등 원하는 크기 조절 방식 선택
-          backgroundRepeat: "repeat", // 'no-repeat', 'repeat-x', 'repeat-y' 등 원하는 반복 방식 선택
-          backgroundPosition: "center", // 이미지 위치 조정
-          // backgroundBlendMode: 'overlay', // (선택 사항) 배경색과 이미지 블렌딩 모드
-          // opacity: 0.8, // (선택 사항) 섹션 전체의 투명도 조절
+        className="bg-gray-800 py-20 px-4 md:px-8 text-white rounded-t-xl mt-[-200px] relative z-20 overflow-hidden" // overflow-hidden 추가
+        initial={{ y: 200, opacity: 0 }} // Product 섹션은 Process 섹션 위에 겹치므로 Process 섹션과 같은 높이로 시작
+        whileInView={{
+          y: 0,
+          opacity: 1,
+          transition: { duration: 0.8, ease: "easeOut" },
         }}
+        viewport={{ once: true, amount: 0.1 }}
       >
-        {/* 기존의 반투명 오버레이를 유지하여 텍스트 가독성 확보 */}
-        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
-        {/* 콘텐츠는 오버레이 위에 오도록 z-index 설정 */}
+        {/* 배경 이미지와 오버레이를 위한 div 추가 */}
+        <div
+          className="absolute inset-0" // 부모 motion.div에 대한 절대 위치 설정
+          style={{
+            backgroundImage: `url('/images/service_product_bg.png')`, // 배경 이미지 경로
+            backgroundSize: "cover", // 이미지가 요소를 꽉 채우도록 설정
+            backgroundPosition: "center", // 이미지를 가운데 정렬
+            backgroundRepeat: "no-repeat", // 이미지가 반복되지 않도록 설정
+          }}
+        >
+          {/* 어둡게 할 오버레이 div 추가 */}
+          <div className="absolute inset-0 bg-gray-800 opacity-90"></div>{" "}
+          {/* 검은색 반투명 오버레이 */}
+        </div>
         <div className="max-w-7xl mx-auto relative z-10">
+          {" "}
+          {/* This div needs to remain to center the content within the full-width section */}
           <h2 className="text-4xl font-bold mb-4">Products</h2>
           <p className="text-lg mb-12 leading-relaxed">
             정밀 부품, 모듈, 자동화 장비까지
@@ -395,7 +368,7 @@ export default function ServicePage() {
             {productCategories.map((product, index) => (
               <motion.div
                 key={index}
-                className="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out group"
+                className="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out group" /* Added 'group' class */
                 variants={itemVariants}
               >
                 <div className="relative w-full h-48">
@@ -407,17 +380,24 @@ export default function ServicePage() {
                   />
                 </div>
                 <div className="p-6 transition-colors duration-300 group-hover:bg-white">
+                  {" "}
+                  {/* Added hover:bg-white */}
                   <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-black transition-colors duration-300">
+                    {" "}
+                    {/* Added group-hover:text-black */}
                     {product.name}
                   </h3>
                   <p className="text-gray-400 text-sm group-hover:text-gray-700 transition-colors duration-300">
+                    {" "}
+                    {/* Changed group-hover:text-gray-700 for better contrast */}
                     {product.subtitle}
                   </p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
-        </div>
+        </div>{" "}
+        {/* closing the max-w-7xl mx-auto div for centering content */}
       </motion.div>
     </Layout>
   );
