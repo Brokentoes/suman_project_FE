@@ -4,6 +4,7 @@ import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import Image from "next/image"; // Image import added for completeness, though not directly used for the SVG arrow.
 
 export default function VisionPage() {
   const fadeInRiseVariants = {
@@ -93,15 +94,55 @@ export default function VisionPage() {
   };
 
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  // 클라이언트에서 컴포넌트가 마운트되었는지 확인하는 상태
+
   const [isClient, setIsClient] = useState(false);
 
-  // 컴포넌트가 클라이언트에서 마운트될 때 isClient 상태를 true로 설정
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   const svgViewBox = "0 0 1047 810";
+
+  // Reusable SVG arrow component with adjustable length
+  const ArrowSVG = ({
+    x,
+    y,
+    className,
+    arrowLength = 70,
+  }: {
+    x: number;
+    y: number;
+    className: string;
+    arrowLength?: number;
+  }) => (
+    <svg
+      x={x}
+      y={y}
+      width={arrowLength + 10} // SVG width adjusted for arrowLength + arrowhead
+      height="20" // Fixed height for the arrow container
+      viewBox={`0 0 ${arrowLength + 10} 20`} // ViewBox adjusted dynamically
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <line
+        x1="0"
+        y1="10"
+        x2={arrowLength}
+        y2="10"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <polyline
+        points={`${arrowLength - 5},5 ${arrowLength},10 ${arrowLength - 5},15`}
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 
   return (
     <>
@@ -169,7 +210,7 @@ export default function VisionPage() {
                           y="160"
                           width="260"
                           height="405"
-                          className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                          className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
                           x="110"
@@ -182,25 +223,22 @@ export default function VisionPage() {
                         >
                           2024
                         </text>
-                        <text
-                          x="110"
-                          y="380"
-                          fill="white"
-                          fontSize="24"
-                          textAnchor="middle"
+                        {/* 2024년 화살표 대체 */}
+                        <ArrowSVG
+                          x={90 - 80 / 2} // Adjust X to center the arrow SVG
+                          y={380 - 10} // Adjust Y to align with previous text Y
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2024"
                               ? "opacity-0"
                               : "opacity-100"
                           }`}
-                        >
-                          →
-                        </text>
+                          arrowLength={120} // Example length for 2024
+                        />
 
                         <foreignObject
-                          x="40"
+                          x="2"
                           y="380"
-                          width="140"
+                          width="230"
                           height="80"
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2024"
@@ -208,7 +246,7 @@ export default function VisionPage() {
                               : "opacity-0"
                           }`}
                         >
-                          <div className="font-size-60 text-center text-white">
+                          <div className="text-xl text-center text-white">
                             제2시험센터 구축
                             <br />
                             반도체 정밀가공분야 진입
@@ -227,7 +265,7 @@ export default function VisionPage() {
                           y="490"
                           width="440"
                           height="380"
-                          className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                          className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
                           x="310"
@@ -240,25 +278,22 @@ export default function VisionPage() {
                         >
                           2026
                         </text>
-                        <text
-                          x="310"
-                          y="680"
-                          fill="white"
-                          fontSize="24"
-                          textAnchor="middle"
+                        {/* 2026년 화살표 대체 */}
+                        <ArrowSVG
+                          x={290 - 100 / 2} // Adjust X to center the arrow SVG
+                          y={680 - 10} // Adjust Y to align with previous text Y
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2026"
                               ? "opacity-0"
                               : "opacity-100"
                           }`}
-                        >
-                          →
-                        </text>
+                          arrowLength={150} // Example length for 2026
+                        />
 
                         <foreignObject
-                          x="240"
+                          x="210"
                           y="670"
-                          width="140"
+                          width="200" // width를 140에서 250으로 증가.
                           height="80"
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2026"
@@ -266,7 +301,7 @@ export default function VisionPage() {
                               : "opacity-0"
                           }`}
                         >
-                          <div className="font-size-60 text-center text-white">
+                          <div className="text-xl text-center text-white ">
                             전지모듈, 장비 및
                             <br />
                             모빌리티 분야 확장
@@ -285,7 +320,7 @@ export default function VisionPage() {
                           y="0"
                           width="550"
                           height="788"
-                          className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02]"
+                          className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
                           x="750"
@@ -298,25 +333,22 @@ export default function VisionPage() {
                         >
                           2028
                         </text>
-                        <text
-                          x="750"
-                          y="430"
-                          fill="white"
-                          fontSize="24"
-                          textAnchor="middle"
+                        {/* 2028년 화살표 대체 */}
+                        <ArrowSVG
+                          x={720 - 120 / 2} // Adjust X to center the arrow SVG
+                          y={430 - 10} // Adjust Y to align with previous text Y
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2028"
                               ? "opacity-0"
                               : "opacity-100"
                           }`}
-                        >
-                          →
-                        </text>
+                          arrowLength={190} // Example length for 2028
+                        />
 
                         <foreignObject
-                          x="690"
+                          x="650"
                           y="420"
-                          width="140"
+                          width="200"
                           height="80"
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2028"
@@ -324,7 +356,7 @@ export default function VisionPage() {
                               : "opacity-0"
                           }`}
                         >
-                          <div className="font-size-60 text-center text-white">
+                          <div className="text-xl text-center text-white">
                             매출 600억
                             <br />
                             순이익 150억원 목표

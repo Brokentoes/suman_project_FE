@@ -1,20 +1,19 @@
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
-import { motion, type Transition, type Variants } from "framer-motion"; // Variants 타입을 추가로 임포트
+import { motion, type Transition, type Variants } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function ServicePage() {
   const [showAllEquipment, setShowAllEquipment] = useState(false);
 
-  // Variants 타입 정의를 직접 사용
   const fadeInVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" } as Transition, // as Transition 유지
+      transition: { duration: 0.8, ease: "easeOut" } as Transition,
     },
   };
 
@@ -23,7 +22,7 @@ export default function ServicePage() {
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.5, ease: "easeOut" } as Transition, // as Transition 유지
+      transition: { duration: 0.5, ease: "easeOut" } as Transition,
     },
   };
 
@@ -32,7 +31,7 @@ export default function ServicePage() {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.7, ease: "easeOut" } as Transition, // as Transition 유지
+      transition: { duration: 0.7, ease: "easeOut" } as Transition,
     },
   };
 
@@ -41,11 +40,10 @@ export default function ServicePage() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" } as Transition, // as Transition 유지
+      transition: { duration: 0.8, ease: "easeOut" } as Transition,
     },
   };
 
-  // 설비 데이터 타입 정의
   interface EquipmentItem {
     name: string;
     image: string;
@@ -84,13 +82,11 @@ export default function ServicePage() {
     { name: "MCT (측정)", image: "/images/mct.png" },
   ];
 
-  // 모든 장비 리스트를 통합
   const allEquipmentList: EquipmentItem[] = [
     ...productionAndAssemblyEquipment,
     ...reliabilityEquipment,
   ];
 
-  // 제품 카테고리 데이터 타입 정의
   interface ProductCategoryItem {
     name: string;
     subtitle: string;
@@ -120,8 +116,7 @@ export default function ServicePage() {
     },
   ];
 
-  // 초기에 보여줄 설비 아이템 개수 (생산가공/조립만 표시)
-  const initialEquipmentCount = 10; // lg:grid-cols-5 기준 2줄 = 10개
+  const initialEquipmentCount = 10;
 
   return (
     <Layout>
@@ -181,7 +176,7 @@ export default function ServicePage() {
               )
               .map((equipment, index) => (
                 <motion.div
-                  key={`prod-${index}`} // 고유한 key를 위해 prefix 추가
+                  key={`prod-${index}`}
                   className="bg-gray-700 rounded-lg overflow-hidden shadow-md flex flex-col items-center justify-center p-4"
                   variants={itemVariants}
                   initial="hidden"
@@ -205,7 +200,6 @@ export default function ServicePage() {
                 </motion.div>
               ))}
 
-            {/* 신뢰성 (측정 / 분석) 섹션 - showAllEquipment가 true일 때만 보이도록 */}
             {showAllEquipment && (
               <>
                 <h3 className="text-2xl font-semibold text-white mt-12 mb-8 col-span-full">
@@ -213,7 +207,7 @@ export default function ServicePage() {
                 </h3>
                 {reliabilityEquipment.map((equipment, index) => (
                   <motion.div
-                    key={`meas-${index}`} // 고유한 key를 위해 prefix 추가
+                    key={`meas-${index}`}
                     className="bg-gray-700 rounded-lg overflow-hidden shadow-md flex flex-col items-center justify-center p-4"
                     variants={itemVariants}
                     initial="hidden"
@@ -223,7 +217,6 @@ export default function ServicePage() {
                     {equipment.image && (
                       <div className="w-full h-24 relative mb-2">
                         {" "}
-                        {/* 이미지 높이 통일 */}
                         <Image
                           src={equipment.image}
                           alt={equipment.name}
@@ -359,13 +352,27 @@ export default function ServicePage() {
 
       {/* 4. Products Section - Process 섹션 위에 겹쳐지도록 설정 */}
       <motion.div
-        className="bg-gray-800 py-20 px-4 md:px-8 text-white rounded-t-xl mt-[-150px] relative z-20"
+        className="py-20 px-4 md:px-8 text-white rounded-t-xl mt-[-150px] relative z-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeInVariants}
+        style={{
+          // 기존 푸른색 배경을 Tailwind CSS의 bg-gray-800 대신 rgba 값으로 직접 지정
+          backgroundColor: "rgba(31, 41, 55, 1)",
+          // 그 위에 이미지를 추가. 'repeat' 속성을 사용하여 패턴처럼 반복 가능
+          backgroundImage: 'url("/images/service_product_bg.png")', // <--- 여기에 원하는 이미지 경로를 넣어주세요 (예: 작은 패턴, 노이즈 질감 등)
+          backgroundSize: "auto", // 'cover', 'contain', 'auto', '100% 100%' 등 원하는 크기 조절 방식 선택
+          backgroundRepeat: "repeat", // 'no-repeat', 'repeat-x', 'repeat-y' 등 원하는 반복 방식 선택
+          backgroundPosition: "center", // 이미지 위치 조정
+          // backgroundBlendMode: 'overlay', // (선택 사항) 배경색과 이미지 블렌딩 모드
+          // opacity: 0.8, // (선택 사항) 섹션 전체의 투명도 조절
+        }}
       >
-        <div className="max-w-7xl mx-auto">
+        {/* 기존의 반투명 오버레이를 유지하여 텍스트 가독성 확보 */}
+        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
+        {/* 콘텐츠는 오버레이 위에 오도록 z-index 설정 */}
+        <div className="max-w-7xl mx-auto relative z-10">
           <h2 className="text-4xl font-bold mb-4">Products</h2>
           <p className="text-lg mb-12 leading-relaxed">
             정밀 부품, 모듈, 자동화 장비까지
