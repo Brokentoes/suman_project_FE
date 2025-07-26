@@ -72,8 +72,8 @@ function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 gap-6 mb-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-              <h2 className="text-xl font-bold mb-4">월별 방문자 추이</h2>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <h2 className="text-xl font-bold mb-4 text-white">월별 방문자 추이</h2>
               <MonthlyVisitorsChart data={data} />
             </div>
         </div>
