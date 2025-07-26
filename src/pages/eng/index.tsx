@@ -228,7 +228,6 @@ export default function HomePage({ content }: HomePageProps) {
                 Explore Products
                 <span className="text-xl">→</span>
               </button>
-            
             </div>
         </section>
       </main>
