@@ -1,11 +1,19 @@
 // index.tsx Props 타입 정의
 export interface HomePageProps {
   content:{
-    bannerImages: string[];
     section1Text: {
       title: string;
       subtitle: string;
     };
+    section2: {
+      title: string;
+      description: string;
+      bgImage: string;
+      buttonLabel: string;
+      keywords: string[];
+      translations?: string[];
+    };
+  
     section3: {
       title: string;
       subtitle: string;
@@ -16,6 +24,7 @@ export interface HomePageProps {
         description: string;
       }>;
     };
+
     sectionCertifications: {
       title: string;
       tags: string[];
@@ -25,5 +34,7 @@ export interface HomePageProps {
       }>;
       legal: string;
     };
+
+    footer_banner: string[];
   }
 }

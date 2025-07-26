@@ -54,7 +54,7 @@ export default function CeoPage() {
       {/* 서브 내비게이션 (Breadcrumb) 섹션 */}
       <BreadcrumbSection path="회사소개 > CEO 인사말" />
 
-      {/* CEO 인사말  섹션 */}
+      {/* CEO 인사말 섹션 */}
       <main className="content-wrapper py-20 px-4 md:px-8 bg-white flex justify-center items-center">
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center md:items-start space-y-10 md:space-y-0 md:space-x-12">
           <motion.div
@@ -74,7 +74,7 @@ export default function CeoPage() {
                 찾아주신 고객 여러분, 반갑습니다.
               </span>
             </h2>
-            <p className="mb-4 text-lg">안녕하십니까.</p>
+            <p className="mb-4 text-2xl">안녕하십니까.</p>
             <p className="mb-4">
               (주)수만 기업은 정밀 가공 기술을 기반으로 자동차, 전기전자,
               이차전지 산업에
@@ -149,6 +149,7 @@ export default function CeoPage() {
           </motion.div>
         </div>
       </main>
+      <hr className="my-8 border-gray-200 w-full" />
     </Layout>
   );
 }

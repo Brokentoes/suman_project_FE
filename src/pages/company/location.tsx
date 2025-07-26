@@ -1,7 +1,7 @@
 // location.tsx
 import { motion, type Transition } from "framer-motion";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"; // <-- useMemo 추가
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
@@ -57,7 +57,6 @@ const locationsData = [
 export default function LocationPage() {
   const [openMap, setOpenMap] = useState<string | null>(null);
   const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
   const kakaoMaps = useRef<{ [key: string]: kakao.maps.Map | null }>({});
   const infoWindows = useRef<{ [key: string]: kakao.maps.InfoWindow | null }>(
     {}
@@ -81,7 +80,8 @@ export default function LocationPage() {
         damping: 20,
         duration: 0.5,
       } as Transition),
-    []
+    [] // 의존성 없음: 객체 내부의 값들이 변하지 않으므로 한 번만 생성.
+
   );
 
   const KAKAO_MAP_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY;
@@ -162,6 +162,7 @@ export default function LocationPage() {
 
         if (nextOpenMap && kakaoMaps.current[nextOpenMap]) {
           setTimeout(() => {
+
             kakaoMaps.current[nextOpenMap]?.relayout();
             const config = kakaoMapConfigs[nextOpenMap];
             kakaoMaps.current[nextOpenMap]?.setCenter(
@@ -182,7 +183,7 @@ export default function LocationPage() {
       !window.kakao?.maps
     ) {
       const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`; // libraries=services 추가
       script.async = true;
       script.onload = () => {
         window.kakao.maps.load(() => {
@@ -218,9 +219,7 @@ export default function LocationPage() {
           subtitle="Location"
           backgroundImage="/images/company_hero.png"
         />
-
         <BreadcrumbSection path="회사소개 > 시설 위치 / 찾아오시는 길" />
-
         <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
           <div className="max-w-7xl mx-auto">
             <motion.div
@@ -270,7 +269,6 @@ export default function LocationPage() {
                         />
                       </svg>
                     </div>
-
                     <motion.div
                       initial={false}
                       animate={{
