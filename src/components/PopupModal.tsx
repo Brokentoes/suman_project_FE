@@ -6,6 +6,7 @@ interface PopupModalProps {
   onClose: () => void;
 }
 
+
 const PopupModal: React.FC<PopupModalProps> = ({ title, content, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
