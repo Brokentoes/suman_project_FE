@@ -81,7 +81,6 @@ export default function LocationPage() {
         duration: 0.5,
       } as Transition),
     [] // 의존성 없음: 객체 내부의 값들이 변하지 않으므로 한 번만 생성.
-
   );
 
   const KAKAO_MAP_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY;
@@ -162,7 +161,6 @@ export default function LocationPage() {
 
         if (nextOpenMap && kakaoMaps.current[nextOpenMap]) {
           setTimeout(() => {
-
             kakaoMaps.current[nextOpenMap]?.relayout();
             const config = kakaoMapConfigs[nextOpenMap];
             kakaoMaps.current[nextOpenMap]?.setCenter(
@@ -299,6 +297,7 @@ export default function LocationPage() {
             </motion.div>
           </div>
         </div>
+        <hr className="my-8 border-gray-200 w-full" />
       </Layout>
     </>
   );
