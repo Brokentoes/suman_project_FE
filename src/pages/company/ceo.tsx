@@ -97,7 +97,7 @@ import Head from "next/head";
                 찾아주신 고객 여러분, 반갑습니다.
               </span>
             </h2>
-            <p className="mb-4 text-lg">
+            <p className="mb-4 text-2xl">
               안녕하십니까.
             </p>
             <p className="mb-4">

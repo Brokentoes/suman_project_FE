@@ -169,8 +169,12 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLangStore } from "@/stores/langStore";
 
-const NAV_ITEMS = [
+// -----------------------------------
+//               Nav_KOR
+// -----------------------------------
+const navItemsKor = [
   {
     label: "회사소개",
     href: "/company/ceo",
@@ -209,6 +213,49 @@ const NAV_ITEMS = [
   },
 ];
 
+// -----------------------------------
+//               Nav_ENG
+// -----------------------------------
+const navItemsEng = [
+  {
+    label: "Company",
+    href: "/eng/company/ceo",
+    submenu: [
+      { label: "CEO Message", href: "/eng/company/ceo" },
+      { label: "Vision", href: "/eng/company/vision" },
+      { label: "History", href: "/eng/company/history" },
+      { label: "Organization", href: "/eng/company/org" },
+      { label: "CI", href: "/eng/company/ci" },
+      { label: "Location", href: "/eng/company/location" },
+    ],
+  },
+  {
+    label: "Business",
+    href: "/eng/business/service",
+    submenu: [
+      { label: "Service", href: "/eng/business/service" },
+      { label: "Product", href: "/eng/business/product" },
+    ],
+  },
+  {
+    label: "Careers",
+    href: "/eng/careers/philosophy",
+    submenu: [
+      { label: "Talent Philosophy", href: "/eng/careers/philosophy" },
+      { label: "Recruit Notice", href: "/eng/careers/notice" },
+    ],
+  },
+  {
+    label: "Support",
+    href: "/eng/support/faq",
+    submenu: [
+      { label: "FAQ", href: "/eng/support/faq" },
+      { label: "Contact Us", href: "/eng/support/contact" },
+    ],
+  },
+];
+
+
 export default function Header() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [scrollDir, setScrollDir] = useState<"up" | "down">("up");
@@ -216,6 +263,8 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
 
   const isHovered = hoveredIndex !== null;
+  const { lang } = useLangStore();
+  const NAV_ITEMS = lang === 'KOR' ? navItemsKor : navItemsEng; // LangStore의 값이 KOR이면, Nav_Items의 값은 navItemsKor.
 
   useEffect(() => {
     const handleScroll = () => {
