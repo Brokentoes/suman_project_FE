@@ -1,11 +1,11 @@
-// /stores/useAuthStore.ts - 이 코드로 교체
+// 로그인 토큰 관련 전역 함수
 import { create } from 'zustand';
 
 interface AuthState {
   isLoggedIn: boolean;
   accessToken: string | null;
   refreshToken: string | null;
-  login: (accessToken: string, refreshToken: string) => void; // 매개변수 추가
+  login: (accessToken: string, refreshToken: string) => void;
   logout: () => void;
   init: () => void;
   updateAccessToken: (newAccessToken: string) => void;
@@ -16,6 +16,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   accessToken: null,
   refreshToken: null,
   
+  // ---------------------- 로그인 --------------------------
   login: (accessToken: string, refreshToken: string) => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
@@ -26,7 +27,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       refreshToken 
     });
   },
-  
+
+  // ---------------------- 로그아웃 --------------------------  
   logout: () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -37,7 +39,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       refreshToken: null 
     });
   },
-  
+
+  // ---------------------- 초기값 --------------------------
   init: () => {
     const saved = localStorage.getItem('isLoggedIn') === 'true';
     const accessToken = localStorage.getItem('accessToken');
@@ -49,7 +52,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       refreshToken 
     });
   },
-  
+
+  // ---------------------- 재발행 토큰 --------------------------
   updateAccessToken: (newAccessToken: string) => {
     localStorage.setItem('accessToken', newAccessToken);
     set({ accessToken: newAccessToken });

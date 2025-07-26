@@ -1,16 +1,13 @@
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import { motion, type Transition } from "framer-motion";
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 import Layout from "@/components/Layout";
+import Image from 'next/image';
 
-import { useEffect, useState } from "react";
-import { ArrowUp } from "lucide-react";
+// import { useEffect, useState } from "react";
 import Head from "next/head";
 
-
-  
-  
   // Ceo인사말 좌측에서 날아오는 애니메이션
   const slideInLeft = {
     hidden: { opacity: 0, x: -50 },
@@ -126,10 +123,12 @@ import Head from "next/head";
               viewport={{ once: true, amount: 0.3 }}
             >
               (주) 수만 그룹 대표이사 임태형{" "}
-              <img
+              <Image
                 src="/images/signature.png"
                 alt="임태형 대표이사 서명"
                 className="w-40 h-auto inline-block align-middle ml-2"
+                width={100}
+                height={100}
               />
             </motion.p>
           </motion.div>
@@ -155,10 +154,12 @@ import Head from "next/head";
               }}
             >
               {/* 실제 CEO 이미지로 교체하세요 */}
-              <img
+              <Image
                 src="/images/image_419e40.png" // 실제 CEO 이미지 경로로 변경하세요
                 alt="SUMAN CEO"
                 className="w-full h-full object-cover"
+                width={100}
+                height={100}
               />
             </div>
           </motion.div>

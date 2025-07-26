@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
 import { motion, type Transition } from "framer-motion";
 import Head from "next/head";
+import Image from "next/image";
 
 export default function HistoryPage() {
   // Framer Motion variants
@@ -90,10 +91,12 @@ export default function HistoryPage() {
 
           {/* 우측 이미지 (Company Growth Arrow) 및 매출/임직원 정보 */}
           <div className="relative flex flex-col justify-center items-center h-full min-h-[300px] md:min-h-auto z-[100]">
-            <img
+            <Image
               src="/images/image_31aa9b.jpg" // Use the new background image with the arrow
               alt="Company Growth Arrow"
               className="absolute inset-0 w-full h-full object-cover object-center z-10"
+              width={100}
+              height={100}
             />
             <div className="absolute bottom-[500px] right-[200px] z-[99999] text-left text-sm text-white drop-shadow-md">
               <p className="mb-1">
@@ -115,10 +118,12 @@ export default function HistoryPage() {
           
         </div>
 
-        <img
+        <Image
           src="/images/arrowww_suman.png"
           alt="Company Growth Arrow"
           className="absolute top-[35%] left-[35%] w-[900px] z-20 opacity-90 pointer-events-none"
+          width={100}
+          height={100}
         />
       </section>
 

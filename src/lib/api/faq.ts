@@ -1,33 +1,36 @@
 // FAQ관련 API함수
-import instance from './axios';
+import publicInstance from "./publicInstance";
+import privateInstance from "./privateInstance";
+import { isPrimaryPointer } from "framer-motion";
 
 export interface FAQ {
   id: number;
   question: string;
   answer: string;
-  category: string;
+  category: number;
   is_published: boolean;
 }
 
 export interface CreateFAQData {
   question: string;
   answer: string;
-  category: string;
+  category: number;
   is_published: boolean;
 }
 
 export interface UpdateFAQData {
   question: string;
   answer: string;
-  category: string;
+  category: number;
   is_published: boolean;
 }
 // -------------------------------------
-//            전체 FAQ 조회
+//       전체 FAQ 조회 - publicInstance
 // -------------------------------------
 export const fetchFAQs = async (): Promise<FAQ[]> => {
   try {
-    const response = await instance.get<FAQ[]>('faqs/');
+    const response = await publicInstance.get<FAQ[]>('faqs/');
+    console.log("FAQ GET성공: ",response);
     return response.data;
   } catch (error: any) {
     console.error('FAQ 조회 실패:', error);
@@ -36,7 +39,7 @@ export const fetchFAQs = async (): Promise<FAQ[]> => {
 };
 
 // -------------------------------------
-//            신규 FAQ 등록
+//      신규 FAQ 등록 - privateInstance
 // -------------------------------------
 export const createFAQ = async (data: CreateFAQData): Promise<FAQ> => {
   try {
@@ -47,17 +50,25 @@ export const createFAQ = async (data: CreateFAQData): Promise<FAQ> => {
     if (!data.answer?.trim()) {
       throw new Error('답변을 입력해주세요.');
     }
-    if (!data.category?.trim()) {
+    if (!data.category) {
       throw new Error('카테고리를 입력해주세요.');
     }
-
-    const response = await instance.post<FAQ>('faqs/', {
+    // 요청 데이터 로그 출력
+    const payload = {
       question: data.question.trim(),
       answer: data.answer.trim(),
-      category: data.category.trim(),
+      category: data.category,
+      is_published: data.is_published,
+    };
+    console.log('[📦 POST 요청 payload]', payload);
+
+    const response = await privateInstance.post<FAQ>('faqs/', {
+      question: data.question.trim(),
+      answer: data.answer.trim(),
+      category: data.category,
       is_published: data.is_published
     });
-    
+
     return response.data;
   } catch (error: any) {
     console.error('FAQ 등록 실패:', error);
@@ -66,7 +77,7 @@ export const createFAQ = async (data: CreateFAQData): Promise<FAQ> => {
 };
 
 // -------------------------------------
-//            기존 FAQ 수정
+//      기존 FAQ 수정 - privateInstance
 // -------------------------------------
 export const updateFAQ = async (
   id: number,
@@ -80,14 +91,14 @@ export const updateFAQ = async (
     if (!data.answer?.trim()) {
       throw new Error('답변을 입력해주세요.');
     }
-    if (!data.category?.trim()) {
+    if (!data.category) {
       throw new Error('카테고리를 입력해주세요.');
     }
 
-    const response = await instance.put<FAQ>(`faqs/${id}/`, {
+    const response = await privateInstance.put<FAQ>(`faqs/${id}/`, {
       question: data.question.trim(),
       answer: data.answer.trim(),
-      category: data.category.trim(),
+      category: data.category,
       is_published: data.is_published
     });
     return response.data;
@@ -99,11 +110,11 @@ export const updateFAQ = async (
 };
 
 // -------------------------------------
-//            기존 FAQ 삭제
+//       기존 FAQ 삭제 - privateInstance
 // -------------------------------------
 export const deleteFAQ = async (id: number): Promise<void> => {
   try {
-    await instance.delete(`faqs/${id}/`);
+    await privateInstance.delete(`faqs/${id}/`);
   } catch (error: any) {
     console.error('FAQ 삭제 실패:', error);
     throw new Error('FAQ 삭제에 실패했습니다.');

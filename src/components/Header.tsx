@@ -259,7 +259,6 @@ export default function Header() {
                 width={60}
                 height={60}
                 priority
-                style={{ height: "auto", width: "auto" }}
                 className="cursor-pointer"
               />
             </Link>

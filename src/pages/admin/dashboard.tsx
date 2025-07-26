@@ -1,31 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, BookOpenText } from 'lucide-react';
+import { Users, MessageSquare, HelpCircle, BarChart3, Activity, BookOpenText } from 'lucide-react';
 import { useRouter } from 'next/router';
-import { useAuthStore } from '@/stores/useAuthStore';
 import AdminHeader from '@/components/AdminHeader';
 import { getAnalyticData } from '@/lib/api/analytic';
+import { withAdminAuth } from '@/components/WithAdminAuth';
 
 interface AnalyticData {
   total_users: number;
   change_percentage: number;
 }
 
-export default function AdminDashboard() {
+function AdminDashboard() {
   const router = useRouter();
   const [analytics, setAnalytics] = useState<AnalyticData | null>(null);
-  const { isLoggedIn, init } = useAuthStore();
-
-  //   useEffect(() => {
-  //   init();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     router.replace('/admin/login');
-  //   }
-  // }, [isLoggedIn]);
-
-  // if (!isLoggedIn) return null;
 
 // 고객 분석 데이터 요청
   useEffect(() => {
@@ -153,3 +140,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+export default withAdminAuth(AdminDashboard);

@@ -4,10 +4,58 @@ import { section1Text, section2, section3, sectionCertifications, footer_banner}
 import { useState } from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import Image from "next/image";
+
 import Head from 'next/head';
 import Link from "next/link";
+import { GetStaticProps } from 'next';
 
-export default function HomePage() {
+
+// Props 타입 정의
+interface HomePageProps {
+  section1Text: {
+    subtitle: string;
+  };
+  section2: {
+    title: string;
+    description: string;
+    bgImage: string[];
+    buttonLabel: string;
+    keywords: string;
+    translations: string;
+  };
+  section3: {
+    title: string;
+    subtitle: string;
+    cards: Array<{
+      img: string;
+      title: string;
+      subtitle: string;
+      description: string;
+    }>;
+  };
+  sectionCertifications: {
+    title: string;
+    tags: string[];
+    certifications: Array<{
+      label: string;
+      img?: string | null;
+    }>;
+    legal: string;
+  };
+  footer_banner: string[];
+}
+
+
+export default function HomePage(props: HomePageProps) {
+  // props에서 데이터를 받아오되, 클라이언트에서는 기존 import 사용
+  const pageData = {
+    section1Text: props.section1Text || section1Text,
+    section2: props.section2 || section2,
+    section3: props.section3 || section3,
+    sectionCertifications: props.sectionCertifications || sectionCertifications,
+    footer_banner: props.footer_banner || footer_banner
+  };
+  
   const [showMore, setShowMore] = useState(false);
   const handleToggleMore = () => setShowMore(prev => !prev);
 
@@ -19,10 +67,17 @@ export default function HomePage() {
 
   return (
     <>
-      <Head>
-          <title>(주) 수만</title>
-          <link rel="icon" sizes="16x16" href="/images/logo.ico" />
-      </Head>
+
+    <Head>
+        <title>(주) 수만</title>
+        <meta name="description" content="정밀한 기술이 만드는 내일의 기업, 수만. 혁신적인 솔루션과 최적의 서비스를 제공합니다." />
+        <meta name="keywords" content="수만, SUMAN, 기업솔루션, 혁신기술, 정밀기술" />
+        <meta property="og:title" content="(주) 수만" />
+        <meta property="og:description" content="정밀한 기술이 만드는 내일의 기업" />
+        <meta property="og:type" content="website" />
+        <link rel="icon" sizes="16x16" href="/images/logo.ico" />
+    </Head>
+
       <Header />
 
       <main>
@@ -419,3 +474,21 @@ export default function HomePage() {
     </>
   );
 }
+
+// SSG를 위한 getStaticProps 함수
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  // 빌드 타임에 데이터를 가져옴
+  const { section1Text, section2, section3, sectionCertifications, footer_banner} = await import('@/data/home');
+  
+  return {
+    props: {
+      section1Text,
+      section2,
+      section3,
+      sectionCertifications,
+      footer_banner
+    },
+    // Optional: ISR (Incremental Static Regeneration) 설정
+    // revalidate: 3600, // 1시간마다 재생성 (필요한 경우에만 주석 해제)
+  };
+};

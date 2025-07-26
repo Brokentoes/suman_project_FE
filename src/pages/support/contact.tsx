@@ -1,6 +1,6 @@
 // contact.tsx
 import { useState } from "react";
-import axios from "axios";
+import { postInquiry } from "@/lib/api/contact";
 import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
 import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
 import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
@@ -8,13 +8,12 @@ import { motion, type Transition } from "framer-motion"; // motion, Transition �
 import Head from "next/head"; // Head 임포트
 
 export default function InquiryFormPage() {
-  // 컴포넌트 이름을 페이지에 맞게 변경
   const [form, setForm] = useState({
     name: "",
     affiliation: "",
     phone: "",
     email: "",
-    contect: "", // 오타: 'contect' -> 'content' 또는 'contactContent'
+    contect: "",
   });
 
   const handleChange = (
@@ -24,12 +23,12 @@ export default function InquiryFormPage() {
     setForm({ ...form, [name]: value });
   };
 
+// 문의 등록
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://192.168.100.106:8000/api/Inquiries/", form);
+      await postInquiry(form);
       alert("문의가 등록되었습니다.");
-      // 폼 초기화
       setForm({
         name: "",
         affiliation: "",
@@ -56,7 +55,7 @@ export default function InquiryFormPage() {
   return (
     <>
       <Head>
-        <title>고객 문의 | 수만</title> {/* 페이지 타이틀 설정 */}
+        <title>고객 문의 | 수만</title>
       </Head>
       <Layout>
         <HeroSection

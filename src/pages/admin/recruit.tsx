@@ -1,7 +1,6 @@
-// pages/admin/recruit.tsx
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { useAuthStore } from '@/stores/useAuthStore';
+// import { useRouter } from 'next/router';
+// import { useAuthStore } from '@/stores/useAuthStore';
 import {
   fetchRecruitments,
   createRecruitment,
@@ -13,7 +12,7 @@ import {
   ApiError
 } from '@/lib/api/recruit';
 import AdminHeader from '@/components/AdminHeader';
-import { Shield, Users, MessageSquare, HelpCircle, Settings, BarChart3, Activity, Plus, RefreshCw, Eye, Edit3, Trash2, X, Calendar, FileText } from 'lucide-react';
+import { Users, Activity, Plus, RefreshCw, Eye, Edit3, Trash2, X, Calendar, FileText } from 'lucide-react';
 
 interface FormData {
   title: string;
@@ -21,8 +20,8 @@ interface FormData {
 }
 
 export default function RecruitPage() {
-  const router = useRouter();
-  const { isLoggedIn, init } = useAuthStore();
+  // const router = useRouter();
+  // const { isLoggedIn, init } = useAuthStore();
 
   // 상태 관리
   const [recruitments, setRecruitments] = useState<Recruitment[]>([]);
@@ -39,21 +38,21 @@ export default function RecruitPage() {
   const [newData, setNewData] = useState<FormData>({ title: '', description: '' });
 
   // 인증 체크
-  useEffect(() => {
-    init();
-  }, [init]);
+  // useEffect(() => {
+  //   init();
+  // }, [init]);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.replace('/admin/login');
-    }
-  }, [isLoggedIn, router]);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     router.replace('/admin/login');
+  //   }
+  // }, [isLoggedIn, router]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      loadRecruitments();
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     loadRecruitments();
+  //   }
+  // }, [isLoggedIn]);
 
   // 에러 처리 헬퍼
   const handleError = useCallback((error: unknown, fallbackMessage: string) => {
@@ -107,7 +106,7 @@ export default function RecruitPage() {
     try {
       const createData: CreateRecruitmentData = {
         title: newData.title.trim(),
-        description: newData.description.trim()
+        content: newData.description.trim()
       };
       
       await createRecruitment(createData);
@@ -130,7 +129,7 @@ export default function RecruitPage() {
     try {
       const updateData: UpdateRecruitmentData = {
         title: editData.title.trim(),
-        description: editData.description.trim()
+        content: editData.description.trim()
       };
       
       await updateRecruitment(selected.id, updateData);
@@ -189,7 +188,12 @@ export default function RecruitPage() {
     loadRecruitments();
   };
 
-  if (!isLoggedIn) return null;
+  // 페이지 접속시 GET요청
+  useEffect(() => {
+  loadRecruitments();
+}, [loadRecruitments]);
+
+  // if (!isLoggedIn) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
