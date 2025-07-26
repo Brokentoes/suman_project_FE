@@ -148,7 +148,7 @@ export default function HomePage({ content }: HomePageProps) {
               transition={{ duration: 1 }}
               viewport={{ once: true ,amount:0.3 }}
             >
-              {content.section2.keywords.map((title, idx) => (
+              {(content.section2.keywords as string[]).map((title, idx) => (
                 <motion.div
                   key={idx}
                   className="w-28 h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full bg-white/10 border border-white/10 flex flex-col justify-center items-center text-sm md:text-base text-white backdrop-blur-sm hover:bg-white/20 transition"
@@ -158,7 +158,7 @@ export default function HomePage({ content }: HomePageProps) {
                   viewport={{ once: true, amount: 0.3 }}
                 >
                   <p className="font-bold text-base md:text-lg lg:text-xl tracking-wide">{title}</p>
-                  <p className="text-xs md:text-xs lg:text-base tracking-wide">{content.section2.translations[idx]}</p>
+                  <p className="text-xs md:text-xs lg:text-base tracking-wide">{content.section2.translations?.[idx] ?? ""}</p>
                 </motion.div>
               ))}
             </motion.div>

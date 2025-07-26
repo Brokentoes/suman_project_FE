@@ -80,16 +80,21 @@ export const homeContentKor = {
 //                   ENG
 //--------------------------------------------
 export const homeContentEng = {
-    bannerImages: [
-      '/images/banner1.png',
-      '/images/banner2.png',
-      '/images/banner3.png',
-    ],
+    
     section1Text: {
       title: 'Tomorrow company that creates precision technology',
       subtitle: 'With deep know-how in precision manufacturing, SUMAN provides customized solutions.',
     },
-    
+    section2: {
+      title: 'Technology that Drives Industry',
+      description:
+        'SUMAN is a specialized company that designs and manufactures secondary battery production equipment and reliability evaluation systems.\nBased on the technological expertise and production infrastructure accumulated at our Daejeon R&D center, we provide customized, high-reliability solutions.',
+      bgImage: '/images/main_tech.png',
+      buttonLabel: 'Go to Vision →',
+      keywords: ["ENJOY", "NEO", "INTENSELY", "QUICKLY"],
+      translations: ["Enjoyably", "Newly", "Fiercely", "Quickly"]
+    },
+
     section3: {
       title: 'From Precision Parts to Automation Systems',
       subtitle: 'We manufacture essential solutions for future industries',
@@ -124,17 +129,26 @@ export const homeContentEng = {
       title: 'We are certified by government institutions and have established ISO-based quality, environment, and safety management systems.',
       tags: ['Technology Certification', 'Quality Assurance'],
       certifications: [
-        { label: 'ISO 9001', img: null },
-        { label: 'ISO 14001', img: null },
-        { label: 'ISO 45001', img: null },
-        { label: 'Venture Company Certificate', img: '/images/main_venture.png' },
-        { label: 'Materials & Parts Specialist', img: null },
-        { label: 'Root Company Certificate', img: null },
+        { label: 'ISO 9001', img: '/images/Certifications/ISO_9001.png'},
+        { label: 'ISO 14001', img: '/images/Certifications/ISO_14001.png' },
+        { label: 'ISO 45001', img: '/images/Certifications/ISO_45001.png' },
+        { label: 'Venture Company Certificate', img: '/images/Certifications/main_venture.png.png' },
+        { label: 'Materials & Parts Specialist', img: '/images/Certifications/소재부품장비 전문기업확인서.png'},
+        { label: 'Root Company Certificate', img: '/images/Certifications/기업부설연구소 인정서.png' },
         { label: 'SME Certificate', img: null },
         { label: 'Quality/Environment/Safety', img: null },
+
+        { label: 'Piston Ring Manufacturing Technology', img: '/images/Certifications/특허_피스톤제조.png' },
+        { label: 'Power Management System', img: '/images/Certifications/특허_전력관리시스템.png' },
+        { label: 'Wire Processing Device', img: '/images/Certifications/특허_전선가공장치.png' },
+        { label: 'Swelling Measurement Jig', img: '/images/Certifications/특허_스웰링측정용지그.png' },
+        { label: 'Casting Mold Separation Device', img: '/images/Certifications/특허_주물성형분리장치.png' },
       ],
       legal: 'Holding 6 intellectual property rights including-Piston Ring Manufacturing Device and Method',
     },
+    footer_banner: [
+      '/images/main_banner.png'
+    ],
 };
 
 
