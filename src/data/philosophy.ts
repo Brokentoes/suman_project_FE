@@ -4,7 +4,7 @@ export const traits = {
       key: "sincerity",
       title: "성실함의 가치",
       desc: "맡은 바 책임을 다하며\n성실하게 일하는 자세를 지닌 인재",
-      bgImage: "/images/diligence_suman.png",
+      bgImage: "/images/morningrun_suman.png",
     },
     {
       key: "challenge",
@@ -28,7 +28,7 @@ export const traits = {
       key: "passion",
       title: "열정의 에너지",
       desc: "자신의 일에 몰입하고\n뜨거운 열정으로 성과를 내는 인재",
-      bgImage: "/images/passion2_suman.png",
+      bgImage: "/images/passion3_suman.png",
     },
   ],
 
@@ -64,4 +64,15 @@ export const traits = {
         bgImage: "/images/passion2_suman.png",
     },
   ],
+}
+
+export const Herotext = {
+  KOR: {
+    title: "(주)수만그룹은 이런 인재를 찾습니다.",
+    desc: "도전과 혁신을 통해 끊임없이 성장하며,\n고객과 사회에 기여하는 열정적인 인재를 기다립니다."
+  },
+  ENG: {
+    title: "Suman Group is looking for such talents",
+    desc: "We are looking for passionate talents who continuously grow through challenges and innovations and contribute to our customers and society."
+  }
 }
