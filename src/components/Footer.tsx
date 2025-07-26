@@ -19,7 +19,7 @@ export default function Footer() {
 
   return (
     
-    <footer className="bg-white text-black text-sm mt-20">
+    <footer className="bg-white text-black text-sm mt-10">
       {/* 상단 레이아웃 */}
 
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between gap-10">
@@ -31,7 +31,7 @@ export default function Footer() {
             width={60}
             height={60}
           />
-          <p className="text-lg font-semibold leading-tight">
+          <p className="text-lg font-semibold leading-tight tracking-wide">
             패러다임을 바꾸는
             <br />
             선재산업의 글로벌 리더
@@ -39,10 +39,10 @@ export default function Footer() {
         </div>
 
         {/* 오른쪽: 메뉴 영역 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full md:w-2/3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full md:w-2/3 tracking-wide">
           {/* 메뉴 그룹 */}
           <div>
-            <p className="font-semibold mb-2">회사소개</p>
+            <p className="font-semibold mb-3">회사소개</p>
             <ul className="space-y-1">
               <li>
                 <Link href="/company/ceo">CEO 인사말</Link>
@@ -62,7 +62,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="font-semibold mb-2">사업분야</p>
+            <p className="font-semibold mb-3">사업분야</p>
             <ul className="space-y-1">
               <li>
                 <Link href="/business/products">제품 소개</Link>
@@ -73,7 +73,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="font-semibold mb-2">인재채용</p>
+            <p className="font-semibold mb-3">인재채용</p>
             <ul className="space-y-1">
               <li>
                 <Link href="/recruit/people">인재상</Link>
@@ -84,7 +84,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="font-semibold mb-2">고객지원</p>
+            <p className="font-semibold mb-3">고객지원</p>
             <ul className="space-y-1">
               <li>
                 <Link href="/support/channel">소통채널</Link>
@@ -104,7 +104,7 @@ export default function Footer() {
       <div className="border-t border-gray-300" />
 
       {/* 하단 레이아웃 */}
-      <div className="max-w-7xl mx-auto px-6 py-6 text-xs text-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div className="max-w-7xl mx-auto px-6 py-6 text-xs text-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4 tracking-wide">
         {/* 왼쪽 텍스트 */}
         <div>
           <p>
@@ -118,7 +118,7 @@ export default function Footer() {
         </div>
 
         {/* 우측 하단 정보 거부 관련 */}
-        <div className="flex flex-wrap gap-4 text-gray-500">
+        <div className="flex flex-wrap gap-4 text-gray-500 tracking-wide">
         <button onClick={() => setPopupType('privacy')} className="hover:underline">
           개인정보 처리방침
         </button>

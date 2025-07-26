@@ -355,7 +355,7 @@ export default function Header() {
               transition={{ duration: 0.25 }}
               className="hidden md:block w-full border-t border-gray-200 bg-white z-40"
             >
-              <div className="max-w-full mx-auto px-6 md:px-[60px] lg:px-[120px] py-4 flex justify-between items-start">
+              <div className="max-w-full mx-auto px-6 md:px-[120px] lg:px-[120px] py-4 flex justify-between items-start">
                 <div className="w-[120px]" />
 
                 <div className="flex justify-center flex-1 space-x-0 lg:space-x-4 xl:space-x-19 md:text-sm lg:text-base text-gray-600 tracking-wide">

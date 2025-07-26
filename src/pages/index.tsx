@@ -126,7 +126,7 @@ export default function HomePage() {
               {section2.keywords.map((title, idx) => (
                 <motion.div
                   key={idx}
-                  className="w-28 h-28 md:w-28 h-28 lg:w-36 lg:h-36 rounded-full bg-white/10 border border-white/10 flex flex-col justify-center items-center text-sm md:text-base text-white backdrop-blur-sm hover:bg-white/20 transition"
+                  className="w-28 h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full bg-white/10 border border-white/10 flex flex-col justify-center items-center text-sm md:text-base text-white backdrop-blur-sm hover:bg-white/20 transition"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: idx * 0.3, ease: "easeOut" }}
@@ -186,11 +186,11 @@ export default function HomePage() {
           </motion.div>
 
           <div className="w-full px-[60px] md:px-[120px] lg:px-[160px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-10">
               {section3.cards.map((card, index) => (
                 <motion.div
                   key={index}
-                  className="relative w-full h-[150px] md:h-[200px] lg:h-[550px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
+                  className="relative w-full h-[150px] md:h-[200px] lg:h-[500px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
                   initial={{ x: -100, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -212,10 +212,10 @@ export default function HomePage() {
                   </div>
 
                   {/* 텍스트 영역 */}
-                  <div className="absolute bottom-0 z-20 w-full px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-white text-[10px] sm:text-xs md:text-sm lg:text-base leading-tight sm:leading-snug">
-                    <p className="text-xs md:text-sm lg:text-xl mb-1 md:mb-2 lg:mb-8 ">{card.subtitle}</p>
-                    <h3 className="text-base md:text-lg lg:text-3xl font-bold mb-1 md:mb-1 lg:mb-2">{card.title}</h3>
-                    <p className="text-xs md:text-xs lg:text-lg text-gray-300">{card.description}</p>
+                  <div className="absolute bottom-0 lg:bottom-3 z-20 w-full px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-white text-[10px] sm:text-xs md:text-sm lg:text-base tracking-wide leading-tight sm:leading-snug">
+                    <p className="text-xs md:text-sm lg:text-lg mb-1 md:mb-2 lg:mb-7 ">{card.subtitle}</p>
+                    <h3 className="text-base md:text-lg lg:text-2xl font-bold mb-1 md:mb-1 lg:mb-2">{card.title}</h3>
+                    <p className="text-xs md:text-xs lg:text-base text-gray-300">{card.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -286,7 +286,7 @@ export default function HomePage() {
                 return (
                   <motion.div
                     key={rowIndex}
-                    className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-20"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-20"
                     initial={{ x: fromLeft ? -200 : 200, opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1.3 }}
                     transition={{ duration: 1 }}
