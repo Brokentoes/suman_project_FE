@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import PopupModal from './PopupModal';
-import { PRIVACY_POLICY_TEXT, EMAIL_REFUSAL_TEXT } from '@/data/policy';
+import PopupModal from "./PopupModal";
+import { PRIVACY_POLICY_TEXT, EMAIL_REFUSAL_TEXT } from "@/data/policy";
 import { useState } from "react";
-import { useLangStore } from '@/stores/langStore';
+import { useLangStore } from "@/stores/langStore";
 
 const menuGroups = {
   //-------------- KOR ---------------
@@ -23,15 +23,12 @@ const menuGroups = {
     },
     {
       title: "사업분야",
-      items: [
-        { label: "제품 소개", href: "/business/products" },
-        { label: "서비스 소개", href: "/business/services" },
-      ],
+      items: [{ label: "기술 소개", href: "/business/service" }],
     },
     {
       title: "인재채용",
       items: [
-       { label: "인재상", href: "/careers/philosophy" },
+        { label: "인재상", href: "/careers/philosophy" },
         { label: "채용공고", href: "/careers/notice" },
       ],
     },
@@ -59,10 +56,7 @@ const menuGroups = {
     },
     {
       title: "Business",
-      items: [
-        { label: "Products", href: "/eng/business/products" },
-        { label: "Services", href: "/eng/business/services" },
-      ],
+      items: [{ label: "Production", href: "/eng/business/service" }],
     },
     {
       title: "Careers",
@@ -82,31 +76,29 @@ const menuGroups = {
 };
 
 export default function Footer() {
-  const [popupType, setPopupType] = useState<'privacy' | 'email' | null>(null);
+  const [popupType, setPopupType] = useState<"privacy" | "email" | null>(null);
   const { lang } = useLangStore();
   const selectedMenu = menuGroups[lang];
 
   const getPopupContent = () => {
-  if (popupType === 'privacy') {
-    return {
-      title: lang === 'KOR' ? '개인정보 처리방침' : 'Privacy Policy',
-      content: PRIVACY_POLICY_TEXT[lang],
-    };
-  }
-  if (popupType === 'email') {
-    return {
-      title: lang === 'KOR' ? '이메일 수집거부' : 'Email Collection Refusal',
-      content: EMAIL_REFUSAL_TEXT[lang],
-    };
-  }
-  return null;
-};
+    if (popupType === "privacy") {
+      return {
+        title: lang === "KOR" ? "개인정보 처리방침" : "Privacy Policy",
+        content: PRIVACY_POLICY_TEXT[lang],
+      };
+    }
+    if (popupType === "email") {
+      return {
+        title: lang === "KOR" ? "이메일 수집거부" : "Email Collection Refusal",
+        content: EMAIL_REFUSAL_TEXT[lang],
+      };
+    }
+    return null;
+  };
 
   const popupContent = getPopupContent();
-  
 
   return (
-    
     <footer className="bg-white text-black text-sm mt-10">
       {/* 상단 레이아웃 */}
 
@@ -120,7 +112,7 @@ export default function Footer() {
             height={60}
           />
           <p className="text-lg font-semibold leading-tight tracking-wide">
-            {lang === 'KOR' ? (
+            {lang === "KOR" ? (
               <>
                 패러다임을 바꾸는
                 <br />
@@ -139,20 +131,20 @@ export default function Footer() {
         {/* 오른쪽: 메뉴 영역 */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full md:w-2/3 tracking-wide">
           {/* 메뉴 그룹 */}
-            {selectedMenu.map((group, idx) => (
-              <div key={idx}>
-                <p className="font-semibold mb-3">{group.title}</p>
-                <ul className="space-y-1">
-                  {group.items.map((item) => (
-                    <li key={item.href}>
-                      <Link href={item.href}>{item.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {selectedMenu.map((group, idx) => (
+            <div key={idx}>
+              <p className="font-semibold mb-3">{group.title}</p>
+              <ul className="space-y-1">
+                {group.items.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
+      </div>
 
       {/* 구분선 */}
       <div className="border-t border-gray-300" />
@@ -162,36 +154,42 @@ export default function Footer() {
         {/* 왼쪽 텍스트 */}
         <div>
           <p>
-            {lang === 'KOR'
-              ? '㈜ SUMAN | 주소: 대전광역시 대덕구 문평서로17번길 105(문평동) | 사업자등록번호: 318-81-00161'
-              : 'SUMAN Co., Ltd. | Address: 105, Munpyeongseo-ro 17beon-gil, Daedeok-gu, Daejeon, Republic of Korea | Biz Reg No.: 318-81-00161'}
+            {lang === "KOR"
+              ? "㈜ SUMAN | 주소: 대전광역시 대덕구 문평서로17번길 105(문평동) | 사업자등록번호: 318-81-00161"
+              : "SUMAN Co., Ltd. | Address: 105, Munpyeongseo-ro 17beon-gil, Daedeok-gu, Daejeon, Republic of Korea | Biz Reg No.: 318-81-00161"}
           </p>
           <p>
-            {lang === 'KOR'
-              ? '대표전화 : 042-934-1517 | FAX : 042-934-1516 | E-Mail : suman20140411@suman.co.kr'
-              : 'Tel: +82-42-934-1517 | Fax: +82-42-934-1516 | Email: suman20140411@suman.co.kr'}
+            {lang === "KOR"
+              ? "대표전화 : 042-934-1517 | FAX : 042-934-1516 | E-Mail : suman20140411@suman.co.kr"
+              : "Tel: +82-42-934-1517 | Fax: +82-42-934-1516 | Email: suman20140411@suman.co.kr"}
           </p>
         </div>
 
         {/* 우측 하단 정보 거부 관련 */}
 
         <div className="flex flex-wrap gap-4 text-gray-500 tracking-wide">
-        <button onClick={() => setPopupType('privacy')} className="hover:underline cursor-pointer">
-          {lang === 'KOR' ? '개인정보 처리방침' : 'Privacy Policy'}
-        </button>
-        <button onClick={() => setPopupType('email')} className="hover:underline cursor-pointer">
-          {lang === 'KOR' ? '이메일 수집거부' : 'Email Collection Refusal'}
-        </button>
+          <button
+            onClick={() => setPopupType("privacy")}
+            className="hover:underline cursor-pointer"
+          >
+            {lang === "KOR" ? "개인정보 처리방침" : "Privacy Policy"}
+          </button>
+          <button
+            onClick={() => setPopupType("email")}
+            className="hover:underline cursor-pointer"
+          >
+            {lang === "KOR" ? "이메일 수집거부" : "Email Collection Refusal"}
+          </button>
+        </div>
       </div>
-    </div>
 
-    {popupContent && (
-      <PopupModal
-        title={popupContent.title}
-        content={popupContent.content}
-        onClose={() => setPopupType(null)}
-      />
-    )}
+      {popupContent && (
+        <PopupModal
+          title={popupContent.title}
+          content={popupContent.content}
+          onClose={() => setPopupType(null)}
+        />
+      )}
     </footer>
   );
 }
