@@ -1,5 +1,6 @@
 import { Shield, ArrowLeft } from 'lucide-react';
 import { useRouter } from "next/router";
+import LogoutButton from './LogoutButton';
 
 // 관리자 페이지 전용 헤더
 export default function AdminHeader() {
@@ -26,7 +27,7 @@ export default function AdminHeader() {
             <div className="flex items-center space-x-4">
               <div className="text-right">
                 <p className="text-sm text-gray-300">환영합니다, 관리자님</p>
-                <p className="text-xs text-gray-400">마지막 로그인: 2025.07.16 14:30</p>
+                <LogoutButton />
               </div>
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold">관</span>

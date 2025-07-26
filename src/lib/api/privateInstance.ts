@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 
 const privateInstance = axios.create({
   baseURL: 'https://suman-project-cap5.onrender.com/api/', // API 주소.
-  timeout: 5000,
+  timeout: 15000, // 백엔드 서버 wake-up time 고려
 });
 
 // accessToken 자동 삽입 자동 주입 코드 인터셉터

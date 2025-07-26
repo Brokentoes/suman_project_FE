@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, Lock, User } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -13,6 +13,13 @@ export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // 백엔드 서버 슬립 방지용 깨우기 요청
+  useEffect(() => {
+  fetch("https://suman-project-cap5.onrender.com/api/")
+    .then(() => console.log("Render 서버 깨우기 완료"))
+    .catch(() => console.warn("Render 서버 깨우기 실패"));
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
   e.preventDefault();
   setIsLoading(true);
@@ -20,7 +27,7 @@ export default function LoginScreen() {
    try {
       const { access, refresh } = await loginUser(username, password);
       login(access, refresh);
-      alert('환영합니다');
+      alert('환영합니다 관리자님');
       router.replace('/admin/dashboard');
     } catch (error) {
       alert(error instanceof Error ? error.message : '로그인 실패');
@@ -54,8 +61,8 @@ export default function LoginScreen() {
                 <span className="text-lg font-bold text-white"></span>
               </div>
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">로그인</h1>
-            <p className="text-white/70 text-sm">관리자 계정으로 로그인하세요</p>
+            <h1 className="text-2xl font-bold text-white mb-2">수만 관리자 로그인</h1>
+            <p className="text-white/70 text-sm">로그인이 안되면 새로고침 한번 해주세요.</p>
           </div>
 
           {/* Login Form */}
@@ -109,7 +116,7 @@ export default function LoginScreen() {
                 isLoading ? 'opacity-50 cursor-not-allowed transform-none' : ''
               }`}
             >
-              {isLoading ? '로그인 중...' : '로그인'}
+              {isLoading ? '기다려주세요...' : '로그인'}
             </button>
           </form>
 

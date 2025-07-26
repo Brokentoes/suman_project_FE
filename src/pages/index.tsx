@@ -1,66 +1,34 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { section1Text, section2, section3, sectionCertifications, footer_banner} from "@/data/home";
+// import { section1Text, section2, section3, sectionCertifications, footer_banner} from "@/data/home";
 import { useState } from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import Image from "next/image";
 
 import Head from 'next/head';
 import Link from "next/link";
+import { homeContentKor } from "@/data/home";
 import { GetStaticProps } from 'next';
+import type { HomePageProps } from "@/types/home";
 
 
-// Props 타입 정의
-interface HomePageProps {
-  section1Text: {
-    subtitle: string;
-  };
-  section2: {
-    title: string;
-    description: string;
-    bgImage: string[];
-    buttonLabel: string;
-    keywords: string;
-    translations: string;
-  };
-  section3: {
-    title: string;
-    subtitle: string;
-    cards: Array<{
-      img: string;
-      title: string;
-      subtitle: string;
-      description: string;
-    }>;
-  };
-  sectionCertifications: {
-    title: string;
-    tags: string[];
-    certifications: Array<{
-      label: string;
-      img?: string | null;
-    }>;
-    legal: string;
-  };
-  footer_banner: string[];
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      content: homeContentKor
+    }
+  }
 }
 
+export default function HomePage({ content }: HomePageProps) {
 
-export default function HomePage(props: HomePageProps) {
-  // props에서 데이터를 받아오되, 클라이언트에서는 기존 import 사용
-  const pageData = {
-    section1Text: props.section1Text || section1Text,
-    section2: props.section2 || section2,
-    section3: props.section3 || section3,
-    sectionCertifications: props.sectionCertifications || sectionCertifications,
-    footer_banner: props.footer_banner || footer_banner
-  };
-  
+
   const [showMore, setShowMore] = useState(false);
   const handleToggleMore = () => setShowMore(prev => !prev);
 
-  const visibleCerts = sectionCertifications.certifications.slice(0,8);
-  const moreCerts = sectionCertifications.certifications.slice(8);
+  const visibleCerts = content.sectionCertifications.certifications.slice(0,8);
+  const moreCerts = content.sectionCertifications.certifications.slice(8);
 
   const labelClass = "text-base sm:text-lg lg:text-2xl font-semibold text-black";
   const buttonClass = "text-sm sm:text-base bg-gray-100 text-gray-800 rounded-full px-4 py-2 hover:bg-gray-300 transition";
@@ -75,6 +43,8 @@ export default function HomePage(props: HomePageProps) {
         <meta property="og:title" content="(주) 수만" />
         <meta property="og:description" content="정밀한 기술이 만드는 내일의 기업" />
         <meta property="og:type" content="website" />
+        <meta name="google-site-verification" content="iT2-OO3Wat9zt_bq-t7Y0F24HWiIyWTz_OsvEyvLd9c" />
+        <meta name="naver-site-verification" content="b90c2478a5b6431a748fa0e68d931f04dc9e4fa9" />
         <link rel="icon" sizes="16x16" href="/images/logo.ico" />
     </Head>
 
@@ -107,16 +77,16 @@ export default function HomePage(props: HomePageProps) {
               transition={{duration:1.2}}
               viewport={{once:true}}
             >
-              {section1Text.title}
+              {content.section1Text.title}
             </motion.h2>
             <motion.p 
-              className="text-base md:text-xl text-gray-300 mas-w-90% md:max-w-3xl"
+              className="text-base md:text-xl text-gray-300 max-w-[90%] md:max-w-3xl"
               initial={{opacity:0, y: 20}}
               animate={{opacity:1, y: 0}}
               transition={{duration:1.4}}
               viewport={{once:true}}
             >
-              {section1Text.subtitle}
+              {content.section1Text.subtitle}
             </motion.p>
           </div>
         </section>
@@ -129,7 +99,7 @@ export default function HomePage(props: HomePageProps) {
         >
           {/* 배경 이미지 */}
           <Image
-            src={section2.bgImage}
+            src={content.section2.bgImage}
             alt="배경"
             fill
             className="absolute inset-0 w-full h-full object-cover z-0"
@@ -146,8 +116,8 @@ export default function HomePage(props: HomePageProps) {
             <p className={"text-base sm:text-lg lg:text-2xl font-semibold text-white"}>Vision</p>
             <div className="flex-grow" />
             <Link href="/company/vision">
-              <button className="text-sm sm:text-base bg-gray-600 text-gray-00 rounded-full px-4 py-2 hover:bg-gray-300 transition">
-                {section2.buttonLabel}
+              <button className="text-sm sm:text-base bg-gray-600 text-gray-100 rounded-full px-4 py-2 hover:bg-gray-300 transition">
+                {content.section2.buttonLabel}
               </button>
             </Link>
           </motion.div>
@@ -163,10 +133,10 @@ export default function HomePage(props: HomePageProps) {
               viewport={{ once: true, amount: 0.3 }}
             >
               <h2 className="text-xl md:text-2xl lg:text-4xl font-bold mb-4 md:mb-7 tracking-wide text-white">
-                {section2.title}
+                {content.section2.title}
               </h2>
               <p className="text-sm md:text-sm lg:text-xl text-white/70 leading-relaxed whitespace-pre-line tracking-wide">
-                {section2.description}
+                {content.section2.description}
               </p>
             </motion.div>
 
@@ -178,7 +148,7 @@ export default function HomePage(props: HomePageProps) {
               transition={{ duration: 1 }}
               viewport={{ once: true ,amount:0.3 }}
             >
-              {section2.keywords.map((title, idx) => (
+              {content.section2.keywords.map((title, idx) => (
                 <motion.div
                   key={idx}
                   className="w-28 h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full bg-white/10 border border-white/10 flex flex-col justify-center items-center text-sm md:text-base text-white backdrop-blur-sm hover:bg-white/20 transition"
@@ -188,7 +158,7 @@ export default function HomePage(props: HomePageProps) {
                   viewport={{ once: true, amount: 0.3 }}
                 >
                   <p className="font-bold text-base md:text-lg lg:text-xl tracking-wide">{title}</p>
-                  <p className="text-xs md:text-xs lg:text-base tracking-wide">{section2.translations[idx]}</p>
+                  <p className="text-xs md:text-xs lg:text-base tracking-wide">{content.section2.translations[idx]}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -236,14 +206,15 @@ export default function HomePage(props: HomePageProps) {
             transition={{ duration: 1}} 
             viewport={{ once: true,amount:0.3 }}
           >
-            <h2 className="text-xl md:text-2xl lg:text-4xl font-bold mb-0 md:mb-3 tracking-wide text-black">{section3.title}</h2>
-            <p className=" text-xl md:text-2xl lg:text-4xl font-bold tracking-wide">{section3.subtitle}</p>
+            <h2 className="text-xl md:text-2xl lg:text-4xl font-bold mb-0 md:mb-3 tracking-wide text-black">{content.section3.title}</h2>
+            <p className=" text-xl md:text-2xl lg:text-4xl font-bold tracking-wide">{content.section3.subtitle}</p>
           </motion.div>
 
           <div className="w-full px-[60px] md:px-[120px] lg:px-[160px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-10">
-              {section3.cards.map((card, index) => (
+              {content.section3.cards.map((card, index) => (
                 <motion.div
+
                   key={index}
                   className="relative w-full h-[150px] md:h-[200px] lg:h-[500px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
                   initial={{ x: -100, opacity: 0 }}
@@ -254,7 +225,7 @@ export default function HomePage(props: HomePageProps) {
                   {/* 이미지 영역 (원본 비율 유지) */}
                   <div className="relative w-full h-full"> {/* 비율 조절 가능 */}
                     <Image
-                      src={card.image}
+                      src={card.img}
                       alt={card.title}
                       fill
                       className="object-cover"
@@ -312,7 +283,7 @@ export default function HomePage(props: HomePageProps) {
             transition={{ duration: 1 }}
             viewport={{ once: true ,amount:0.3}}
           >
-            <p className="text-xl md:text-2xl lg:text-4xl font-bold mb-4 md:mb-7 tracking-wide text-black leading-[1.3]">{sectionCertifications.title}</p>
+            <p className="text-xl md:text-2xl lg:text-4xl font-bold mb-4 md:mb-7 tracking-wide text-black leading-[1.3]">{content.sectionCertifications.title}</p>
           </motion.div>
 
           {/*태그*/}
@@ -323,11 +294,12 @@ export default function HomePage(props: HomePageProps) {
             transition={{ duration: 1}}
             viewport={{ once: true,amount:0.3 }}
           >
-            {sectionCertifications.tags.map((tag, i) => (
+            {content.sectionCertifications.tags.map((tag, i) => (
               <span
                 key={i}
                 className="bg-gray-100 text-blue-700 px-3 py-0.3 text-xs lg:text-lg font-medium"
               >
+
                 {tag}
               </span>
             ))}
@@ -349,7 +321,7 @@ export default function HomePage(props: HomePageProps) {
                   >
                     {certGroup.map((cert, i) => (
                       <div key={i} className="group text-center">
-                        {!cert.image && (
+                        {!cert.img && (
                           <button
                             title={cert.label}
                             className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
@@ -358,7 +330,7 @@ export default function HomePage(props: HomePageProps) {
                           </button>
                         )}
 
-                        {cert.image && (
+                        {cert.img && (
                           <>
                             <button
                               title={cert.label}
@@ -369,11 +341,10 @@ export default function HomePage(props: HomePageProps) {
 
                             <div className="w-48 mx-auto transition-all duration-500 ease-in-out max-h-0 overflow-hidden group-hover:max-h-96">
                               <Image
-                                src={cert.image}
+                                src={cert.img}
                                 alt={cert.label}
                                 width={192}
                                 height={192}
-                                style={{ height: "auto", width: "auto" }}
                                 className="rounded shadow-xl transform scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 mt-3"
                               />
                             </div>
@@ -399,7 +370,7 @@ export default function HomePage(props: HomePageProps) {
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-20 mt-10 pb-6">
                     {moreCerts.map((cert, i) => (
                       <div key={i} className="group text-center col-span-1">
-                        {!cert.image && (
+                        {!cert.img && (
                           <button
                             title={cert.label}
                             className="w-full py-3 px-5 bg-white shadow rounded-full text-lg font-semibold text-gray-800 hover:shadow-lg transition truncate tracking-wide"
@@ -407,7 +378,7 @@ export default function HomePage(props: HomePageProps) {
                             {cert.label}
                           </button>
                         )}
-                        {cert.image && (
+                        {cert.img && (
                           <>
                             <button
                               title={cert.label}
@@ -418,11 +389,10 @@ export default function HomePage(props: HomePageProps) {
 
                             <div className="w-48 mx-auto transition-all duration-500 ease-in-out max-h-0 overflow-hidden group-hover:max-h-96">
                               <Image
-                                src={cert.image}
+                                src={cert.img}
                                 alt={cert.label}
                                 width={192}
                                 height={192}
-                                style={{ height: "auto", width: "auto" }}
                                 className="rounded shadow-xl transform scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 mt-3"
                               />
                             </div>
@@ -443,7 +413,7 @@ export default function HomePage(props: HomePageProps) {
             >
               {!showMore && (
                 <p className="text-sm lg:text-base text-gray-400 tracking-wide mt-6">
-                  {sectionCertifications.legal}
+                  {content.sectionCertifications.legal}
                 </p>
               )}
             </motion.div>
@@ -452,17 +422,17 @@ export default function HomePage(props: HomePageProps) {
           {/* section5_footer_banner */}
           <section className="relative w-full mt-20">
             <Image
-              src={footer_banner[0]}
+              src={content.footer_banner[0]}
               alt="footer banner"
               width={1440}
               height={220}
               className="w-full object-cover"
-              style={{ aspectRatio: '1440 / 220', display: 'block' }}
+              style={{ aspectRatio:'1440/220'}}
             />
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-6 pointer-events-none transfrom translate-x-20">
               <h2 className="text-lg md:text-2xl lg:text-4xl font-semibold md:font-semibold lg:font-bold mb-2 md:mb-4 lg:mb-7 tracking-wide">Contact us</h2>
               <Link href="/support/contact">
-                <button className="pointer-events-auto border border-gray-300 text-xs md:text-xs lg:text-sm text-white px-4 py-0.9 lg:px-13 lg:py-0.8 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
+                <button className="pointer-events-auto border border-gray-300 text-xs md:text-xs lg:text-sm text-white px-4 py-1 lg:px-12 lg:py-0.8 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
                   문의하기 <span className="text-xs md:text-sm lg:text-base">→</span>
                 </button>
               </Link>
@@ -474,21 +444,3 @@ export default function HomePage(props: HomePageProps) {
     </>
   );
 }
-
-// SSG를 위한 getStaticProps 함수
-export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
-  // 빌드 타임에 데이터를 가져옴
-  const { section1Text, section2, section3, sectionCertifications, footer_banner} = await import('@/data/home');
-  
-  return {
-    props: {
-      section1Text,
-      section2,
-      section3,
-      sectionCertifications,
-      footer_banner
-    },
-    // Optional: ISR (Incremental Static Regeneration) 설정
-    // revalidate: 3600, // 1시간마다 재생성 (필요한 경우에만 주석 해제)
-  };
-};
