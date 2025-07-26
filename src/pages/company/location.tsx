@@ -1,13 +1,12 @@
 // location.tsx
 import { motion, type Transition } from "framer-motion";
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react"; // <-- useMemo 추가
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
 import Head from "next/head";
 
-// kakaoMapConfigs를 컴포넌트 외부로 분리
 const kakaoMapConfigs: {
   [key: string]: {
     latitude: number;
@@ -36,7 +35,6 @@ const kakaoMapConfigs: {
   },
 };
 
-// 위치 데이터를 배열로 정의하여 JSX 반복을 줄임
 const locationsData = [
   {
     key: "본사",
@@ -59,7 +57,7 @@ const locationsData = [
 export default function LocationPage() {
   const [openMap, setOpenMap] = useState<string | null>(null);
   const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  // `any` 대신 카카오 맵 객체 타입으로 변경
+
   const kakaoMaps = useRef<{ [key: string]: kakao.maps.Map | null }>({});
   const infoWindows = useRef<{ [key: string]: kakao.maps.InfoWindow | null }>(
     {}
@@ -75,7 +73,6 @@ export default function LocationPage() {
     },
   };
 
-  // mapTransition 객체를 useMemo로 감싸서 메모이제이션
   const mapTransition = useMemo(
     () =>
       ({
@@ -84,84 +81,75 @@ export default function LocationPage() {
         damping: 20,
         duration: 0.5,
       } as Transition),
-    [] // 의존성 없음: 객체 내부의 값들이 변하지 않으므로 한 번만 생성.
+    []
   );
 
   const KAKAO_MAP_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY;
 
-  // useCallback 적용
-  const initKakaoMap = useCallback(
-    (locationKey: string) => {
-      const config = kakaoMapConfigs[locationKey];
-      const container = mapRefs.current[locationKey];
+  const initKakaoMap = useCallback((locationKey: string) => {
+    const config = kakaoMapConfigs[locationKey];
+    const container = mapRefs.current[locationKey];
 
-      if (kakaoMaps.current[locationKey]) {
-        return;
-      }
+    if (kakaoMaps.current[locationKey]) {
+      return;
+    }
 
-      if (config && container && window.kakao && window.kakao.maps) {
-        const options: kakao.maps.MapOptions = {
-          // MapOptions 타입 지정
-          center: new window.kakao.maps.LatLng(
-            config.latitude,
-            config.longitude
-          ),
-          level: config.level,
-        };
-        const map = new window.kakao.maps.Map(container, options);
-        kakaoMaps.current[locationKey] = map;
+    if (config && container && window.kakao && window.kakao.maps) {
+      const options: kakao.maps.MapOptions = {
+        center: new window.kakao.maps.LatLng(config.latitude, config.longitude),
+        level: config.level,
+      };
+      const map = new window.kakao.maps.Map(container, options);
+      kakaoMaps.current[locationKey] = map;
 
-        const zoomControl = new window.kakao.maps.ZoomControl();
-        map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
+      const zoomControl = new window.kakao.maps.ZoomControl();
+      map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
 
-        const markerPosition = new window.kakao.maps.LatLng(
-          config.latitude,
-          config.longitude
-        );
-        const marker = new window.kakao.maps.Marker({
-          position: markerPosition,
-          map: map,
-        });
+      const markerPosition = new window.kakao.maps.LatLng(
+        config.latitude,
+        config.longitude
+      );
+      const marker = new window.kakao.maps.Marker({
+        position: markerPosition,
+        map: map,
+      });
 
-        const infowindowContent =
-          `<div style="padding:10px;font-size:14px;font-weight:bold;color:#333;">` +
-          `<div style="margin-bottom:5px;">${locationKey}</div>` +
-          `<div style="font-size:12px;color:#666;">${config.address}</div>` +
-          `</div>`;
+      const infowindowContent =
+        `<div style="padding:10px;font-size:14px;font-weight:bold;color:#333;">` +
+        `<div style="margin-bottom:5px;">${locationKey}</div>` +
+        `<div style="font-size:12px;color:#666;">${config.address}</div>` +
+        `</div>`;
 
-        const infowindow = new window.kakao.maps.InfoWindow({
-          content: infowindowContent,
-          removable: true,
-        });
+      const infowindow = new window.kakao.maps.InfoWindow({
+        content: infowindowContent,
+        removable: true,
+      });
 
-        infoWindows.current[locationKey] = infowindow;
+      infoWindows.current[locationKey] = infowindow;
 
-        window.kakao.maps.event.addListener(marker, "click", function () {
-          if (currentOpenInfowindow.current) {
-            currentOpenInfowindow.current.close();
-          }
-          infowindow.open(map, marker);
-          currentOpenInfowindow.current = infowindow;
-        });
+      window.kakao.maps.event.addListener(marker, "click", function () {
+        if (currentOpenInfowindow.current) {
+          currentOpenInfowindow.current.close();
+        }
+        infowindow.open(map, marker);
+        currentOpenInfowindow.current = infowindow;
+      });
 
-        window.kakao.maps.event.addListener(map, "click", function () {
-          if (currentOpenInfowindow.current) {
-            currentOpenInfowindow.current.close();
-            currentOpenInfowindow.current = null;
-          }
-        });
+      window.kakao.maps.event.addListener(map, "click", function () {
+        if (currentOpenInfowindow.current) {
+          currentOpenInfowindow.current.close();
+          currentOpenInfowindow.current = null;
+        }
+      });
 
-        console.log(`${locationKey} Kakao Map initialized.`);
-      } else {
-        console.warn(
-          `[[initKakaoMap]] Failed to initialize Kakao Map for ${locationKey}. Config, container or Kakao API not ready.`
-        );
-      }
-    },
-    [] // <-- kakaoMapConfigs와 KAKAO_MAP_APP_KEY를 제거했습니다. 이들은 외부 상수이므로 의존성으로 불필요합니다.
-  );
+      console.log(`${locationKey} Kakao Map initialized.`);
+    } else {
+      console.warn(
+        `[[initKakaoMap]] Failed to initialize Kakao Map for ${locationKey}. Config, container or Kakao API not ready.`
+      );
+    }
+  }, []);
 
-  // useCallback 적용
   const handleToggleMap = useCallback(
     (location: string) => {
       setOpenMap((prevOpenMap) => {
@@ -174,10 +162,9 @@ export default function LocationPage() {
 
         if (nextOpenMap && kakaoMaps.current[nextOpenMap]) {
           setTimeout(() => {
-            kakaoMaps.current[nextOpenMap]?.relayout(); // Optional chaining 추가
+            kakaoMaps.current[nextOpenMap]?.relayout();
             const config = kakaoMapConfigs[nextOpenMap];
             kakaoMaps.current[nextOpenMap]?.setCenter(
-              // Optional chaining 추가
               new window.kakao.maps.LatLng(config.latitude, config.longitude)
             );
           }, (mapTransition.duration ?? 0.5) * 1000 + 50);
@@ -185,7 +172,7 @@ export default function LocationPage() {
         return nextOpenMap;
       });
     },
-    [mapTransition, kakaoMaps, currentOpenInfowindow] // <-- kakaoMapConfigs를 제거했습니다. mapTransition은 useMemo로 감쌌으므로 여기에 포함해도 괜찮습니다.
+    [mapTransition, kakaoMaps, currentOpenInfowindow]
   );
 
   useEffect(() => {
@@ -195,7 +182,7 @@ export default function LocationPage() {
       !window.kakao?.maps
     ) {
       const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`; // libraries=services 추가
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`;
       script.async = true;
       script.onload = () => {
         window.kakao.maps.load(() => {
@@ -218,26 +205,22 @@ export default function LocationPage() {
         initKakaoMap(key);
       });
     }
-  }, [KAKAO_MAP_APP_KEY, initKakaoMap]); // initKakaoMap 함수를 의존성에 추가
+  }, [KAKAO_MAP_APP_KEY, initKakaoMap]);
 
   return (
-    // Layout 컴포넌트로 전체 페이지 내용을 감쌈
     <>
       <Head>
         <title>오시는길 | 수만</title>
       </Head>
       <Layout>
-        {/* HeroSection 컴포넌트 사용 */}
         <HeroSection
           title="시설 위치"
           subtitle="Location"
-          backgroundImage="/images/company_hero.png" // 해당 페이지에 맞는 배경 이미지 경로
+          backgroundImage="/images/company_hero.png"
         />
 
-        {/* 서브 내비게이션 (Breadcrumb) 섹션: BreadcrumbSection 컴포넌트 사용 */}
         <BreadcrumbSection path="회사소개 > 시설 위치 / 찾아오시는 길" />
 
-        {/* org.tsx와 동일하게 <main> 태그 대신 <div>로 변경 */}
         <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
           <div className="max-w-7xl mx-auto">
             <motion.div
@@ -248,12 +231,12 @@ export default function LocationPage() {
             >
               <h2 className="text-3xl font-bold mb-8">찾아오시는 길</h2>
 
-              <div className="space-y-6">
-                {/* locationsData 배열을 사용하여 반복되는 JSX를 렌더링 */}
-                {locationsData.map((location) => (
+              <div className="space-y-0 border-t-2 border-gray-900">
+                {" "}
+                {locationsData.map((location, index) => (
                   <div
                     key={location.key}
-                    className="border border-gray-300 rounded-lg p-6"
+                    className={`p-6 border-b border-gray-300`}
                   >
                     <div
                       className="flex justify-between items-center cursor-pointer"
@@ -287,27 +270,23 @@ export default function LocationPage() {
                         />
                       </svg>
                     </div>
+
                     <motion.div
                       initial={false}
                       animate={{
-                        height: openMap === location.key ? "250px" : "100px",
-                        opacity: openMap === location.key ? 1 : 0.6,
-                        filter:
-                          openMap === location.key ? "blur(0px)" : "blur(3px)",
+                        height: openMap === location.key ? "250px" : "0px", // 닫혔을 때 높이를 0으로 설정
+                        opacity: openMap === location.key ? 1 : 0, // 닫혔을 때 불투명도를 0으로 설정
                       }}
                       transition={mapTransition}
-                      className="mt-4 rounded-md overflow-hidden relative"
-                      style={{ minHeight: "100px" }}
+                      className="mt-4 overflow-hidden relative"
                     >
                       <div
-                        // `ref` 콜백 함수 수정
                         ref={(el) => {
                           mapRefs.current[location.key] = el;
                         }}
                         className="w-full h-full absolute top-0 left-0"
                         style={{ backgroundColor: "lightgray" }}
                       >
-                        {/* 투명 오버레이 추가 */}
                         {openMap !== location.key && (
                           <div
                             className="absolute inset-0 z-10"
