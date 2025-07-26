@@ -60,11 +60,10 @@
 //     window.addEventListener("scroll", handleScroll);
 //     return () => window.removeEventListener("scroll", handleScroll);
 //   }, [lastScrollY]);
-  
 
 //   const isAtTop = lastScrollY === 0;
 //   const isVisible = scrollDir === "up" || isHovered;
-//   const isSolid = isHovered || (!isAtTop && scrollDir === "up"); 
+//   const isSolid = isHovered || (!isAtTop && scrollDir === "up");
 
 //   const bgColor = isSolid ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)";
 //   const textColor = isSolid ? "text-black" : "text-white";
@@ -85,7 +84,7 @@
 
 //         {/* 메인 메뉴 영역 */}
 //         <div className={`w-full mx-auto px-[120px] py-3 flex justify-between items-center text-lg font-medium ${textColor}`}>
-  
+
 //           {/* 로고 */}
 //           <div className = "flex-none">
 //             <Link href="/">
@@ -153,7 +152,7 @@
 //                 ))}
 //               </div>
 
-//               <div className="w-[60px]" /> 
+//               <div className="w-[60px]" />
 //             </div>
 //           </motion.div>
 //         )}
@@ -190,10 +189,7 @@ const navItemsKor = [
   {
     label: "사업분야",
     href: "/business/service",
-    submenu: [
-      { label: "서비스 소개", href: "/business/service" },
-      { label: "제품 소개", href: "/business/product" },
-    ],
+    submenu: [{ label: "기술 소개", href: "/business/service" }],
   },
   {
     label: "인재채용",
@@ -232,10 +228,7 @@ const navItemsEng = [
   {
     label: "Business",
     href: "/eng/business/service",
-    submenu: [
-      { label: "Service", href: "/eng/business/service" },
-      { label: "Product", href: "/eng/business/product" },
-    ],
+    submenu: [{ label: "Production", href: "/eng/business/service" }],
   },
   {
     label: "Careers",
@@ -255,16 +248,15 @@ const navItemsEng = [
   },
 ];
 
-
 export default function Header() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [scrollDir, setScrollDir] = useState<"up" | "down">("up");
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isHovered = hoveredIndex !== null;
   const { lang } = useLangStore();
-  const NAV_ITEMS = lang === 'KOR' ? navItemsKor : navItemsEng; // LangStore의 값이 KOR이면, Nav_Items의 값은 navItemsKor.
+  const NAV_ITEMS = lang === "KOR" ? navItemsKor : navItemsEng; // LangStore의 값이 KOR이면, Nav_Items의 값은 navItemsKor.
 
   useEffect(() => {
     const handleScroll = () => {
@@ -298,7 +290,9 @@ export default function Header() {
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         {/* 메인 메뉴 영역 */}
-        <div className={`w-full mx-auto px-6 md:px-[60px] lg:px-[120px] py-3 flex justify-between items-center text-lg font-medium ${textColor}`}>
+        <div
+          className={`w-full mx-auto px-6 md:px-[60px] lg:px-[120px] py-3 flex justify-between items-center text-lg font-medium ${textColor}`}
+        >
           {/* 로고 */}
           <div className="flex-none">
             <Link href="/">
@@ -346,10 +340,10 @@ export default function Header() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              initial={{ x: "100%", opacity:0 }}
-              animate={{ x: 0 , opacity:1}}
-              exit={{ x: "100%" ,opacity:0 }}
-              transition={{ duration: 0.3 , ease:"easeInOut"}}
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className="md:hidden fixed top-0 right-0 w-[65%] h-screen bg-white text-black px-6 py-6 space-y-4 shadow-lg z-50"
             >
               <div className="flex justify-between items-center mb-6">
@@ -362,7 +356,10 @@ export default function Header() {
                     className="cursor-pointer"
                   />
                 </Link>
-                <button onClick={() => setMobileMenuOpen(false)} className="text-xl">
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-xl"
+                >
                   ✕
                 </button>
               </div>
@@ -391,7 +388,6 @@ export default function Header() {
           )}
         </AnimatePresence>
 
-
         {/* 서브 메뉴 (데스크탑 전용) */}
         <AnimatePresence>
           {isHovered && (
@@ -408,7 +404,10 @@ export default function Header() {
 
                 <div className="flex justify-center flex-1 space-x-0 lg:space-x-4 xl:space-x-19 md:text-sm lg:text-base text-gray-600 tracking-wide">
                   {NAV_ITEMS.map((mainItem) => (
-                    <div key={mainItem.label} className="flex flex-col items-start min-w-[150px]">
+                    <div
+                      key={mainItem.label}
+                      className="flex flex-col items-start min-w-[150px]"
+                    >
                       {mainItem.submenu.map((sub) => (
                         <Link
                           key={sub.label}
