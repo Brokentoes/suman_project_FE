@@ -1,6 +1,5 @@
 export const ceoText = {
-    KOR: {
-        greeting: "SUMAN을\n찾아주신 고객 여러분, 반갑습니다.",
+    KOR: {//
         intro: "안녕하십니까.",
         body: `(주)수만 기업은 정밀 가공 기술을 기반으로 자동차, 전기전자,
 이차전지 산업에 필요한 부품과 모듈, 장비를 설계, 제조하는 전문 기업입니다.
@@ -10,9 +9,12 @@ export const ceoText = {
 앞으로도 수만 기업은 고객여러분의 성공과 함께하는 든든한 파트너가 되겠습니다.
 변함없는 관심과 성원 부탁드립니다.`,
         closing: "감사합니다.",
+        //sign: 생략
     },
     ENG: {
-    greeting: "Welcome, dear customers, to SUMAN.",
+    greetingBlue: "SUMAN.",//
+    greetingBlack: ",",//
+    greetingBlack2: "Welcome, dear customers,",//
     intro: "Hello.",
     body: `Suman Group is a precision manufacturing company that designs and manufactures parts,
 modules, and equipment for the automotive, electronics, and battery industries.
@@ -21,5 +23,6 @@ and we continue to grow sustainably with flexible and honest technology.
 We will continue to be a reliable partner in your success.
 We ask for your continued interest and support.`,
     closing: "Thank you.",
-    sign: "CEO Taehyung Lim, SUMAN Group",
-}
+    // sign: "CEO Taehyung Lim, SUMAN Group", 생략
+    },
+};
