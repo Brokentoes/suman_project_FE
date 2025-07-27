@@ -89,6 +89,10 @@ export default function ServicePage() {
   const initialDisplayCount = 10; // This will now apply to the combined list
 
   return (
+    <>
+    <head>
+        <title>기술소개 | 수만</title>
+    </head>
     <Layout>
       <HeroSection
         title="기술 소개"
@@ -400,5 +404,6 @@ export default function ServicePage() {
         {/* closing the max-w-7xl mx-auto div for centering content */}
       </motion.div>
     </Layout>
+    </>
   );
 }
