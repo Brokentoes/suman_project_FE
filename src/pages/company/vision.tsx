@@ -101,9 +101,10 @@ export default function VisionPage() {
     setIsClient(true);
   }, []);
 
-  const svgViewBox = "0 0 1047 810";
 
-  // Reusable SVG arrow component with adjustable length
+  const svgViewBox = "0 0 1047 900"; //
+
+  
   const ArrowSVG = ({
     x,
     y,
@@ -118,9 +119,9 @@ export default function VisionPage() {
     <svg
       x={x}
       y={y}
-      width={arrowLength + 10} // SVG width adjusted for arrowLength + arrowhead
-      height="20" // Fixed height for the arrow container
-      viewBox={`0 0 ${arrowLength + 10} 20`} // ViewBox adjusted dynamically
+      width={arrowLength + 10} 
+      height="20" 
+      viewBox={`0 0 ${arrowLength + 10} 20`} 
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
@@ -171,10 +172,12 @@ export default function VisionPage() {
               Vision
             </h2>
 
-            <div className="vision-neo-area -mt-30 flex flex-col md:flex-row items-center justify-between ">
-              <div className="md:w-1/2 text-left">
+            
+            <div className="vision-neo-area mt-12 flex flex-col items-center"> 
+              
+              <div className="w-full text-left">
                 <p className="text-gray-800 font-semibold text-[30px] mb-2">
-                  NEO &apos;24 5th 6015
+                  NEO &lsquo;24 5th 6015
                 </p>
                 <h3 className="text-4xl font-bold text-blue-600 text-[50px] leading-tight">
                   확신의 종합 솔루션 서비스
@@ -182,15 +185,16 @@ export default function VisionPage() {
                 <h3 className="text-4xl font-bold text-gray-800 text-[50px] leading-tight">
                   회사로의 도약
                 </h3>
-                <p className="text-[25px] text-gray-500 mt-8">
+                {/* <p className="text-[25px] text-gray-500 mt-8">
                   새롭게 성장하고 도약하는 2025년
                   <br /> 5년 한 매출액 600억원, 순이익 150억 달성!
-                </p>
+                </p> */}
               </div>
-              <div className="md:w-1/2 flex justify-center relative">
+              
+              <div className="w-full flex justify-center relative mt-12">
                 <svg
                   width="100%"
-                  height="810px"
+                  height="850px" 
                   viewBox={svgViewBox}
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -205,11 +209,11 @@ export default function VisionPage() {
                         onMouseLeave={() => setHoveredSection(null)}
                       >
                         <image
-                          href="/images/vision_arrow3.png" // 실제 이미지 경로
-                          x="0"
-                          y="160"
-                          width="260"
-                          height="405"
+                          href="/images/vision_arrow3.png" 
+                          x="-6" 
+                          y="169" 
+                          width="270" 
+                          height="420" 
                           className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
@@ -223,20 +227,20 @@ export default function VisionPage() {
                         >
                           2024
                         </text>
-                        {/* 2024년 화살표 대체 */}
+                       
                         <ArrowSVG
-                          x={90 - 80 / 2} // Adjust X to center the arrow SVG
-                          y={380 - 10} // Adjust Y to align with previous text Y
+                          x={50}
+                          y={380 - 10}
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2024"
                               ? "opacity-0"
                               : "opacity-100"
                           }`}
-                          arrowLength={120} // Example length for 2024
+                          arrowLength={130}
                         />
 
                         <foreignObject
-                          x="2"
+                          x="0"
                           y="380"
                           width="230"
                           height="80"
@@ -260,11 +264,11 @@ export default function VisionPage() {
                         onMouseLeave={() => setHoveredSection(null)}
                       >
                         <image
-                          href="/images/vision_arrow2.png" // 실제 이미지 경로
-                          x="90"
-                          y="490"
-                          width="440"
-                          height="380"
+                          href="/images/vision_arrow2.png" 
+                          x="79"
+                          y="499" 
+                          width="470" 
+                          height="415" 
                           className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
@@ -278,28 +282,28 @@ export default function VisionPage() {
                         >
                           2026
                         </text>
-                        {/* 2026년 화살표 대체 */}
+                       
                         <ArrowSVG
-                          x={290 - 100 / 2} // Adjust X to center the arrow SVG
-                          y={680 - 10} // Adjust Y to align with previous text Y
+                          x={235}
+                          y={680 - 10}
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2026"
                               ? "opacity-0"
                               : "opacity-100"
                           }`}
-                          arrowLength={150} // Example length for 2026
+                          arrowLength={160}
                         />
 
                         <foreignObject
                           x="210"
                           y="670"
-                          width="200" // width를 140에서 250으로 증가.
+                          width="200"
                           height="80"
-                          className={`transition-opacity duration-300 ${
-                            hoveredSection === "2026"
-                              ? "opacity-100"
-                              : "opacity-0"
-                          }`}
+                          className="text-xl text-center text-white"
+                          style={{
+                            opacity: hoveredSection === "2026" ? 1 : 0,
+                            transition: "opacity 300ms duration-300",
+                          }}
                         >
                           <div className="text-xl text-center text-white ">
                             전지모듈, 장비 및
@@ -315,11 +319,11 @@ export default function VisionPage() {
                         onMouseLeave={() => setHoveredSection(null)}
                       >
                         <image
-                          href="/images/vision_arrow1.png" // 실제 이미지 경로
-                          x="500"
-                          y="0"
-                          width="550"
-                          height="788"
+                          href="/images/vision_arrow1.png" 
+                          x="486"
+                          y="0" 
+                          width="578" 
+                          height="827" 
                           className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
@@ -333,16 +337,16 @@ export default function VisionPage() {
                         >
                           2028
                         </text>
-                        {/* 2028년 화살표 대체 */}
+                        
                         <ArrowSVG
-                          x={720 - 120 / 2} // Adjust X to center the arrow SVG
-                          y={430 - 10} // Adjust Y to align with previous text Y
+                          x={660}
+                          y={430 - 10}
                           className={`transition-opacity duration-300 ${
                             hoveredSection === "2028"
                               ? "opacity-0"
                               : "opacity-100"
                           }`}
-                          arrowLength={190} // Example length for 2028
+                          arrowLength={190}
                         />
 
                         <foreignObject
@@ -357,9 +361,9 @@ export default function VisionPage() {
                           }`}
                         >
                           <div className="text-xl text-center text-white">
-                            매출 600억
+                            종합 솔루션 서비스
                             <br />
-                            순이익 150억원 목표
+                            회사로의 성장
                           </div>
                         </foreignObject>
                       </g>
@@ -390,7 +394,7 @@ export default function VisionPage() {
               viewport={{ once: true, amount: 0.3 }}
             >
               <motion.div
-                className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
+                className="relative flex flex-col justify-end p-4 shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[380px]"
                 variants={itemRiseVariants}
                 style={{
                   backgroundImage: 'url("/images/vision_Flex.png")',
@@ -401,7 +405,7 @@ export default function VisionPage() {
                 }}
               >
                 <div
-                  className="absolute inset-0 bg-black opacity-40 rounded-lg"
+                  className="absolute inset-0 bg-black opacity-40 "
                   style={{
                     clipPath:
                       "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
@@ -418,7 +422,7 @@ export default function VisionPage() {
               </motion.div>
 
               <motion.div
-                className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
+                className="relative flex flex-col justify-end p-4 shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[380px]"
                 variants={itemRiseVariants}
                 style={{
                   backgroundImage: 'url("/images/vision_pro.png")',
@@ -429,7 +433,7 @@ export default function VisionPage() {
                 }}
               >
                 <div
-                  className="absolute inset-0 bg-black opacity-40 rounded-lg"
+                  className="absolute inset-0 bg-black opacity-40 g"
                   style={{
                     clipPath:
                       "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
@@ -448,7 +452,7 @@ export default function VisionPage() {
               </motion.div>
 
               <motion.div
-                className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
+                className="relative flex flex-col justify-end p-4 shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[380px]"
                 variants={itemRiseVariants}
                 style={{
                   backgroundImage: 'url("/images/vision_tek.png")',
@@ -459,7 +463,7 @@ export default function VisionPage() {
                 }}
               >
                 <div
-                  className="absolute inset-0 bg-black opacity-40 rounded-lg"
+                  className="absolute inset-0 bg-black opacity-40"
                   style={{
                     clipPath:
                       "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
@@ -478,7 +482,7 @@ export default function VisionPage() {
               </motion.div>
 
               <motion.div
-                className="relative flex flex-col justify-end p-4 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[350px]"
+                className="relative flex flex-col justify-end p-4  shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[380px]"
                 variants={itemRiseVariants}
                 style={{
                   backgroundImage: 'url("/images/vision_rnbd.png")',
@@ -489,7 +493,7 @@ export default function VisionPage() {
                 }}
               >
                 <div
-                  className="absolute inset-0 bg-black opacity-40 rounded-lg"
+                  className="absolute inset-0 bg-black opacity-40 "
                   style={{
                     clipPath:
                       "polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px)",
@@ -519,7 +523,7 @@ export default function VisionPage() {
           style={{
             backgroundImage: 'url("/images/vision_R&D_bg.png")',
             backgroundSize: "cover",
-            backgroundPosition: "bottom center",
+            backgroundPosition: "center 245px",
             backgroundRepeat: "no-repeat",
           }}
         >
@@ -533,25 +537,25 @@ export default function VisionPage() {
             <div className="rnd-content flex flex-col md:flex-row items-center justify-between gap-12">
               <div className="md:w-1/2 flex flex-col items-end pr-0">
                 <motion.div
-                  className="bg-white/40 rounded-lg p-6 mb-4 w-72 backdrop-blur-sm"
+                  className="bg-white/40 rounded-4xl p-3 mb-4 w-72 h-23 backdrop-blur-sm "
                   variants={rndBoxLeftInVariants}
                 >
-                  <p className="text-[25px] text-white font-semibold mb-2">
+                  <p className="text-[25px] text-white font-semibold mb-2 flex items-center justify-center " >
                     R&D 기획
                   </p>
-                  <p className="text-[15px] text-white">
+                  <p className="text-[15px] text-white flex items-center justify-center">
                     PJT 운영 및 R&D 사업화 전략수립
                   </p>
                 </motion.div>
 
                 <motion.div
-                  className="bg-white/40 rounded-lg p-6 w-72 backdrop-blur-sm"
+                  className="bg-white/40 rounded-4xl p-3 mb-4 w-72 h-23 backdrop-blur-sm"
                   variants={rndBoxLeftInVariants}
                 >
-                  <p className="text-[25px] text-white font-semibold mb-2">
+                  <p className="text-[25px] text-white font-semibold mb-2 flex items-center justify-center">
                     R&D
                   </p>
-                  <p className="text-[15px] text-white">
+                  <p className="text-[15px] text-white flex items-center justify-center">
                     단계별 연구 ITEM 초기개발 / 차별화
                   </p>
                 </motion.div>
@@ -612,7 +616,7 @@ export default function VisionPage() {
                   style={{ backgroundImage: 'url("/images/vision_dev.png")' }}
                   variants={rndBoxRightInVariants}
                 >
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent p-4">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/100 via-[79%] to-transparent p-4">
                     <p className="text-gray-300 text-[15px] mb-1">
                       제조기술 효율성 극대화
                     </p>
