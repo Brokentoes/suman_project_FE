@@ -48,7 +48,7 @@ export default function CeoPage() {
       <HeroSection
         title="CEO 인사말"
         subtitle="CEO Message"
-        backgroundImage="/images/company_hero.png"
+        backgroundImage="/images/ceo_hero.png"
       />
 
       {/* 서브 내비게이션 (Breadcrumb) 섹션 */}
