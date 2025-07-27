@@ -111,12 +111,12 @@ export default function TalentPage() {
       <HeroSection
         title="인재상"
         subtitle="Our Talent"
-        backgroundImage="/images/talent-hero-bg.jpg"
+        backgroundImage="/images/careers_hero.png"
       />
 
       <section className="breadcrumb-section bg-gray-700 py-4 px-4 md:px-8 text-white">
         <div className="max-w-7xl mx-auto">
-          <p className="text-md">회사소개 &gt; 인재상</p>
+          <p className="text-md">인재 채용 &gt; 인재상</p>
         </div>
       </section>
 
@@ -179,6 +179,7 @@ export default function TalentPage() {
           </motion.div>
         </div>
       </div>
+      <hr className="my-8 border-gray-200 w-full" />
     </Layout>
   );
 }
