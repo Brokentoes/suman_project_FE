@@ -1,2 +1,2 @@
-import PhilosophyPage from "@/pages/careers/philosophy";
+import PhilosophyPage from "@/pages/careers/philosophy"
 export default PhilosophyPage;

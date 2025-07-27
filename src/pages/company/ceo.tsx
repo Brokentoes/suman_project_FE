@@ -5,6 +5,9 @@ import Image from "next/image";
 import Head from "next/head";
 import { motion, type Transition } from "framer-motion";
 import HeroSection from "@/components/HeroSection";
+import { ceoText } from "@/data/ceo"
+import { useLangStore } from "@/stores/langStore";
+import { useState } from "react";
 
 // Ceo인사말 애니메이션
 const slideInLeft = {
@@ -36,6 +39,10 @@ const slideInLeftBottom = {
 };
 
 export default function CeoPage() {
+  const lang = useLangStore((state) => state.lang);
+    const { intro, body, closing } = ceoText[lang];
+    
+    
   return (
     <Layout>
       <Head>
@@ -65,39 +72,32 @@ export default function CeoPage() {
             viewport={{ once: true, amount: 0.3 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-snug">
-              <span>
-                <span className="text-blue-600 font-bold">SUMAN</span>
-                <span className="text-black font-bold">을</span>
-              </span>
-              <br />
-              <span className="text-black font-bold">
-                찾아주신 고객 여러분, 반갑습니다.
-              </span>
-            </h2>
-            <p className="mb-4 text-2xl">안녕하십니까.</p>
-            <p className="mb-4">
-              (주)수만 기업은 정밀 가공 기술을 기반으로 자동차, 전기전자,
-              이차전지 산업에
-              <br />
-              필요한 부품과 모듈, 장비를 설계, 제조하는 전문 기업입니다.
-              <br />
-              저희는 끊임없는 기술 혁신과 철저한 품질 관리를 통해 고객이 신뢰할
-              수 있는
-              <br />
-              제품을 공급해왔으며, 산업의 변화 속에서도 유연하고 정직한
-              기술력으로
-              <br />
-              지속 가능한 성장을 이어가고 있습니다.
-              <br />
-              앞으로도 수만 기업은 고객여러분의 성공과 함께하는 든든한 파트너가
-              되겠습니다.
-              <br />
-              변함없는 관심과 성원 부탁드립니다.
-            </p>
-            <p className="mb-4">감사합니다.</p>
+  {lang === "KOR" ? (
+    <>
+      <span className="text-blue-600 font-bold">SUMAN</span>
+      <span className="text-black font-bold">을</span>
+      <br />
+      <span className="text-black font-bold">
+        찾아주신 고객 여러분, 반갑습니다.
+      </span>
+    </>
+  ) : (
+    <>
+      <span className="text-blue-600 font-bold">SUMAN</span>
+      <br />
+      <span className="text-black font-bold">
+        Welcome, dear customers,
+      </span>
+    </>
+  )}
+</h2>
+            <p className="mb-4 text-2xl">{intro}</p>
+            <p className="mb-4 whitespace-pre-line">{body}</p>
+            <p className="mb-4">{closing}</p>
+            </motion.div>
 
-            {/* 서명 영역  */}
-            <motion.p
+            {/* 서명 영역 주석 
+            <
               className="signature-area text-lg font-semibold text-gray-800 mt-8"
               variants={slideInLeftBottom}
               initial="hidden"
@@ -105,17 +105,16 @@ export default function CeoPage() {
               viewport={{ once: true, amount: 0.3 }}
             >
               (주) 수만 그룹 대표이사 임태형{" "}
-              {/* 대표이사님 서명이 필요하실 경우 여기에 파일명을 넣어주세요*/}
-              {/*></><Image
+              
+              <Image
                 src="/images/signature.png"
                 alt="대표이사 서명"
                 className="w-40 h-auto inline-block align-middle ml-2"
                 width={100}
                 height={100}
               />
-              */}
-            </motion.p>
-          </motion.div>
+              </motion.p>
+            */}
 
           {/*Ceo 인사말과 Ceo이미지 사이 회색 실선 */}
           <div className="hidden md:block w-px min-h-[700px] bg-gray-300 self-stretch mr-8" />
