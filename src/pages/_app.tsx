@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
     </Head>
       {/* GA4 스크립트 삽입 */}
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=G-50XKFW176B`}
+        src={`https://www.googletagmanager.com/gtag/js?id=G-FE5VF18659`}
         strategy="afterInteractive"
       />
       <Script id="gtag-init" strategy="afterInteractive">
@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-50XKFW176B', {
+          gtag('config', 'G-FE5VF18659', {
             page_path: window.location.pathname,
           });
         `}
