@@ -53,7 +53,7 @@ export default function HistoryPage() {
         subtitle={
           <span className="text-xl font-bold tracking-wide px-2">History</span>
         }
-        backgroundImage="/images/company_banner.png" // 해당 페이지에 맞는 배경 이미지 경로
+        backgroundImage="/images/sub_banner/company_banner.png" // 해당 페이지에 맞는 배경 이미지 경로
       />
     
 
