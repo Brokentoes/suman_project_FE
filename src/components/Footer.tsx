@@ -155,7 +155,7 @@ export default function Footer() {
         </div>
 
       {/* 구분선 */}
-      <div className="border-t border-gray-300" />
+      <div className="border-t border-gray-200" />
 
       {/* 하단 레이아웃 */}
       <div className="max-w-7xl mx-auto px-6 py-6 text-xs text-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4 tracking-wide">

@@ -115,7 +115,7 @@ export default function VisionPage() {
       <HeroSection
         title="기업 비전"
         subtitle="Vision"
-        backgroundImage="/images/company_hero.png"
+        backgroundImage="/images/company_banner.png"
       />
 
       <BreadcrumbSection path="회사소개 > 기업 비전" />

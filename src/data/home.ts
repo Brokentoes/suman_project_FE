@@ -5,7 +5,7 @@ export const homeContentKor = {
 //                   KOR
 //--------------------------------------------  
     section1Text: {
-      title: '정밀한 기술이 만드는 내일의 기업',
+      title: '정밀한 기술이 만드는\n내일의 기업',
       subtitle: '수만은 정밀 제조 분야의 깊은 know-how를 바탕으로, 고객 맞춤형 솔루션을 제공합니다.',
     },
     
