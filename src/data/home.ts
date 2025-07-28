@@ -6,13 +6,13 @@ export const homeContentKor = {
 //--------------------------------------------  
     section1Text: {
       title: '정밀한 기술이 만드는\n내일의 기업',
-      subtitle: '수만은 정밀 제조 분야의 깊은 know-how를 바탕으로, 고객 맞춤형 솔루션을 제공합니다.',
+      subtitle: '(주) 수만은 정밀 제조 분야의 깊은 know-how를 바탕으로, 고객 맞춤형 솔루션을 제공합니다.',
     },
     
     section2: {
       title: '산업을 움직이는 기술',
       description:
-        '수만은 2차전지 생산 장비 및 신뢰성 평가 시스템을 설계/제작하는 전문 기업입니다.\n대전 R&D 센터에서 축적한 기술력과 생산 인프라를 기반으로, 고객 맞춤형 고신뢰성 솔루션을 제공합니다.',
+        '수만은 2차전지 생산 장비 및 신뢰성 평가 시스템을 설계 및 제작하는 전문 기업입니다.\n대전 R&D 센터에서 축적한 기술력과 생산 인프라를 기반으로, 고객 맞춤형 고신뢰성 솔루션을 제공합니다.',
       bgImage: '/images/main_tech.png',
       buttonLabel: '기업 비전 바로가기 →',
       keywords: ["ENJOY", "NEO", "INTENSELY", "QUICKLY"],
@@ -103,25 +103,25 @@ export const homeContentEng = {
           title: 'Secondary Battery',
           subtitle: 'Secondary Battery',
           description: 'Precision parts / module design',
-          img: '/images/main_secondary_battery.png',
+          img: '/images/solution/main_secondary_battery.png',
         },
         {
           title: 'Electrical & Electronics',
           subtitle: 'Electrical & Electronics',
           description: 'Precision parts / customized equipment manufacturing',
-          img: '/images/main_electronics.png',
+          img: '/images/solution/main_electronics.png',
         },
         {
           title: 'Semiconductor',
           subtitle: 'Semiconductor',
           description: 'Fusion of precision parts / solution service technology',
-          img: '/images/main_semiconductor.png',
+          img: '/images/solution/main_semiconductor.png',
         },
         {
           title: 'Mobility',
           subtitle: 'Mobility',
           description: 'Precision machining technology',
-          img: '/images/main_mobility.png',
+          img: '/images/solution/main_mobility.png',
         },
       ],
     },
@@ -132,7 +132,7 @@ export const homeContentEng = {
         { label: 'ISO 9001', img: '/images/Certifications/ISO_9001.png'},
         { label: 'ISO 14001', img: '/images/Certifications/ISO_14001.png' },
         { label: 'ISO 45001', img: '/images/Certifications/ISO_45001.png' },
-        { label: 'Venture Company Certificate', img: '/images/Certifications/main_venture.png.png' },
+        { label: 'Venture Company Certificate', img: '/images/Certifications/main_venture.png' },
         { label: 'Materials & Parts Specialist', img: '/images/Certifications/소재부품장비 전문기업확인서.png'},
         { label: 'Root Company Certificate', img: '/images/Certifications/기업부설연구소 인정서.png' },
         { label: 'SME Certificate', img: null },

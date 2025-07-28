@@ -438,7 +438,6 @@ export default function HomePage({ content }: HomePageProps) {
               </Link>
             </div>
           </section>
-
        </main>
       <Footer />
     </>

@@ -162,7 +162,7 @@ export default function InquiryFormPage() {
             </motion.div>
           </div>
         </div>
-        <hr className="my-8 border-gray-200" />
+        <hr className="my-8 border-gray-200 w-full" />
       </Layout>
     </>
   );
