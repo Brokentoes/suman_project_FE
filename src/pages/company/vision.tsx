@@ -101,10 +101,8 @@ export default function VisionPage() {
     setIsClient(true);
   }, []);
 
-
   const svgViewBox = "0 0 1047 900"; //
 
-  
   const ArrowSVG = ({
     x,
     y,
@@ -119,9 +117,9 @@ export default function VisionPage() {
     <svg
       x={x}
       y={y}
-      width={arrowLength + 10} 
-      height="20" 
-      viewBox={`0 0 ${arrowLength + 10} 20`} 
+      width={arrowLength + 10}
+      height="20"
+      viewBox={`0 0 ${arrowLength + 10} 20`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
@@ -154,7 +152,7 @@ export default function VisionPage() {
         <HeroSection
           title="기업 비전"
           subtitle="Vision"
-          backgroundImage="/images/company_hero.png"
+          backgroundImage="/images/sub_banner/company_banner.png"
         />
 
         <BreadcrumbSection path="회사소개 > 기업 비전" />
@@ -172,9 +170,7 @@ export default function VisionPage() {
               Vision
             </h2>
 
-            
-            <div className="vision-neo-area mt-12 flex flex-col items-center"> 
-              
+            <div className="vision-neo-area mt-12 flex flex-col items-center">
               <div className="w-full text-left">
                 <p className="text-gray-800 font-semibold text-[30px] mb-2">
                   NEO &lsquo;24 5th 6015
@@ -190,11 +186,11 @@ export default function VisionPage() {
                   <br /> 5년 한 매출액 600억원, 순이익 150억 달성!
                 </p> */}
               </div>
-              
+
               <div className="w-full flex justify-center relative mt-12">
                 <svg
                   width="100%"
-                  height="850px" 
+                  height="850px"
                   viewBox={svgViewBox}
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -209,11 +205,11 @@ export default function VisionPage() {
                         onMouseLeave={() => setHoveredSection(null)}
                       >
                         <image
-                          href="/images/vision_arrow3.png" 
-                          x="-6" 
-                          y="169" 
-                          width="270" 
-                          height="420" 
+                          href="/images/vision_arrow3.png"
+                          x="-6"
+                          y="169"
+                          width="270"
+                          height="420"
                           className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
@@ -227,7 +223,7 @@ export default function VisionPage() {
                         >
                           2024
                         </text>
-                       
+
                         <ArrowSVG
                           x={50}
                           y={380 - 10}
@@ -264,11 +260,11 @@ export default function VisionPage() {
                         onMouseLeave={() => setHoveredSection(null)}
                       >
                         <image
-                          href="/images/vision_arrow2.png" 
+                          href="/images/vision_arrow2.png"
                           x="79"
-                          y="499" 
-                          width="470" 
-                          height="415" 
+                          y="499"
+                          width="470"
+                          height="415"
                           className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
@@ -282,7 +278,7 @@ export default function VisionPage() {
                         >
                           2026
                         </text>
-                       
+
                         <ArrowSVG
                           x={235}
                           y={680 - 10}
@@ -319,11 +315,11 @@ export default function VisionPage() {
                         onMouseLeave={() => setHoveredSection(null)}
                       >
                         <image
-                          href="/images/vision_arrow1.png" 
+                          href="/images/vision_arrow1.png"
                           x="486"
-                          y="0" 
-                          width="578" 
-                          height="827" 
+                          y="0"
+                          width="578"
+                          height="827"
                           className="transition-all duration-300 group-hover:opacity-70 group-hover:scale-[1.02] filter brightness-50"
                         />
                         <text
@@ -337,7 +333,7 @@ export default function VisionPage() {
                         >
                           2028
                         </text>
-                        
+
                         <ArrowSVG
                           x={660}
                           y={430 - 10}
@@ -540,7 +536,7 @@ export default function VisionPage() {
                   className="bg-white/40 rounded-4xl p-3 mb-4 w-72 h-23 backdrop-blur-sm "
                   variants={rndBoxLeftInVariants}
                 >
-                  <p className="text-[25px] text-white font-semibold mb-2 flex items-center justify-center " >
+                  <p className="text-[25px] text-white font-semibold mb-2 flex items-center justify-center ">
                     R&D 기획
                   </p>
                   <p className="text-[15px] text-white flex items-center justify-center">

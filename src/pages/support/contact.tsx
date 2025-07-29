@@ -23,7 +23,7 @@ export default function InquiryFormPage() {
     setForm({ ...form, [name]: value });
   };
 
-// 문의 등록
+  // 문의 등록
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -152,7 +152,7 @@ export default function InquiryFormPage() {
                   <div className="text-right">
                     <button
                       type="submit"
-                      className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700 transition"
+                      className="bg-gray-600 text-white px-6 py-2 hover:bg-blue-700 transition"
                     >
                       등록
                     </button>

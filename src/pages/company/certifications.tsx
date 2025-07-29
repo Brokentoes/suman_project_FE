@@ -12,7 +12,8 @@ import { useState } from "react";
 // You should typically import this from "@/data/home" or a dedicated data file.
 const homeContentKor = {
   sectionCertifications: {
-    title: "수만의 경쟁력은 다양한 분야에서 검증된 기술력과 품질입니다.",
+    title:
+      "정부기관의 인증을 비롯해\nISO 품질·환경·안전경영 시스템을 모두 구축하여\n고객 중심의 고신뢰 생산 체계를 갖추고 있습니다.",
     tags: ["Technology Certification", "Quality Assurance"],
     certifications: [
       { label: "ISO 9001", img: "/images/Certifications/ISO_9001.png" },
@@ -88,7 +89,7 @@ export default function CIPage() {
         <HeroSection
           title="인증 현황"
           subtitle="Certifications"
-          backgroundImage="/images/company_hero.png" // You can change this to a specific certifications hero image if you have one
+          backgroundImage="/images/sub_banner/company_banner.png" // You can change this to a specific certifications hero image if you have one
         />
 
         <BreadcrumbSection path="회사소개 > 인증 현황" />
