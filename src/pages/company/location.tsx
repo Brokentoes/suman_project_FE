@@ -1,11 +1,12 @@
-// location.tsx
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion, type Transition } from "framer-motion";
-import { useState, useEffect, useRef, useCallback, useMemo } from "react"; // <-- useMemo 추가
+import Head from "next/head";
 
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
-import Head from "next/head";
+import { useLangStore } from "@/stores/langStore";
+
 
 const kakaoMapConfigs: {
   [key: string]: {
@@ -38,29 +39,45 @@ const kakaoMapConfigs: {
 const locationsData = [
   {
     key: "본사",
-    title: "본사",
-    addressSnippet: "대전광역시 대덕구 문평서로",
+    title: {
+      KOR: "본사",
+      ENG: "Head Office",
+    },
+    addressSnippet: {
+      KOR: "대전광역시 대덕구 문평서로",
+      ENG: "Munpyeongseo-ro, Daedeok-gu, Daejeon",
+    },
   },
   {
     key: "천안지부",
-    title: "천안지부",
-    address: "충청남도 천안시 서북구 성성동 336-4 G1비즈캠퍼스 4F 401호",
-    addressSnippet: "G1 비즈캠퍼스 4F 401호",
+    title: {
+      KOR: "천안지부",
+      ENG: "Cheonan Branch",
+    },
+    addressSnippet: {
+      KOR: "G1 비즈캠퍼스 4F 401호",
+      ENG: "4F 401, G1 Biz Campus, Cheonan-si",
+    },
   },
   {
     key: "시험센터",
-    title: "시험센터",
-    addressSnippet: "대전광역시 유성구 테크노2로",
+    title: {
+      KOR: "시험센터",
+      ENG: "Testing Center",
+    },
+    addressSnippet: {
+      KOR: "대전광역시 유성구 테크노2로",
+      ENG: "Techno 2-ro, Yuseong-gu, Daejeon",
+    },
   },
 ];
 
 export default function LocationPage() {
+  const lang = useLangStore((state) => state.lang);
   const [openMap, setOpenMap] = useState<string | null>(null);
   const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const kakaoMaps = useRef<{ [key: string]: kakao.maps.Map | null }>({});
-  const infoWindows = useRef<{ [key: string]: kakao.maps.InfoWindow | null }>(
-    {}
-  );
+  const infoWindows = useRef<{ [key: string]: kakao.maps.InfoWindow | null }>({});
   const currentOpenInfowindow = useRef<kakao.maps.InfoWindow | null>(null);
 
   const fadeInVariants = {
@@ -72,16 +89,12 @@ export default function LocationPage() {
     },
   };
 
-  const mapTransition = useMemo(
-    () =>
-      ({
-        type: "spring",
-        stiffness: 200,
-        damping: 20,
-        duration: 0.5,
-      } as Transition),
-    [] // 의존성 없음: 객체 내부의 값들이 변하지 않으므로 한 번만 생성.
-  );
+  const mapTransition = useMemo(() => ({
+    type: "spring",
+    stiffness: 200,
+    damping: 20,
+    duration: 0.5,
+  } as Transition), []);
 
   const KAKAO_MAP_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY;
 
@@ -89,9 +102,7 @@ export default function LocationPage() {
     const config = kakaoMapConfigs[locationKey];
     const container = mapRefs.current[locationKey];
 
-    if (kakaoMaps.current[locationKey]) {
-      return;
-    }
+    if (kakaoMaps.current[locationKey]) return;
 
     if (config && container && window.kakao && window.kakao.maps) {
       const options: kakao.maps.MapOptions = {
@@ -104,29 +115,22 @@ export default function LocationPage() {
       const zoomControl = new window.kakao.maps.ZoomControl();
       map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
 
-      const markerPosition = new window.kakao.maps.LatLng(
-        config.latitude,
-        config.longitude
-      );
       const marker = new window.kakao.maps.Marker({
-        position: markerPosition,
-        map: map,
+        position: new window.kakao.maps.LatLng(config.latitude, config.longitude),
+        map,
       });
 
-      const infowindowContent =
-        `<div style="padding:10px;font-size:14px;font-weight:bold;color:#333;">` +
-        `<div style="margin-bottom:5px;">${locationKey}</div>` +
-        `<div style="font-size:12px;color:#666;">${config.address}</div>` +
-        `</div>`;
-
       const infowindow = new window.kakao.maps.InfoWindow({
-        content: infowindowContent,
+        content: `<div style="padding:10px;font-size:14px;font-weight:bold;color:#333;">
+                    <div style="margin-bottom:5px;">${locationKey}</div>
+                    <div style="font-size:12px;color:#666;">${config.address}</div>
+                  </div>`,
         removable: true,
       });
 
       infoWindows.current[locationKey] = infowindow;
 
-      window.kakao.maps.event.addListener(marker, "click", function () {
+      window.kakao.maps.event.addListener(marker, "click", () => {
         if (currentOpenInfowindow.current) {
           currentOpenInfowindow.current.close();
         }
@@ -134,18 +138,12 @@ export default function LocationPage() {
         currentOpenInfowindow.current = infowindow;
       });
 
-      window.kakao.maps.event.addListener(map, "click", function () {
+      window.kakao.maps.event.addListener(map, "click", () => {
         if (currentOpenInfowindow.current) {
           currentOpenInfowindow.current.close();
           currentOpenInfowindow.current = null;
         }
       });
-
-      console.log(`${locationKey} Kakao Map initialized.`);
-    } else {
-      console.warn(
-        `[[initKakaoMap]] Failed to initialize Kakao Map for ${locationKey}. Config, container or Kakao API not ready.`
-      );
     }
   }, []);
 
@@ -168,10 +166,11 @@ export default function LocationPage() {
             );
           }, (mapTransition.duration ?? 0.5) * 1000 + 50);
         }
+
         return nextOpenMap;
       });
     },
-    [mapTransition, kakaoMaps, currentOpenInfowindow]
+    [mapTransition]
   );
 
   useEffect(() => {
@@ -181,124 +180,128 @@ export default function LocationPage() {
       !window.kakao?.maps
     ) {
       const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`; // libraries=services 추가
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`;
       script.async = true;
       script.onload = () => {
         window.kakao.maps.load(() => {
-          console.log("Kakao Map Script Loaded and Ready on LocationPage.");
-          Object.keys(kakaoMapConfigs).forEach((key) => {
-            initKakaoMap(key);
-          });
+          Object.keys(kakaoMapConfigs).forEach(initKakaoMap);
         });
       };
-      script.onerror = (error) => {
-        console.error("Kakao Map Script failed to load:", error);
-      };
       document.head.appendChild(script);
-    } else if (
-      KAKAO_MAP_APP_KEY &&
-      typeof window !== "undefined" &&
-      window.kakao?.maps
-    ) {
-      Object.keys(kakaoMapConfigs).forEach((key) => {
-        initKakaoMap(key);
-      });
+    } else if (window.kakao?.maps) {
+      Object.keys(kakaoMapConfigs).forEach(initKakaoMap);
     }
   }, [KAKAO_MAP_APP_KEY, initKakaoMap]);
 
   return (
-    <>
-      <Head>
-        <title>오시는길 | 수만</title>
-      </Head>
-      <Layout>
-        <HeroSection
-          title="시설 위치"
-          subtitle="Location"
-          backgroundImage="/images/company_hero.png"
-        />
-        <BreadcrumbSection path="회사소개 > 시설 위치 / 찾아오시는 길" />
-        <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fadeInVariants}
-            >
-              <h2 className="text-3xl font-bold mb-8">찾아오시는 길</h2>
+  <>
+    <Head>
+      <title>{lang === "KOR" ? "오시는길 | 수만" : "Directions | SUMAN"}</title>
+    </Head>
+    <Layout>
+      <HeroSection
+        title={lang === "KOR" ? "시설 위치" : "Our Locations"}
+        subtitle={lang === "KOR" ? "찾아오시는 길" : "How to Reach Us"}
+        backgroundImage="/images/company_hero.png"
+      />
+      <BreadcrumbSection
+        path={
+          lang === "KOR"
+            ? "회사소개 > 시설 위치 / 찾아오시는 길"
+            : "Company > Location / Directions"
+        }
+      />
 
-              <div className="space-y-0 border-t-2 border-gray-900">
-                {" "}
-                {locationsData.map((location, index) => (
+      <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInVariants}
+          >
+            <h2 className="text-3xl font-bold mb-8">
+              {lang === "KOR" ? (
+                <span className="text-black font-bold">찾아오시는 길</span>
+              ) : (
+              <>
+                <span className="text-black font-bold">Directions to </span>
+                <span className="text-blue-600 font-bold">SUMAN</span>
+              </>
+  )}
+</h2>
+
+            <div className="space-y-0 border-t-2 border-gray-900">
+              {locationsData.map((location) => (
+                <div
+                  key={location.key}
+                  className="p-6 border-b border-gray-300"
+                >
                   <div
-                    key={location.key}
-                    className={`p-6 border-b border-gray-300`}
+                    className="flex justify-between items-center cursor-pointer"
+                    onClick={() => handleToggleMap(location.key)}
+                  >
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">
+                        {location.title[lang]}
+                      </h3>
+                      <p className="text-gray-700">
+                        {location.addressSnippet[lang]}
+                      </p>
+                    </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      className={`w-8 h-8 text-blue-600 transition-transform duration-300 ${
+                        openMap === location.key ? "rotate-180" : ""
+                      }`}
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
+                        clipRule="evenodd"
+                      />
+                      <path
+                        fillRule="evenodd"
+                        d="M11.47 11.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 1 1-1.06 1.06L12 13.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      height: openMap === location.key ? "250px" : "0px",
+                      opacity: openMap === location.key ? 1 : 0,
+                    }}
+                    transition={mapTransition}
+                    className="mt-4 overflow-hidden relative"
                   >
                     <div
-                      className="flex justify-between items-center cursor-pointer"
-                      onClick={() => handleToggleMap(location.key)}
-                    >
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">
-                          {location.title}
-                        </h3>
-                        <p className="text-gray-700">
-                          {location.addressSnippet}
-                        </p>
-                      </div>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className={`w-8 h-8 text-blue-600 transition-transform duration-300 ${
-                          openMap === location.key ? "rotate-180" : ""
-                        }`}
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
-                          clipRule="evenodd"
-                        />
-                        <path
-                          fillRule="evenodd"
-                          d="M11.47 11.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 1 1-1.06 1.06L12 13.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <motion.div
-                      initial={false}
-                      animate={{
-                        height: openMap === location.key ? "250px" : "0px", // 닫혔을 때 높이를 0으로 설정
-                        opacity: openMap === location.key ? 1 : 0, // 닫혔을 때 불투명도를 0으로 설정
+                      ref={(el) => {
+                        mapRefs.current[location.key] = el;
                       }}
-                      transition={mapTransition}
-                      className="mt-4 overflow-hidden relative"
+                      className="w-full h-full absolute top-0 left-0"
+                      style={{ backgroundColor: "lightgray" }}
                     >
-                      <div
-                        ref={(el) => {
-                          mapRefs.current[location.key] = el;
-                        }}
-                        className="w-full h-full absolute top-0 left-0"
-                        style={{ backgroundColor: "lightgray" }}
-                      >
-                        {openMap !== location.key && (
-                          <div
-                            className="absolute inset-0 z-10"
-                            style={{ pointerEvents: "auto" }}
-                          ></div>
-                        )}
-                      </div>
-                    </motion.div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+                      {openMap !== location.key && (
+                        <div
+                          className="absolute inset-0 z-10"
+                          style={{ pointerEvents: "auto" }}
+                        />
+                      )}
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
-        <hr className="my-8 border-gray-200 w-full" />
-      </Layout>
-    </>
-  );
+      </div>
+      <hr className="my-8 border-gray-200 w-full" />
+    </Layout>
+  </>
+);
 }
