@@ -12,7 +12,7 @@ interface FAQ {
   id: number;
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 
@@ -22,7 +22,15 @@ const FAQPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [openItems, setOpenItems] = useState<Set<number>>(new Set());
   const [displayCount, setDisplayCount] = useState(5);
+  
+  // 백엔드 서버 슬립 깨우기 요청
+  useEffect(() => {
+  fetch("https://suman-project-cap5.onrender.com/api/")
+    .then(() => console.log("Render 서버 깨우기 완료"))
+    .catch(() => console.warn("Render 서버 깨우기 실패"));
+  }, []);
 
+  // FAQ 가져오기
   useEffect(() => {   
     loadFAQs();
   }, []);

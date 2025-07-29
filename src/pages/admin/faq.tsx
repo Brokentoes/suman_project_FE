@@ -9,21 +9,21 @@ interface FAQ {
   id: number;
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 
 interface CreateFAQData {
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 
 interface UpdateFAQData {
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 
@@ -35,12 +35,15 @@ const AdminFAQPage = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [actionLoading, setActionLoading] = useState<number | null>(null);
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  const [editCategoryDropdownOpen, setEditCategoryDropdownOpen] = useState(false);
+  const categoryOptions = ['회사', '제품', '기술', '채용', '기타'];
 
   // 새 FAQ 폼 데이터
   const [newFAQ, setNewFAQ] = useState<CreateFAQData>({
     question: '',
     answer: '',
-    category: 0,
+    category: '',
     is_published: true
   });
 
@@ -48,7 +51,7 @@ const AdminFAQPage = () => {
   const [editFAQ, setEditFAQ] = useState<UpdateFAQData>({
     question: '',
     answer: '',
-    category: 0,
+    category: '',
     is_published: true
   });
 
@@ -85,7 +88,7 @@ const AdminFAQPage = () => {
       setActionLoading(-1);
       const createdFAQ = await createFAQ(newFAQ);
       setFaqs([createdFAQ, ...faqs]);
-      setNewFAQ({ question: '', answer: '', category: 0, is_published: true });
+      setNewFAQ({ question: '', answer: '', category: '', is_published: true });
       setIsCreating(false);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'FAQ 등록에 실패했습니다.');
@@ -195,13 +198,31 @@ const AdminFAQPage = () => {
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">카테고리</label>
-                <input
-                  type="text"
-                  value={newFAQ.category}
-                  onChange={(e) => setNewFAQ({...newFAQ, category: Number(e.target.value)})}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400 backdrop-blur-sm"
-                  placeholder="카테고리를 입력하세요"
-                />
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setCategoryDropdownOpen(prev => !prev)}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-left text-white"
+                  >
+                    {newFAQ.category ? (newFAQ.category) : '카테고리를 선택하세요'}
+                  </button>
+                  {categoryDropdownOpen && (
+                    <ul className="absolute z-10 w-full mt-2 bg-slate-800 border border-white/20 rounded-lg shadow-lg">
+                      {categoryOptions.map((label, idx) => (
+                        <li
+                          key={label}
+                          onClick={() => {
+                            setNewFAQ({ ...newFAQ, category: label });
+                            setCategoryDropdownOpen(false);
+                          }}
+                          className="px-4 py-2 hover:bg-slate-700 text-white cursor-pointer"
+                        >
+                          {label}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">질문</label>
@@ -251,7 +272,7 @@ const AdminFAQPage = () => {
                 <button
                   onClick={() => {
                     setIsCreating(false);
-                    setNewFAQ({ question: '', answer: '', category: 0, is_published: true });
+                    setNewFAQ({ question: '', answer: '', category: '', is_published: true });
                   }}
                   className="flex items-center px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-all duration-200 shadow-lg"
                 >
@@ -271,15 +292,34 @@ const AdminFAQPage = () => {
                 // 수정 모드
                 <div className="p-6">
                   <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-300 mb-2">카테고리</label>
-                      <input
-                        type="text"
-                        value={editFAQ.category}
-                        onChange={(e) => setEditFAQ({...editFAQ, category: Number(e.target.value) })}
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400 backdrop-blur-sm"
-                      />
-                    </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">카테고리</label>
+                        <div className="relative">
+                          <button
+                            type="button"
+                            onClick={() => setEditCategoryDropdownOpen(prev => !prev)}
+                            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-left text-white"
+                          >
+                            {editFAQ.category || '카테고리를 선택하세요'}
+                          </button>
+                          {editCategoryDropdownOpen && (
+                            <ul className="absolute z-10 w-full mt-2 bg-slate-800 border border-white/20 rounded-lg shadow-lg">
+                              {categoryOptions.map((label) => (
+                                <li
+                                  key={label}
+                                  onClick={() => {
+                                    setEditFAQ({ ...editFAQ, category: label });
+                                    setEditCategoryDropdownOpen(false);
+                                  }}
+                                  className="px-4 py-2 hover:bg-slate-700 text-white cursor-pointer"
+                                >
+                                  {label}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-300 mb-2">질문</label>
                       <input

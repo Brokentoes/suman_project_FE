@@ -1,11 +1,12 @@
 // contact.tsx
 import { useState } from "react";
 import { postInquiry } from "@/lib/api/contact";
-import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
-import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
-import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
-import { motion, type Transition } from "framer-motion"; // motion, Transition 임포트
-import Head from "next/head"; // Head 임포트
+import Layout from "@/components/Layout";
+import HeroSection from "@/components/HeroSection"; 
+import BreadcrumbSection from "@/components/BreadcrumbSection"; 
+import { motion, type Transition } from "framer-motion";
+import Head from "next/head";
+import { useEffect } from "react";
 
 export default function InquiryFormPage() {
   const [form, setForm] = useState({
@@ -15,6 +16,13 @@ export default function InquiryFormPage() {
     email: "",
     contect: "",
   });
+
+  // 백엔드 슬립 깨우기 요청
+  useEffect(() => {
+  fetch("https://suman-project-cap5.onrender.com/api/")
+    .then(() => console.log("Render 서버 깨우기 완료"))
+    .catch(() => console.warn("Render 서버 깨우기 실패"));
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
