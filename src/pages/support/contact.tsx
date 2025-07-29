@@ -7,8 +7,10 @@ import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
 import Head from "next/head";
 import { useEffect } from "react";
+import { useLangStore } from "@/stores/langStore";
 
 export default function InquiryFormPage() {
+  const { lang } = useLangStore();
   const [form, setForm] = useState({
     name: "",
     affiliation: "",
@@ -86,13 +88,13 @@ export default function InquiryFormPage() {
                 {" "}
                 {/* 기존 InquiryForm의 section 태그 */}
                 <h2 className="text-2xl font-bold mb-8 text-center">
-                  고객 문의
+                  {lang === "KOR" ? " 고객 문의" : "Client Contact Form"}
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6 text-sm">
                   {/* 이름 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      이름<span className="text-red-500">*</span>
+                      {lang === "KOR" ? " 이름" : "Name"}<span className="text-red-500">*</span>
                     </label>
                     <input
                       name="name"
@@ -105,7 +107,7 @@ export default function InquiryFormPage() {
                   {/* 소속 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      소속<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "소속" : "Affiliation"}<span className="text-red-500">*</span>
                     </label>
                     <input
                       name="affiliation"
@@ -118,7 +120,7 @@ export default function InquiryFormPage() {
                   {/* 연락처 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      연락처<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "연략처" : "Affiliation"}<span className="text-red-500">*</span>
                     </label>
                     <input
                       name="phone"
@@ -146,7 +148,7 @@ export default function InquiryFormPage() {
                   {/* 문의내용 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      문의내용<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "문의내용" : "contact"}<span className="text-red-500">*</span>
                     </label>
                     <textarea
                       name="contect" // 오타 주의: 'contect'
@@ -160,9 +162,9 @@ export default function InquiryFormPage() {
                   <div className="text-right">
                     <button
                       type="submit"
-                      className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700 transition"
+                      className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700 transition cursor-pointer"
                     >
-                      등록
+                      {lang === "KOR" ? "제출" : "POST"}
                     </button>
                   </div>
                 </form>
