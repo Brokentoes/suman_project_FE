@@ -7,7 +7,6 @@ import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { useLangStore } from "@/stores/langStore";
 
-
 const kakaoMapConfigs: {
   [key: string]: {
     latitude: number;
@@ -29,8 +28,8 @@ const kakaoMapConfigs: {
     address: "충청남도 천안시 서북구 성성동 336-4 G1비즈캠퍼스 4F 401호",
   },
   시험센터: {
-    latitude: 36.424057,
-    longitude: 127.406167,
+    latitude: 36.414282,
+    longitude: 127.413725,
     level: 3,
     address: "대전광역시 유성구 테크노2로 187 B동 120호",
   },
@@ -44,8 +43,8 @@ const locationsData = [
       ENG: "Head Office",
     },
     addressSnippet: {
-      KOR: "대전광역시 대덕구 문평서로",
-      ENG: "Munpyeongseo-ro, Daedeok-gu, Daejeon",
+      KOR: "대전광역시 대덕구 문평서로 17번길 105(문평동)",
+      ENG: "M105, Munpyeongseo-ro 17beon-gil, Daedeok-gu, Daejeon, Republic of Korea",
     },
   },
   {
@@ -55,8 +54,8 @@ const locationsData = [
       ENG: "Cheonan Branch",
     },
     addressSnippet: {
-      KOR: "G1 비즈캠퍼스 4F 401호",
-      ENG: "4F 401, G1 Biz Campus, Cheonan-si",
+      KOR: "충남 천안시 서북구 2공단4로 40-11(성성동) G1 비즈캠퍼스 4F 401호",
+      ENG: "40-11, 2gongdan 4-ro, Seobuk-gu, Cheonan-si, Chungcheongnam-do, Republic of Korea",
     },
   },
   {
@@ -66,8 +65,8 @@ const locationsData = [
       ENG: "Testing Center",
     },
     addressSnippet: {
-      KOR: "대전광역시 유성구 테크노2로",
-      ENG: "Techno 2-ro, Yuseong-gu, Daejeon",
+      KOR: "대전광역시 유성구 테크노 2로 309-26(탑립동 929-1)",
+      ENG: "309-26, Techno 2-ro, Yuseong-gu, Daejeon, Republic of Korea",
     },
   },
 ];
@@ -77,7 +76,9 @@ export default function LocationPage() {
   const [openMap, setOpenMap] = useState<string | null>(null);
   const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const kakaoMaps = useRef<{ [key: string]: kakao.maps.Map | null }>({});
-  const infoWindows = useRef<{ [key: string]: kakao.maps.InfoWindow | null }>({});
+  const infoWindows = useRef<{ [key: string]: kakao.maps.InfoWindow | null }>(
+    {}
+  );
   const currentOpenInfowindow = useRef<kakao.maps.InfoWindow | null>(null);
 
   const fadeInVariants = {
@@ -89,12 +90,16 @@ export default function LocationPage() {
     },
   };
 
-  const mapTransition = useMemo(() => ({
-    type: "spring",
-    stiffness: 200,
-    damping: 20,
-    duration: 0.5,
-  } as Transition), []);
+  const mapTransition = useMemo(
+    () =>
+      ({
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
+        duration: 0.5,
+      } as Transition),
+    []
+  );
 
   const KAKAO_MAP_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY;
 
@@ -116,7 +121,10 @@ export default function LocationPage() {
       map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
 
       const marker = new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(config.latitude, config.longitude),
+        position: new window.kakao.maps.LatLng(
+          config.latitude,
+          config.longitude
+        ),
         map,
       });
 
@@ -194,114 +202,116 @@ export default function LocationPage() {
   }, [KAKAO_MAP_APP_KEY, initKakaoMap]);
 
   return (
-  <>
-    <Head>
-      <title>{lang === "KOR" ? "오시는길 | 수만" : "Directions | SUMAN"}</title>
-    </Head>
-    <Layout>
-      <HeroSection
-        title={lang === "KOR" ? "시설 위치" : "Our Locations"}
-        subtitle={lang === "KOR" ? "찾아오시는 길" : "How to Reach Us"}
-        backgroundImage="/images/company_hero.png"
-      />
-      <BreadcrumbSection
-        path={
-          lang === "KOR"
-            ? "회사소개 > 시설 위치 / 찾아오시는 길"
-            : "Company > Location / Directions"
-        }
-      />
+    <>
+      <Head>
+        <title>
+          {lang === "KOR" ? "오시는길 | 수만" : "Directions | SUMAN"}
+        </title>
+      </Head>
+      <Layout>
+        <HeroSection
+          title={lang === "KOR" ? "시설 위치" : "Our Locations"}
+          subtitle={lang === "KOR" ? "찾아오시는 길" : "How to Reach Us"}
+          backgroundImage="/images/company_hero.png"
+        />
+        <BreadcrumbSection
+          path={
+            lang === "KOR"
+              ? "회사소개 > 시설 위치 / 찾아오시는 길"
+              : "Company > Location / Directions"
+          }
+        />
 
-      <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInVariants}
-          >
-            <h2 className="text-3xl font-bold mb-8">
-              {lang === "KOR" ? (
-                <span className="text-black font-bold">찾아오시는 길</span>
-              ) : (
-              <>
-                <span className="text-black font-bold">Directions to </span>
-                <span className="text-blue-600 font-bold">SUMAN</span>
-              </>
-  )}
-</h2>
+        <div className="content-wrapper py-20 px-4 md:px-8 bg-white text-black">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={fadeInVariants}
+            >
+              <h2 className="text-3xl font-bold mb-8">
+                {lang === "KOR" ? (
+                  <span className="text-black font-bold">찾아오시는 길</span>
+                ) : (
+                  <>
+                    <span className="text-black font-bold">Directions to </span>
+                    <span className="text-blue-600 font-bold">SUMAN</span>
+                  </>
+                )}
+              </h2>
 
-            <div className="space-y-0 border-t-2 border-gray-900">
-              {locationsData.map((location) => (
-                <div
-                  key={location.key}
-                  className="p-6 border-b border-gray-300"
-                >
+              <div className="space-y-0 border-t-2 border-gray-900">
+                {locationsData.map((location) => (
                   <div
-                    className="flex justify-between items-center cursor-pointer"
-                    onClick={() => handleToggleMap(location.key)}
-                  >
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2">
-                        {location.title[lang]}
-                      </h3>
-                      <p className="text-gray-700">
-                        {location.addressSnippet[lang]}
-                      </p>
-                    </div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      className={`w-8 h-8 text-blue-600 transition-transform duration-300 ${
-                        openMap === location.key ? "rotate-180" : ""
-                      }`}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
-                        clipRule="evenodd"
-                      />
-                      <path
-                        fillRule="evenodd"
-                        d="M11.47 11.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 1 1-1.06 1.06L12 13.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-
-                  <motion.div
-                    initial={false}
-                    animate={{
-                      height: openMap === location.key ? "250px" : "0px",
-                      opacity: openMap === location.key ? 1 : 0,
-                    }}
-                    transition={mapTransition}
-                    className="mt-4 overflow-hidden relative"
+                    key={location.key}
+                    className="p-6 border-b border-gray-300"
                   >
                     <div
-                      ref={(el) => {
-                        mapRefs.current[location.key] = el;
-                      }}
-                      className="w-full h-full absolute top-0 left-0"
-                      style={{ backgroundColor: "lightgray" }}
+                      className="flex justify-between items-center cursor-pointer"
+                      onClick={() => handleToggleMap(location.key)}
                     >
-                      {openMap !== location.key && (
-                        <div
-                          className="absolute inset-0 z-10"
-                          style={{ pointerEvents: "auto" }}
+                      <div>
+                        <h3 className="text-xl font-semibold mb-2">
+                          {location.title[lang]}
+                        </h3>
+                        <p className="text-gray-700">
+                          {location.addressSnippet[lang]}
+                        </p>
+                      </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        className={`w-8 h-8 text-blue-600 transition-transform duration-300 ${
+                          openMap === location.key ? "" : "rotate-180"
+                        }`}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
+                          clipRule="evenodd"
                         />
-                      )}
+                        <path
+                          fillRule="evenodd"
+                          d="M11.47 11.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 1 1-1.06 1.06L12 13.56l-2.69 2.69a.75.75 0 0 1-1.06-1.06l3.75-3.75Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
                     </div>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        height: openMap === location.key ? "250px" : "0px",
+                        opacity: openMap === location.key ? 1 : 0,
+                      }}
+                      transition={mapTransition}
+                      className="mt-4 overflow-hidden relative"
+                    >
+                      <div
+                        ref={(el) => {
+                          mapRefs.current[location.key] = el;
+                        }}
+                        className="w-full h-full absolute top-0 left-0"
+                        style={{ backgroundColor: "lightgray" }}
+                      >
+                        {openMap !== location.key && (
+                          <div
+                            className="absolute inset-0 z-10"
+                            style={{ pointerEvents: "auto" }}
+                          />
+                        )}
+                      </div>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-      <hr className="my-8 border-gray-200 w-full" />
-    </Layout>
-  </>
-);
+        <hr className="my-8 border-gray-200 w-full" />
+      </Layout>
+    </>
+  );
 }
