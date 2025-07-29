@@ -106,7 +106,7 @@ const FAQPage = () => {
         <HeroSection
           title="자주 묻는 질문"
           subtitle="Frequently Asked Questions"
-          backgroundImage="/images/company_hero.png" // 적절한 배경 이미지 경로로 변경
+          backgroundImage="/images/sub_banner/support_banner.png" // 적절한 배경 이미지 경로로 변경
         />
 
         <BreadcrumbSection path="고객지원 > FAQ" />
