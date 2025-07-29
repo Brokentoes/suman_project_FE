@@ -1,13 +1,16 @@
 // contact.tsx
 import { useState } from "react";
 import { postInquiry } from "@/lib/api/contact";
-import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
-import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
-import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
-import { motion, type Transition } from "framer-motion"; // motion, Transition 임포트
-import Head from "next/head"; // Head 임포트
+import Layout from "@/components/Layout";
+import HeroSection from "@/components/HeroSection"; 
+import BreadcrumbSection from "@/components/BreadcrumbSection"; 
+import { motion, type Transition } from "framer-motion";
+import Head from "next/head";
+import { useEffect } from "react";
+import { useLangStore } from "@/stores/langStore";
 
 export default function InquiryFormPage() {
+  const { lang } = useLangStore();
   const [form, setForm] = useState({
     name: "",
     affiliation: "",
@@ -15,6 +18,13 @@ export default function InquiryFormPage() {
     email: "",
     contect: "",
   });
+
+  // 백엔드 슬립 깨우기 요청
+  useEffect(() => {
+  fetch("https://suman-project-cap5.onrender.com/api/")
+    .then(() => console.log("Render 서버 깨우기 완료"))
+    .catch(() => console.warn("Render 서버 깨우기 실패"));
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -78,13 +88,13 @@ export default function InquiryFormPage() {
                 {" "}
                 {/* 기존 InquiryForm의 section 태그 */}
                 <h2 className="text-2xl font-bold mb-8 text-center">
-                  고객 문의
+                  {lang === "KOR" ? " 고객 문의" : "Client Contact Form"}
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6 text-sm">
                   {/* 이름 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      이름<span className="text-red-500">*</span>
+                      {lang === "KOR" ? " 이름" : "Name"}<span className="text-red-500">*</span>
                     </label>
                     <input
                       name="name"
@@ -97,7 +107,7 @@ export default function InquiryFormPage() {
                   {/* 소속 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      소속<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "소속" : "Affiliation"}<span className="text-red-500">*</span>
                     </label>
                     <input
                       name="affiliation"
@@ -110,7 +120,7 @@ export default function InquiryFormPage() {
                   {/* 연락처 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      연락처<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "연략처" : "Affiliation"}<span className="text-red-500">*</span>
                     </label>
                     <input
                       name="phone"
@@ -138,7 +148,7 @@ export default function InquiryFormPage() {
                   {/* 문의내용 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      문의내용<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "문의내용" : "contact"}<span className="text-red-500">*</span>
                     </label>
                     <textarea
                       name="contect" // 오타 주의: 'contect'
@@ -152,9 +162,9 @@ export default function InquiryFormPage() {
                   <div className="text-right">
                     <button
                       type="submit"
-                      className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700 transition"
+                      className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700 transition cursor-pointer"
                     >
-                      등록
+                      {lang === "KOR" ? "제출" : "POST"}
                     </button>
                   </div>
                 </form>
