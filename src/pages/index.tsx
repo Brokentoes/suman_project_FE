@@ -35,16 +35,17 @@ export default function HomePage({ content }: HomePageProps) {
 
   return (
     <>
-
+    {/* SEO 유도 태그 */}
     <Head>
-        <title>(주) 수만</title>
-        <meta name="description" content="정밀한 기술이 만드는 내일의 기업, 수만. 혁신적인 솔루션과 최적의 서비스를 제공합니다." />
-        <meta name="keywords" content="수만, SUMAN, 기업솔루션, 혁신기술, 정밀기술" />
-        <meta property="og:title" content="(주) 수만" />
-        <meta property="og:description" content="정밀한 기술이 만드는 내일의 기업" />
+        <title>(주) 수만 | 2차전지·반도체 신뢰성 장비 전문 기업</title>
+        <meta name="description" content="수만은 2차전지 생산 장비와 반도체 신뢰성 평가 장비를 개발하는 정밀 제조 기업입니다." />
+        <meta name="keywords" content="수만, 주식회사 수만, SUMAN, suman, 정밀기술, 2차전지 장비, 반도체 신뢰성" />
+        <meta property="og:title" content="(주) 수만 | 정밀 제조 기술의 선두주자" />
+        <meta property="og:description" content="2차전지 생산 장비와 반도체 신뢰성 평가 시스템을 제공하는 정밀 기술 기업, 수만." />
+        <meta property="og:image" content="https://www.suman.co.kr/images/logo_suman.png" />
+        <meta property="og:url" content="https://www.suman.co.kr" />
         <meta property="og:type" content="website" />
-        <meta name="google-site-verification" content="iT2-OO3Wat9zt_bq-t7Y0F24HWiIyWTz_OsvEyvLd9c" />
-        <meta name="naver-site-verification" content="b90c2478a5b6431a748fa0e68d931f04dc9e4fa9" />
+        <meta property="og:site_name" content="수만" />
         <link rel="icon" sizes="16x16" href="/images/logo.ico" />
     </Head>
 
@@ -216,7 +217,7 @@ export default function HomePage({ content }: HomePageProps) {
                 <motion.div
 
                   key={index}
-                  className="relative w-full h-[150px] md:h-[200px] lg:h-[500px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
+                  className="relative w-full h-[150px] md:h-[200px] lg:h-[550px] overflow-hidden rounded-xl shadow-md hover:scale-105 transition-transform duration-300 ease-out"
                   initial={{ x: -100, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}

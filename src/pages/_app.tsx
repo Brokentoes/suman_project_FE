@@ -26,11 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
     <Head>
-      <title>(주) 수만</title>
-      <meta name="description" content="수만 주식회사는 2차전지 검사 장비, 신뢰성 평가, 자동화 솔루션을 전문으로 하는 기술 기반 기업입니다." />
-      <meta name="keywords" content="수만, 2차전지, 검사장비, 신뢰성 평가, 자동화, 장비 제조" />
-      <meta property="og:title" content="(주) 수만" />
-      <meta property="og:image" content="http://www.suman.co.kr/images/logo_suman.png" />
+      {/* google & naver 사이트 확인 태그 (임의 변경 금지) */}
       <meta name="google-site-verification" content="iT2-OO3Wat9zt_bq-t7Y0F24HWiIyWTz_OsvEyvLd9c" />
       <meta name="naver-site-verification" content="b90c2478a5b6431a748fa0e68d931f04dc9e4fa9" />
       <link rel="icon" sizes="16x16" href="/images/logo.ico" />

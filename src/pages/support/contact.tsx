@@ -61,7 +61,7 @@ export default function InquiryFormPage() {
         <HeroSection
           title="고객 문의"
           subtitle="Customer Inquiry"
-          backgroundImage="/images/company_hero.png"
+          backgroundImage="/images/sub_banner/support_banner.png"
         />
 
         <BreadcrumbSection path="고객지원 > 문의하기" />
