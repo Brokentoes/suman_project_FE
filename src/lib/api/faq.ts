@@ -7,21 +7,21 @@ export interface FAQ {
   id: number;
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 
 export interface CreateFAQData {
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 
 export interface UpdateFAQData {
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 // -------------------------------------
@@ -68,7 +68,7 @@ export const createFAQ = async (data: CreateFAQData): Promise<FAQ> => {
       category: data.category,
       is_published: data.is_published
     });
-
+    console.log('POST요청성공')
     return response.data;
   } catch (error: any) {
     console.error('FAQ 등록 실패:', error);

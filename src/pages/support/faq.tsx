@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { fetchFAQs } from '@/lib/api/faq';
-import Layout from "@/components/Layout"; // Layout 컴포넌트 임포트
-import HeroSection from "@/components/HeroSection"; // HeroSection 컴포넌트 임포트
-import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
-import { motion, type Transition } from "framer-motion"; // motion, Transition 임포트
-import Head from "next/head"; // Head 임포트
+import Layout from "@/components/Layout";
+import HeroSection from "@/components/HeroSection"; 
+import BreadcrumbSection from "@/components/BreadcrumbSection"; 
+import { motion, type Transition } from "framer-motion"; 
+import Head from "next/head";
+import { useLangStore } from '@/stores/langStore';
 
 // FAQ 인터페이스 정의
 interface FAQ {
   id: number;
   question: string;
   answer: string;
-  category: number;
+  category: string;
   is_published: boolean;
 }
 
@@ -22,7 +23,16 @@ const FAQPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [openItems, setOpenItems] = useState<Set<number>>(new Set());
   const [displayCount, setDisplayCount] = useState(5);
+  const { lang } = useLangStore();
+  
+  // 백엔드 서버 슬립 깨우기 요청
+  useEffect(() => {
+  fetch("https://suman-project-cap5.onrender.com/api/")
+    .then(() => console.log("Render 서버 깨우기 완료"))
+    .catch(() => console.warn("Render 서버 깨우기 실패"));
+  }, []);
 
+  // FAQ 가져오기
   useEffect(() => {   
     loadFAQs();
   }, []);
@@ -122,10 +132,10 @@ const FAQPage = () => {
               {/* 헤더 */}
               <div className="text-center mb-12">
                 <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                  SUMAN에 관한
+                  {lang === "KOR" ? "SUMAN에 관한" : "Check All About"}
                 </h1>
                 <h2 className="text-2xl font-semibold text-gray-800">
-                  궁금하신 사항을 확인하세요
+                  {lang === "KOR" ? " 궁금하신 사항을 확인하세요" : "Suman Here"}
                 </h2>
               </div>
 

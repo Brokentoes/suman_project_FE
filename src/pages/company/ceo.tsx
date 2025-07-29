@@ -5,7 +5,7 @@ import Image from "next/image";
 import Head from "next/head";
 import { motion, type Transition } from "framer-motion";
 import HeroSection from "@/components/HeroSection";
-import { ceoText } from "@/data/ceo"
+import { ceoText } from "@/data/ceo";
 import { useLangStore } from "@/stores/langStore";
 import { useState } from "react";
 
@@ -40,9 +40,8 @@ const slideInLeftBottom = {
 
 export default function CeoPage() {
   const lang = useLangStore((state) => state.lang);
-    const { intro, body, closing } = ceoText[lang];
-    
-    
+  const { intro, body, closing } = ceoText[lang];
+
   return (
     <Layout>
       <Head>
@@ -72,32 +71,30 @@ export default function CeoPage() {
             viewport={{ once: true, amount: 0.3 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-snug">
-  {lang === "KOR" ? (
-    <>
-      <span className="text-blue-600 font-bold">SUMAN</span>
-      <span className="text-black font-bold">을</span>
-      <br />
-      <span className="text-black font-bold">
-        찾아주신 고객 여러분, 반갑습니다.
-      </span>
-    </>
-  ) : (
-    <>
-      <span className="text-blue-600 font-bold">SUMAN</span>
-      <br />
-      <span className="text-black font-bold">
-        Welcome, dear customers,
-      </span>
-    </>
-  )}
-</h2>
+              {lang === "KOR" ? (
+                <>
+                  <span className="text-blue-600 font-bold">SUMAN</span>
+                  <span className="text-black font-bold">을</span>
+                  <br />
+                  <span className="text-black font-bold">
+                    찾아주신 고객 여러분 반갑습니다
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="text-blue-600 font-bold">SUMAN</span>
+                  <br />
+                  <span className="text-black font-bold">
+                    Welcome, dear customers,
+                  </span>
+                </>
+              )}
+            </h2>
             <p className="mb-4 text-2xl">{intro}</p>
             <p className="mb-4 whitespace-pre-line">{body}</p>
             <p className="mb-4">{closing}</p>
-            </motion.div>
-
-            {/* 서명 영역 주석 
-            <
+            {/* 서명 영역 */}
+            <motion.div
               className="signature-area text-lg font-semibold text-gray-800 mt-8"
               variants={slideInLeftBottom}
               initial="hidden"
@@ -105,16 +102,15 @@ export default function CeoPage() {
               viewport={{ once: true, amount: 0.3 }}
             >
               (주) 수만 그룹 대표이사 임태형{" "}
-              
-              <Image
+              {/* <Image
                 src="/images/signature.png"
                 alt="대표이사 서명"
                 className="w-40 h-auto inline-block align-middle ml-2"
                 width={100}
                 height={100}
-              />
-              </motion.p>
-            */}
+              /> */}
+            </motion.div>
+          </motion.div>
 
           {/*Ceo 인사말과 Ceo이미지 사이 회색 실선 */}
           <div className="hidden md:block w-px min-h-[700px] bg-gray-300 self-stretch mr-8" />

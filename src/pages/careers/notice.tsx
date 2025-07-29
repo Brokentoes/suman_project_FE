@@ -13,6 +13,14 @@ const RecruitmentBoard: React.FC = () => {
   const [selected, setSelected] = useState<Recruitment | null>(null);
   const { lang } = useLangStore();
 
+  // 백엔드 슬립 깨우기 요청
+  useEffect(() => {
+  fetch("https://suman-project-cap5.onrender.com/api/")
+    .then(() => console.log("Render 서버 깨우기 완료"))
+    .catch(() => console.warn("Render 서버 깨우기 실패"));
+  }, []);
+
+  // 채용공고 불러오기 요청
   useEffect(() => {
     const loadRecruitments = async () => {
       try {
