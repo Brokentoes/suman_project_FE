@@ -28,8 +28,8 @@ const kakaoMapConfigs: {
     address: "충청남도 천안시 서북구 성성동 336-4 G1비즈캠퍼스 4F 401호",
   },
   시험센터: {
-    latitude: 36.424057,
-    longitude: 127.406167,
+    latitude: 36.414286,
+    longitude: 127.413821,
     level: 3,
     address: "대전광역시 유성구 테크노2로 187 B동 120호",
   },
@@ -50,7 +50,7 @@ const locationsData = [
   {
     key: "시험센터",
     title: "시험센터",
-    addressSnippet: "대전광역시 유성구 테크노2로",
+    addressSnippet: "대전광역시 유성구 테크노 2로 309-26(탑립동 929-1)",
   },
 ];
 
@@ -252,7 +252,7 @@ export default function LocationPage() {
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         className={`w-8 h-8 text-blue-600 transition-transform duration-300 ${
-                          openMap === location.key ? "rotate-180" : ""
+                          openMap === location.key ? "" : "rotate-180"
                         }`}
                       >
                         <path
