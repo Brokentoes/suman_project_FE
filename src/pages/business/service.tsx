@@ -4,9 +4,21 @@ import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import { serviceContent } from "@/data/service";
+import { useLangStore } from "@/stores/langStore";
+
+interface sectionList {
+  title: string;
+  subtitle: string;
+}
 
 export default function ServicePage() {
   const [showAllEquipment, setShowAllEquipment] = useState(false);
+  const { lang } = useLangStore();
+  const { equipmentList, measurementEquipmentList, productCategories} = serviceContent[lang];
+  const allEquipment = [...equipmentList, ...measurementEquipmentList];
+  const section = serviceContent[lang].sectionList?.[0];
+
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -26,67 +38,8 @@ export default function ServicePage() {
     },
   };
 
-  const equipmentList = [
-    { name: "85호기", image: "/images/85_machine.png" },
-    { name: "조각기", image: "/images/engraving_machine.png" },
-    { name: "MCT", image: "/images/mct.png" },
-    { name: "레이저마킹기", image: "/images/service_machine.png" },
-    { name: "자동포장기", image: "/images/service_machine.png" },
-    { name: "CNC 가공기", image: "/images/service_machine.png" },
-    { name: "CNC ROUTER", image: "/images/service_machine.png" },
-    {
-      name: "3D PRINT 대면적 3D PRINT",
-      image: "/images/service_machine.png",
-    },
-    {
-      name: "CO2 LAZER CUTTER",
-      image: "/images/service_machine.png",
-    },
-    {
-      name: "DIGITAL FLAT CUTTER",
-      image: "/images/service_machine.png",
-    },
-    { name: "CNC 가공기", image: "/images/service_machine.png" },
-    { name: "CNC ROUTER", image: "/images/service_machine.png" },
-  ];
-
-  const measurementEquipmentList = [
-    { name: "3차원 측정기", image: "/images/85_machine.png" }, // Changed name
-    {
-      name: "2.5D 측정기", // Changed name
-      image: "/images/engraving_machine.png",
-    },
-    { name: "현미경", image: "/images/mct.png" }, // Changed name
-  ];
-
-  // Combine both lists for easier management of "show all" logic
-  const allEquipment = [...equipmentList, ...measurementEquipmentList];
-
-  const productCategories = [
-    {
-      name: "이차전지",
-      subtitle: "정밀 부품 / 모듈 설계",
-      image: "/images/service_battery.png",
-    },
-    {
-      name: "전기전자",
-      subtitle: "정밀 부품 / 모듈 설계기술",
-      image: "/images/service_electric.png",
-    },
-    {
-      name: "반도체",
-      subtitle: "정밀 부품 / 모듈 설계 / 자동화 기술 통합",
-      image: "/images/service_semiconductor.png",
-    },
-    {
-      name: "자동차",
-      subtitle: "정밀 가공 기술",
-      image: "/images/service_mobility.png",
-    },
-  ];
-
   // 초기에 보여줄 설비 아이템 개수 (5열 2행)
-  const initialDisplayCount = 10; // This will now apply to the combined list
+  const initialDisplayCount = 10;
 
   return (
     <>
@@ -121,9 +74,9 @@ export default function ServicePage() {
             viewport={{ once: true, amount: 0.3 }}
             variants={leftAlignTextVariants}
           >
-            최적의 생산 환경을 위한
+            {section?.maintitle}
             <br />
-            다양한 설비를 갖추고 있습니다
+            {section?.mainsubtitle}
           </motion.p>
         </div>
       </div>
@@ -140,7 +93,7 @@ export default function ServicePage() {
           >
             {/* 생산가공 / 조립 */}
             <h3 className="text-2xl font-semibold text-white mb-8">
-              생산가공 / 조립
+              {section?.production}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {equipmentList.map((equipment, index) => (
@@ -172,7 +125,7 @@ export default function ServicePage() {
 
             {/* 신뢰성 (측정 / 분석) 섹션 */}
             <h3 className="text-2xl font-semibold text-white mt-12 mb-8">
-              신뢰성 (측정 / 분석)
+              {section?.measurement}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {" "}
@@ -230,9 +183,9 @@ export default function ServicePage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-4">Process</h2>
           <p className="text-lg mb-8 leading-relaxed">
-            제조 및 품질 프로세스는 자재 선정부터 최종 검사까지
+            {section?.process}
             <br />
-            제품의 신뢰성과 고객 만족을 보장하도록 설계되어 있습니다
+            {section?.processsub}
           </p>
 
           <div className="mt-16 flex flex-col items-center">
@@ -352,9 +305,9 @@ export default function ServicePage() {
           {/* This div needs to remain to center the content within the full-width section */}
           <h2 className="text-4xl font-bold mb-4">Products</h2>
           <p className="text-lg mb-12 leading-relaxed">
-            정밀 부품, 모듈, 자동화 장비까지
+            {section?.production2}
             <br />
-            미래 산업에 필요한 핵심 솔루션을 제조합니다
+            {section?.production2sub}
           </p>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
