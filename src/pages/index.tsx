@@ -243,7 +243,7 @@ export default function HomePage({ content }: HomePageProps) {
             </p>
           </motion.div>
 
-          <div className="w-full px-[60px] md:px-[120px] lg:px-[160px]">
+          <div className="w-full px-4 md:px-[60px] lg:px-[120px] xl:px-[160px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-10">
               {content.section3.cards.map((card, index) => (
                 <motion.div
@@ -401,7 +401,7 @@ export default function HomePage({ content }: HomePageProps) {
             className="w-full object-cover"
             style={{ aspectRatio: "1440/220" }}
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-6 pointer-events-none transfrom translate-x-20">
+          <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-6 pointer-events-none">
             <h2 className="text-lg md:text-2xl lg:text-4xl font-semibold md:font-semibold lg:font-bold mb-2 md:mb-4 lg:mb-7 tracking-wide">
               Contact us
             </h2>
