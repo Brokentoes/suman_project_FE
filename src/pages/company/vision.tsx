@@ -179,10 +179,10 @@ export default function VisionPage() {
                 <p className="text-gray-800 font-semibold text-[30px] mb-2">
                   NEO &lsquo;24 5th 6015
                 </p>
-                <h3 className="text-4xl font-bold text-blue-600 text-[50px] leading-tight">
+                <h3 className=" text-xl md:text-2xl lg:text-4xl font-bold tracking-wide leading-[1.5]">
                   확신의 종합 솔루션 서비스
                 </h3>
-                <h3 className="text-4xl font-bold text-gray-800 text-[50px] leading-tight">
+                <h3 className=" text-xl md:text-2xl lg:text-4xl font-bold tracking-wide">
                   회사로의 도약
                 </h3>
                 {/* <p className="text-[25px] text-gray-500 mt-8">
