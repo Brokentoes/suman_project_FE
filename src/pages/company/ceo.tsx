@@ -14,7 +14,6 @@ const slideInLeft = {
   hidden: { opacity: 0, y: 80 },
   visible: {
     opacity: 1,
-
     y: 0,
     transition: { duration: 2, ease: "easeOut" } as Transition,
   },
@@ -28,15 +27,15 @@ const slideInRight = {
     transition: { duration: 2, ease: "easeOut" } as Transition,
   },
 };
-// 대표이사 서명 애니메이션
-const slideInLeftBottom = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: "easeOut" } as Transition,
-  },
-};
+// 대표이사 서명 애니메이션 (이 부분은 더 이상 개별적으로 사용되지 않으므로 필요 없음)
+// const slideInLeftBottom = {
+//   hidden: { opacity: 0, y: 50 },
+//   visible: {
+//     opacity: 1,
+//     y: 0,
+//     transition: { duration: 0.8, ease: "easeOut" } as Transition,
+//   },
+// };
 
 export default function CeoPage() {
   const lang = useLangStore((state) => state.lang);
@@ -63,9 +62,10 @@ export default function CeoPage() {
       {/* CEO 인사말 섹션 */}
       <main className="content-wrapper py-20 px-4 md:px-8 bg-white flex justify-center items-center">
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center md:items-start space-y-10 md:space-y-0 md:space-x-12">
+          {/* 인사말 내용과 서명 섹션을 하나의 motion.div로 묶음 */}
           <motion.div
             className="ceo-text-column md:w-[48%] text-gray-700 leading-relaxed"
-            variants={slideInLeft}
+            variants={slideInLeft} // 상위 요소의 애니메이션 사용
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -90,17 +90,11 @@ export default function CeoPage() {
                 </>
               )}
             </h2>
-            <p className="mb-4 text-2xl">{intro}</p>
-            <p className="mb-4 whitespace-pre-line">{body}</p>
-            <p className="mb-4">{closing}</p>
-            {/* 서명 영역 */}
-            <motion.div
-              className="signature-area text-lg font-semibold text-gray-800 mt-8"
-              variants={slideInLeftBottom}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-            >
+            <p className="mb-4 text-lg">{intro}</p>
+            <p className="mb-4 text-lg whitespace-pre-line">{body}</p>
+            <p className="mb-4 text-lg">{closing}</p>
+            {/* 서명 영역 - 이제 별도의 motion.div가 아님 */}
+            <div className="signature-area text-lg font-semibold text-gray-800 mt-8">
               (주) 수만 그룹 대표이사 임태형{" "}
               {/* <Image
                 src="/images/signature.png"
@@ -109,7 +103,7 @@ export default function CeoPage() {
                 width={100}
                 height={100}
               /> */}
-            </motion.div>
+            </div>
           </motion.div>
 
           {/*Ceo 인사말과 Ceo이미지 사이 회색 실선 */}
@@ -124,7 +118,7 @@ export default function CeoPage() {
             viewport={{ once: true, amount: 0.3 }}
           >
             <div
-              className="placeholder-image w-full flex items-center justify-center text-blue-500 font-bold text-2xl" // h-full 제거
+              className="placeholder-image w-full flex items-center justify-center text-blue-500 font-bold text-2xl"
               style={{
                 height: "auto",
                 maxHeight: "500px",
@@ -132,9 +126,8 @@ export default function CeoPage() {
                 overflow: "hidden",
               }}
             >
-              {/* 실제 이미지가 있을 경우 여기서 교체하세요 */}
               <Image
-                src="/images/ceo.jpeg" // 실제 CEO 이미지 경로로 변경하세요
+                src="/images/ceo.jpeg"
                 alt="SUMAN CEO"
                 className="w-full h-full object-cover"
                 width={700}

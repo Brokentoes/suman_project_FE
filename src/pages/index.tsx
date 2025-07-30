@@ -305,8 +305,14 @@ export default function HomePage({ content }: HomePageProps) {
               고객 맞춤형 장비/제조 <br />
               서비스를 제공합니다
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed mb-8">
-              고객의 다양한 요구에 맞춰 최적의 서비스를 제공합니다.
+            <br />
+            <br />
+            <p className="text-2xl text-gray-700 leading-relaxed mb-8">
+              수만은 고객의 특정한 요구사항을 면밀히 분석하여 <br />
+              최적화된 맞춤형 장비 및 설비, 최고 품질의 정밀 가공 부품을
+              제공함으로써
+              <br /> 혁신적인 솔루션과 지속적인 기술 지원을 통해 고객 비즈니스의
+              성공을 이끌어갑니다.
             </p>
           </motion.div>
 
@@ -320,7 +326,7 @@ export default function HomePage({ content }: HomePageProps) {
               <motion.div
                 className="relative w-64 h-64 rounded-full flex flex-col justify-end items-center text-center text-white p-5 shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-default
                            mb-8 lg:mb-0
-                           lg:absolute lg:right-60 lg:top-[35%] lg:-translate-y-1/2 lg:transform-none /* Reset transform for PC */
+                           lg:absolute lg:right-30 lg:top-5 lg:-translate-y-1/2 lg:transform-none/* Reset transform for PC */
                            overflow-hidden"
                 initial="hidden"
                 whileInView="visible"
@@ -343,7 +349,7 @@ export default function HomePage({ content }: HomePageProps) {
               <motion.div
                 className="relative w-64 h-64 rounded-full flex flex-col justify-end items-center text-center text-white p-5 shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-default
                            mb-8 lg:mb-0
-                           lg:absolute lg:right-85 lg:-translate-x-1/2 lg:bottom-90 lg:transform-none /* Reset transform for PC */
+                           lg:absolute lg:right-60 lg:-translate-x-1/2 lg:bottom-120 lg:transform-none /* Reset transform for PC */
                            overflow-hidden"
                 initial="hidden"
                 whileInView="visible"
@@ -365,7 +371,7 @@ export default function HomePage({ content }: HomePageProps) {
               {/* 정밀 가공 부품 Circle */}
               <motion.div
                 className="relative w-64 h-64 rounded-full flex flex-col justify-end items-center text-center text-white p-5 shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-default
-                           lg:absolute lg:left-50 lg:bottom-105 lg:transform-none /* Reset transform for PC */
+                           lg:absolute lg:left-80 lg:bottom-140 lg:transform-none /* Reset transform for PC */
                            overflow-hidden"
                 initial="hidden"
                 whileInView="visible"
