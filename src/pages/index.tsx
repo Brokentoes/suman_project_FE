@@ -285,7 +285,7 @@ export default function HomePage({ content }: HomePageProps) {
         </motion.section>
 
         <motion.section
-          className="relative z-30 bg-white py-20 px-4 md:px-6"
+          className="relative z-30 bg-white px-4 md:px-6"
           initial={{ opacity: 1, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
@@ -306,7 +306,7 @@ export default function HomePage({ content }: HomePageProps) {
               서비스를 제공합니다
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
-              대충 문구 들어간다는 뜻
+              고객의 다양한 요구에 맞춰 최적의 서비스를 제공합니다.
             </p>
           </motion.div>
 
@@ -319,7 +319,6 @@ export default function HomePage({ content }: HomePageProps) {
               {/* 솔루션 서비스 Circle */}
               <motion.div
                 className="relative w-64 h-64 rounded-full flex flex-col justify-end items-center text-center text-white p-5 shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-default
-                           bg-gradient-to-br from-teal-400 to-teal-800
                            mb-8 lg:mb-0
                            lg:absolute lg:right-60 lg:top-[35%] lg:-translate-y-1/2 lg:transform-none /* Reset transform for PC */
                            overflow-hidden"
@@ -329,13 +328,13 @@ export default function HomePage({ content }: HomePageProps) {
                 variants={circleVariants}
               >
                 <Image
-                  src="/images/service_solution.jpg" // **Update with your image path**
+                  src="/images/index_solution.jpg"
                   alt="솔루션 서비스"
                   fill
-                  className="object-cover -z-10"
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full z-0" />
-                <h3 className="text-2xl font-semibold pb-5 z-10">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent rounded-full z-10" />
+                <h3 className="text-2xl font-semibold pb-5 z-20">
                   솔루션 서비스
                 </h3>
               </motion.div>
@@ -343,7 +342,6 @@ export default function HomePage({ content }: HomePageProps) {
               {/* 맞춤형 장비/설비 Circle */}
               <motion.div
                 className="relative w-64 h-64 rounded-full flex flex-col justify-end items-center text-center text-white p-5 shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-default
-                           bg-gradient-to-br from-purple-600 to-indigo-800
                            mb-8 lg:mb-0
                            lg:absolute lg:right-85 lg:-translate-x-1/2 lg:bottom-90 lg:transform-none /* Reset transform for PC */
                            overflow-hidden"
@@ -353,13 +351,13 @@ export default function HomePage({ content }: HomePageProps) {
                 variants={circleVariants}
               >
                 <Image
-                  src="/images/service_equipment.jpg" // **Update with your image path**
+                  src="/images/index_equipment.png"
                   alt="맞춤형 장비/설비"
                   fill
-                  className="object-cover -z-10"
+                  className="object-cover "
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full z-0" />
-                <h3 className="text-2xl font-semibold pb-5 z-10">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent rounded-full z-10" />
+                <h3 className="text-2xl font-semibold pb-5 z-20">
                   맞춤형 장비/설비
                 </h3>
               </motion.div>
@@ -367,7 +365,6 @@ export default function HomePage({ content }: HomePageProps) {
               {/* 정밀 가공 부품 Circle */}
               <motion.div
                 className="relative w-64 h-64 rounded-full flex flex-col justify-end items-center text-center text-white p-5 shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-default
-                           bg-gradient-to-br from-blue-500 to-blue-900
                            lg:absolute lg:left-50 lg:bottom-105 lg:transform-none /* Reset transform for PC */
                            overflow-hidden"
                 initial="hidden"
@@ -376,13 +373,13 @@ export default function HomePage({ content }: HomePageProps) {
                 variants={circleVariants}
               >
                 <Image
-                  src="/images/service_parts.jpg" // **Update with your image path**
+                  src="/images/index_parts.png"
                   alt="정밀 가공 부품"
                   fill
-                  className="object-cover -z-10"
+                  className="object-cover "
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full z-0" />
-                <h3 className="text-2xl font-semibold pb-5 z-10">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent rounded-full z-10" />
+                <h3 className="text-2xl font-semibold pb-5 z-20">
                   정밀 가공 부품
                 </h3>
               </motion.div>
@@ -390,7 +387,7 @@ export default function HomePage({ content }: HomePageProps) {
           </div>
         </motion.section>
 
-        <section className="relative w-full mt-20">
+        <section className="relative w-full mt-0">
           <Image
             src={content.footer_banner[0]}
             alt="footer banner"
