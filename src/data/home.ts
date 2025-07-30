@@ -125,6 +125,7 @@ export const homeContentEng = {
         },
       ],
     },
+
     sectionCertifications: {
       title: 'We are certified by government institutions and have established ISO-based quality, environment, and safety management systems.',
       tags: ['Technology Certification', 'Quality Assurance'],

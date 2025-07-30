@@ -302,8 +302,7 @@ export default function HomePage({ content }: HomePageProps) {
             <br />
             <br />
             <h2 className="text-5xl md:text-5xl font-bold text-gray-900 leading-tight mb-5">
-              고객 맞춤형 장비/제조 <br />
-              서비스를 제공합니다
+              고객 맞춤형 장비/제조<br />서비스를 제공합니다
             </h2>
             <br />
             <br />
@@ -407,7 +406,7 @@ export default function HomePage({ content }: HomePageProps) {
               Contact us
             </h2>
             <Link href="/support/contact">
-              <button className="pointer-events-auto border border-gray-300 text-xs md:text-xs lg:text-sm text-white px-4 py-1 lg:px-12 lg:py-0.8 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
+              <button className="cursor-pointer pointer-events-auto border border-gray-300 text-xs md:text-xs lg:text-sm text-white px-4 py-1 lg:px-12 lg:py-0.8 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
                 문의하기{" "}
                 <span className="text-xs md:text-sm lg:text-base">→</span>
               </button>
