@@ -166,19 +166,23 @@ export default function VisionPage() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-800 text-left">
+            <h2 className="text-base sm:text-lg lg:text-2xl font-semibold text-gray-800 mb-4 text-left tracking-wide">
               Vision
             </h2>
 
             <div className="vision-neo-area mt-12 flex flex-col items-center">
               <div className="w-full text-left">
-                <p className="text-gray-800 font-semibold text-[30px] mb-2">
+                <p
+                  className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide text-gray-800 mb-2
+
+"
+                >
                   NEO &lsquo;24 5th 6015
                 </p>
-                <h3 className="text-4xl font-bold text-blue-600 text-[50px] leading-tight">
+                <h3 className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide text-blue-600 mb-2">
                   확신의 종합 솔루션 서비스
                 </h3>
-                <h3 className="text-4xl font-bold text-gray-800 text-[50px] leading-tight">
+                <h3 className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide text-gray-800 mb-2">
                   회사로의 도약
                 </h3>
                 {/* <p className="text-[25px] text-gray-500 mt-8">
@@ -373,14 +377,17 @@ export default function VisionPage() {
         {/* Core Value 섹션 */}
         <section className="core-value-section bg-white -mt-3 0 *:py-20 px-4 md:px-8">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-800 mb-4 text-left">
+            <h2 className="text-base sm:text-lg lg:text-2xl font-semibold text-gray-800 mb-4 text-left tracking-wide">
               Core Value
             </h2>
-            <p className="text-[50px] font-bold text-gray-800 mb-12 text-left">
+            <br />
+            <p className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide text-gray-800 mb-2">
               끊임없이 변화하는 시대
               <br />
               우리는 유연함과 전문성으로 대응합니다
             </p>
+            <br />
+            <br />
 
             <motion.div
               className="core-value-boxes grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-8"
@@ -390,7 +397,7 @@ export default function VisionPage() {
               viewport={{ once: true, amount: 0.3 }}
             >
               <motion.div
-                className="relative flex flex-col justify-end p-4 shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[380px]"
+                className="relative flex flex-col pt-64 p-4 shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 ease-out min-h-[380px]" // Changed justify-end to justify-start
                 variants={itemRiseVariants}
                 style={{
                   backgroundImage: 'url("/images/vision_Flex.png")',
@@ -511,21 +518,28 @@ export default function VisionPage() {
         </section>
         {/* R&D 섹션 */}
         <motion.section
-          className="rnd-section bg-dark-navy text-white py-20 px-4 md:px-8 rounded-t-3xl overflow-hidden relative"
+          className="rnd-section bg-[#010104] text-white py-20 px-4 md:px-8 rounded-t-3xl overflow-hidden relative"
           variants={rndSectionRiseVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.3 }}
-          style={{
-            backgroundImage: 'url("/images/vision_R&D_bg.png")',
-            backgroundSize: "cover",
-            backgroundPosition: "center 245px",
-            backgroundRepeat: "no-repeat",
-          }}
         >
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: 'url("/images/vision_R&D_bg.png")',
+              backgroundSize: "cover",
+              backgroundPosition: "center 245px",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
+
           <div className="max-w-7xl mx-auto relative z-10">
-            <h2 className="text-xl font-bold mb-4 text-left">R&D</h2>
-            <p className="text-[40px] font-bold mb-12 text-left">
+            {" "}
+            <h2 className="text-base sm:text-lg lg:text-2xl font-semibold text-white mb-4 text-left tracking-wide">
+              R&D
+            </h2>
+            <p className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide text-white mb-2">
               끊임없는 연구개발과 스마트 공정 혁신을 통해
               <br />
               제조 효율의 새로운 기준을 만들어갑니다
