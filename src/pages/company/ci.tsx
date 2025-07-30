@@ -1,61 +1,57 @@
-// ci.tsx
+import Header from "@/components/Header";
+import BreadcrumbSection from "@/components/BreadcrumbSection";
 import Layout from "@/components/Layout";
-import HeroSection from "@/components/HeroSection";
-import BreadcrumbSection from "@/components/BreadcrumbSection"; // BreadcrumbSection 컴포넌트 임포트
-import { motion, type Transition } from "framer-motion";
-import Head from "next/head";
 import Image from "next/image";
+import Head from "next/head";
+import { motion, type Transition } from "framer-motion";
+import HeroSection from "@/components/HeroSection";
 
-export default function CIPage() {
-  const fadeInVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" } as Transition,
-    },
-  };
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 1 } as Transition },
+};
 
+export default function OrgPage() {
   return (
-    <>
+    <Layout>
       <Head>
         <title>CI | 수만</title>
       </Head>
-      <Layout>
-        <HeroSection
-          title="CI"
-          subtitle="Corporate Identity"
-          backgroundImage="/images/company_hero.png"
-        />
 
-        {/* BreadcrumbSection 컴포넌트 사용 */}
-        <BreadcrumbSection path="회사소개 > CI" />
+      <Header />
 
-        <div className="content-wrapper py-20 px-4 md:px-8 bg-white flex justify-center items-center">
-          <div className="max-w-7xl mx-auto w-full">
-            <motion.div
-              className="flex flex-col items-center"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fadeInVariants}
-            >
+      <HeroSection
+        title="CI"
+        subtitle="CI"
+        backgroundImage="/images/sub_banner/company_banner.png"
+      />
+
+      <BreadcrumbSection path="회사소개 > CI" />
+
+      <main className="content-wrapper py-20 px-4 md:px-8 bg-white flex justify-center items-center">
+        <div className="max-w-7xl mx-auto w-full flex flex-col items-center">
+          <motion.div
+            className="w-full max-w-7xl" // Changed from max-w-4xl to max-w-7xl
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="relative w-full h-auto overflow-hidden rounded-lg">
               <Image
-                src="/images/ci-full-content.png"
-                alt="SUMAN Corporate Identity"
-                className="max-w-full h-auto object-contain shadow-lg rounded-lg"
-                width={100}
-                height={100}
+                src="/images/company_ci_2x.png"
+                alt="CI"
+                width={1200}
+                height={800}
+                layout="responsive"
+                objectFit="contain"
+                className="w-full h-auto"
               />
-              <p className="mt-8 text-lg text-gray-700 text-center">
-                수만(SUMAN)의 CI는 기업의 핵심 가치인 신뢰, 기술, 경쟁력을
-                시각적으로 표현합니다.
-              </p>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
-        <hr className="my-8 border-gray-200 w-full" />
-      </Layout>
-    </>
+      </main>
+      <hr className="my-8 border-gray-200 w-full" />
+    </Layout>
   );
 }

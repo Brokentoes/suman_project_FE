@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { postInquiry } from "@/lib/api/contact";
 import Layout from "@/components/Layout";
-import HeroSection from "@/components/HeroSection"; 
-import BreadcrumbSection from "@/components/BreadcrumbSection"; 
+import HeroSection from "@/components/HeroSection";
+import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
 import Head from "next/head";
 import { useEffect } from "react";
@@ -21,9 +21,9 @@ export default function InquiryFormPage() {
 
   // 백엔드 슬립 깨우기 요청
   useEffect(() => {
-  fetch("https://suman-project-cap5.onrender.com/api/")
-    .then(() => console.log("Render 서버 깨우기 완료"))
-    .catch(() => console.warn("Render 서버 깨우기 실패"));
+    fetch("https://suman-project-cap5.onrender.com/api/")
+      .then(() => console.log("Render 서버 깨우기 완료"))
+      .catch(() => console.warn("Render 서버 깨우기 실패"));
   }, []);
 
   const handleChange = (
@@ -33,7 +33,7 @@ export default function InquiryFormPage() {
     setForm({ ...form, [name]: value });
   };
 
-// 문의 등록
+  // 문의 등록
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -94,7 +94,8 @@ export default function InquiryFormPage() {
                   {/* 이름 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      {lang === "KOR" ? " 이름" : "Name"}<span className="text-red-500">*</span>
+                      {lang === "KOR" ? " 이름" : "Name"}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       name="name"
@@ -107,7 +108,8 @@ export default function InquiryFormPage() {
                   {/* 소속 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      {lang === "KOR" ? "소속" : "Affiliation"}<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "소속" : "Affiliation"}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       name="affiliation"
@@ -120,7 +122,8 @@ export default function InquiryFormPage() {
                   {/* 연락처 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      {lang === "KOR" ? "연략처" : "Affiliation"}<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "연략처" : "Affiliation"}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       name="phone"
@@ -148,7 +151,8 @@ export default function InquiryFormPage() {
                   {/* 문의내용 */}
                   <div className="flex">
                     <label className="w-24 font-semibold">
-                      {lang === "KOR" ? "문의내용" : "contact"}<span className="text-red-500">*</span>
+                      {lang === "KOR" ? "문의내용" : "contact"}
+                      <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       name="contect" // 오타 주의: 'contect'
@@ -162,7 +166,7 @@ export default function InquiryFormPage() {
                   <div className="text-right">
                     <button
                       type="submit"
-                      className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700 transition cursor-pointer"
+                      className="bg-gray-500 text-white px-6 py-2 hover:bg-blue-700 transition cursor-pointer"
                     >
                       {lang === "KOR" ? "제출" : "POST"}
                     </button>

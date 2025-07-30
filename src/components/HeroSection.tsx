@@ -31,7 +31,7 @@ export default function HeroSection({
         viewport={{ once: true, amount: 0.3 }}
       >
         {/* 새로운 div를 추가하여 max-w-7xl mx-auto와 헤더와 동일한 패딩 적용 */}
-        <div className="max-w-7xl  px-6 md:px-[60px] lg:px-[120px]">
+        <div className="max-w-7xl mx-auto px-6 md:px-[60px] lg:px-[0px]">
           <h1 className="text-4xl md:text-5xl font-bold mb-2">{title}</h1>
           <p className="text-lg md:text-xl font-medium">{subtitle}</p>
         </div>
