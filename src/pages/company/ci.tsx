@@ -5,6 +5,7 @@ import Image from "next/image";
 import Head from "next/head";
 import { motion, type Transition } from "framer-motion";
 import HeroSection from "@/components/HeroSection";
+import { useLangStore } from "@/stores/langStore";
 
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -12,21 +13,43 @@ const fadeIn = {
 };
 
 export default function OrgPage() {
+  const { lang } = useLangStore();
+
+  const heroTitle = "CI";
+  const heroSubtitle = "CI";
+  const breadcrumbPath = lang === "KOR" ? "회사소개 > CI" : "Company > CI";
+  const pageTitle = lang === "KOR" ? "CI | 수만" : "CI | SUMAN";
+
+  const sectionTitle = lang === "KOR" ? "Coporate Identity" : "Corporate Identity";
+  const sectionDesc =
+    lang === "KOR"
+      ? "수만(SUMAN)의 CI는 기업의 핵심 가치인 신뢰, 기술, 정밀성을 시각적으로 표현하고 있습니다."
+      : "SUMAN's CI visually represents the core corporate values of trust, technology, and precision.";
+
+  const logoTitle = "Logo";
+  const logoDesc =
+    lang === "KOR"
+      ? "붉은 S는 열정과 에너지, 파란 M은 기술력과 신뢰를 의미하며, 두 문자의 결합은 기술을 통해 가치를 연결하는 수만의 철학을 상징합니다."
+      : "The red S symbolizes passion and energy, while the blue M represents technology and trust. The combination embodies SUMAN's philosophy of connecting value through technology.";
+
+  const monoAlt = lang === "KOR" ? "SUMAN 흑백 로고" : "SUMAN Mono Logo";
+  const colorAlt = lang === "KOR" ? "SUMAN 컬러 로고" : "SUMAN Color Logo";
+
   return (
     <Layout>
       <Head>
-        <title>CI | 수만</title>
+        <title>{pageTitle}</title>
       </Head>
 
       <Header />
 
       <HeroSection
-        title="CI"
-        subtitle="CI"
+        title={heroTitle}
+        subtitle={heroSubtitle}
         backgroundImage="/images/sub_banner/company_banner.png"
       />
 
-      <BreadcrumbSection path="회사소개 > CI" />
+      <BreadcrumbSection path={breadcrumbPath} />
 
       <main className="content-wrapper py-20 px-4 md:px-8 bg-white flex justify-center items-center">
         <div className="max-w-7xl mx-auto w-full flex flex-col items-center">
@@ -37,10 +60,9 @@ export default function OrgPage() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
+            {/* Coporate Identity Section */}
             <div className="mb-12">
-              <h2 className="text-4xl font-bold text-gray-800 inline-block">
-                Coporate Identity
-              </h2>
+              <h2 className="text-4xl font-bold text-gray-800 inline-block">{sectionTitle}</h2>
               <div
                 className="h-1 mt-2"
                 style={{
@@ -48,54 +70,38 @@ export default function OrgPage() {
                   background: "linear-gradient(to right, #2E3092, #ED1B23)",
                 }}
               ></div>
-              <br />
-              <p className="text-xl text-gray-600 leading-relaxed mt-8">
-                수만(SUMAN)의 CI는 기업의 핵심 가치인 신뢰, 기술, 정밀성을
-                시각적으로 표현하고 있습니다.
-              </p>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
+              <p className="text-xl text-gray-600 leading-relaxed mt-8">{sectionDesc}</p>
             </div>
 
+            {/* Logo Section */}
             <div className="mb-12">
-              <h3 className="text-4xl font-bold text-gray-800 mb-4">Logo</h3>
-              <br />
-              <p className="text-xl text-gray-600 leading-relaxed mb-8">
-                붉은 S는 열정과 에너지, 파란 M은 기술력과 신뢰를 의미하며, 두
-                문자의 결합은 기술을 통해 가치를 연결하는 수만의 철학을
-                상징합니다.
-              </p>
-              <br />
-              <br />
-              <br />
+              <h3 className="text-4xl font-bold text-gray-800 mb-4">{logoTitle}</h3>
+              <p className="text-xl text-gray-600 leading-relaxed mb-8">{logoDesc}</p>
 
-              <div className="flex flex-col md:flex-row justify-around items-center ">
-                <div className="relative w-64 h-64 flex items-center justify-center rounded-lg ">
+              <div className="flex flex-col md:flex-row justify-around items-center">
+                <div className="relative w-64 h-64 flex items-center justify-center rounded-lg">
                   <Image
                     src="/images/ci.png"
-                    alt="SUMAN Logo with Grid"
+                    alt={monoAlt}
                     layout="fill"
                     objectFit="contain"
                   />
                 </div>
 
-                <div className="relative w-64 h-64 flex items-center justify-center rounded-lg ">
+                <div className="relative w-64 h-64 flex items-center justify-center rounded-lg">
                   <Image
                     src="/images/ci_color.png"
-                    alt="SUMAN Color Logo"
+                    alt={colorAlt}
                     layout="fill"
                     objectFit="contain"
                   />
                 </div>
               </div>
             </div>
-            <br />
-            <br />
 
+            {/* Color Code Section */}
             <div className="flex flex-col md:flex-row justify-center items-stretch gap-30 mt-12 w-full">
+              {/* RED */}
               <div
                 className="w-80 p-6 rounded-lg shadow-md flex flex-col justify-between"
                 style={{ backgroundColor: "#ED1B23", position: "relative" }}
@@ -108,7 +114,6 @@ export default function OrgPage() {
                   </h4>
                   <div className="absolute top-[43px] left-[130px] w-42 h-0.5 bg-white"></div>
                 </div>
-
                 <div className="text-right">
                   <p className="text-white text-sm">PANTONE 485 C</p>
                   <p className="text-white text-sm">CMYK 0/100/100/0</p>
@@ -117,6 +122,7 @@ export default function OrgPage() {
                 </div>
               </div>
 
+              {/* BLUE */}
               <div
                 className="w-80 p-6 rounded-lg shadow-md flex flex-col justify-between"
                 style={{ backgroundColor: "#2E3092", position: "relative" }}
@@ -129,7 +135,6 @@ export default function OrgPage() {
                   </h4>
                   <div className="absolute top-[43px] left-[130px] w-42 h-0.5 bg-white"></div>
                 </div>
-
                 <div className="text-right">
                   <p className="text-white text-sm">PANTONE 2736 C</p>
                   <p className="text-white text-sm">CMYK 100/100/0/39</p>
@@ -141,6 +146,7 @@ export default function OrgPage() {
           </motion.div>
         </div>
       </main>
+
       <hr className="my-8 border-gray-200 w-full" />
     </Layout>
   );
