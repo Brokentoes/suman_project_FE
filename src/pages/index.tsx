@@ -304,14 +304,14 @@ export default function HomePage({ content }: HomePageProps) {
             <br />
             <br />
             <br />
-            <br />
             <h2 className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide text-gray-900 leading-tight mb-5">
-              고객 맞춤형 장비/제조 <br />
+              고객 맞춤형 장비/제조
+              <br />
               서비스를 제공합니다
             </h2>
 
             <br />
-            <p className="text-xl text-gray-700 leading-relaxed mb-8">
+            <p className="text-2xl text-gray-700 leading-relaxed mb-8">
               수만은 고객의 특정한 요구사항을 면밀히 분석하여 <br />
               최적화된 맞춤형 장비 및 설비, 최고 품질의 정밀 가공 부품을
               제공함으로써
@@ -411,7 +411,7 @@ export default function HomePage({ content }: HomePageProps) {
               Contact us
             </h2>
             <Link href="/support/contact">
-              <button className="pointer-events-auto border border-gray-300 text-xs md:text-xs lg:text-sm text-white px-4 py-1 lg:px-12 lg:py-0.8 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
+              <button className="cursor-pointer pointer-events-auto border border-gray-300 text-xs md:text-xs lg:text-sm text-white px-4 py-1 lg:px-12 lg:py-0.8 flex items-center gap-2 hover:bg-gray-300 hover:text-black transition tracking-wide">
                 문의하기{" "}
                 <span className="text-xs md:text-sm lg:text-base">→</span>
               </button>

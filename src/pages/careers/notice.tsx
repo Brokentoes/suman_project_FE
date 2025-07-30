@@ -5,6 +5,7 @@ import BreadcrumbSection from "@/components/BreadcrumbSection";
 import HeroSection from "@/components/HeroSection";
 import Link from "next/link";
 import { useLangStore } from "@/stores/langStore";
+import Head from "next/head";
 
 const RecruitmentBoard: React.FC = () => {
   const [recruitments, setRecruitments] = useState<Recruitment[]>([]);
@@ -80,6 +81,9 @@ const RecruitmentBoard: React.FC = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>채용공고 | 수만</title>
+      </Head>
       <HeroSection
         title="채용공고"
         subtitle="Recruit"
