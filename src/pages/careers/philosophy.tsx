@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Herotext, traits as traitData } from "@/data/philosophy";
 import { useLangStore } from "@/stores/langStore";
 import Head from "next/head";
+import Link from "next/link";
 
 // TalentCard 컴포넌트
 function TalentCard({
@@ -143,15 +144,15 @@ export default function TalentPage() {
                 </div>
               </div>
               <div className="mt-12">
-                <a 
+                <Link
                   href="/careers/notice"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-colors duration-200"
                 >
-                  <span>{lang === 'KOR'? '지원하기': 'Apply Now' }</span>
+                  <span>{lang === 'KOR' ? '지원하기' : 'Apply Now'}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
         </div>
