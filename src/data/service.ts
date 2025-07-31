@@ -67,6 +67,8 @@ export const serviceContent = {
         image: "/images/business/service/service_mob.png",
       },
     ],
+    footerText:
+      "고정밀 부품 / 모듈 설계 / 맞춤형 설비제작기술 / 고정밀 가공기술 / 모듈 제작 기술 / 솔루션 서비스 기술 융합",
   },
 
   // ----------------------------------------------
@@ -142,5 +144,7 @@ export const serviceContent = {
         image: "/images/business/service/service_mob.png",
       },
     ],
+    footerText:
+      "Integration of Precision Parts / Module Design / Custom Equipment Manufacturing / Precision Machining / Solution Services",
   },
 };

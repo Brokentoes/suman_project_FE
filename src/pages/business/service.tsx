@@ -7,18 +7,26 @@ import { useState } from "react";
 import { serviceContent } from "@/data/service";
 import { useLangStore } from "@/stores/langStore";
 import Head from "next/head";
-interface sectionList {
-  title: string;
-  subtitle: string;
+
+interface SectionList {
+  maintitle: string;
+  mainsubtitle: string;
+  production: string;
+  measurement: string;
+  process: string;
+  processsub: string;
+  production2: string;
+  production2sub: string;
 }
+
 
 export default function ServicePage() {
   const [showAllEquipment, setShowAllEquipment] = useState(false);
   const { lang } = useLangStore();
-  const { equipmentList, measurementEquipmentList, productCategories } = 
+  const { equipmentList, measurementEquipmentList, productCategories, footerText } =
     serviceContent[lang];
   const allEquipment = [...equipmentList, ...measurementEquipmentList];
-  const section = serviceContent[lang].sectionList?.[0];
+  const section: SectionList | undefined = serviceContent[lang].sectionList?.[0];
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -42,17 +50,17 @@ export default function ServicePage() {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>기술소개 | 수만</title>
-    </Head>
-    <Layout>
-      <HeroSection
-        title="기술 소개"
-        subtitle="SUMAN"
-        backgroundImage="/images/business_hero.png"
-      />
+      </Head>
+      <Layout>
+        <HeroSection
+          title="기술 소개"
+          subtitle="SUMAN"
+          backgroundImage="/images/business_hero.png"
+        />
 
-      <BreadcrumbSection path="사업분야 > 기술소개" />
+        <BreadcrumbSection path="사업분야 > 기술소개" />
 
       {/* 1. Main Equipment Section  */}
       <div className="bg-white py-20">
@@ -79,7 +87,6 @@ export default function ServicePage() {
           </motion.p>
         </div>
       </div>
-
       {/* 2. 생산가공 / 조립 & 신뢰성 (측정 / 분석) Section */}
       <div className="relative z-0 bg-[#000B24] pt-20 pb-60">
          <div className="absolute inset-0 pointer-events-none">
@@ -110,6 +117,7 @@ export default function ServicePage() {
             >
               {section?.production}
             </motion.button>
+
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {equipmentList.map((equipment, index) => (
                 <motion.div
@@ -125,7 +133,7 @@ export default function ServicePage() {
                       <Image
                         src={equipment.image}
                         alt={equipment.name}
-                        layout="fill"
+                        fill
                         style={{objectFit:"cover"}}
                         className="rounded-[10px]"
                       />
@@ -161,7 +169,7 @@ export default function ServicePage() {
                     <Image
                       src={equipment.image}
                       alt={equipment.name}
-                      layout="fill"
+                      fill
                       className="object-cover rounded-[10px]"
                     />
                   )}
@@ -186,8 +194,8 @@ export default function ServicePage() {
               </button>
             </div>
           )}
+          </div>
         </div>
-      </div>
 
       {/* 3. Process Section */}
       <motion.div
@@ -212,84 +220,81 @@ export default function ServicePage() {
                   <Image
                     src="/images/service_design.png"
                     alt="컨셉 및 개발 / 가공설계"
-                    layout="fill"
-                    objectFit="contain"
+                    fill
+                    className="object-contain"
                   />
+
                 </div>
                 <p className="text-lg font-semibold">컨셉 및 개발 / 가공설계</p>
-              </div>
-              <div className="hidden lg:flex items-center justify-center">
-                <span className="text-4xl text-gray-400">→</span>
-              </div>
-
-              {/* 2단계: 발주 (소재/부품)*/}
-              <div className="flex flex-col items-center text-center">
-                <div className="w-24 h-24 relative mb-4">
-                  <Image
-                    src="/images/service_order.png"
-                    alt="발주 (소재/부품)"
-                    layout="fill"
-                    objectFit="contain"
-                  />
                 </div>
-                <p className="text-lg font-semibold">
-                  발주
-                  <br />
-                  (소재/부품)
-                </p>
-              </div>
-              <div className="hidden lg:flex items-center justify-center">
-                <span className="text-4xl text-gray-400">→</span>
-              </div>
-
-              {/* 3단계: 가공/제작*/}
-              <div className="flex flex-col items-center text-center">
-                <div className="w-24 h-24 relative mb-4">
-                  <Image
-                    src="/images/service_product.png"
-                    alt="가공/제작"
-                    layout="fill"
-                    objectFit="contain"
-                  />
+                <div className="hidden lg:flex items-center justify-center">
+                  <span className="text-4xl text-gray-400">→</span>
                 </div>
-                <p className="text-lg font-semibold">가공/제작</p>
-              </div>
-              <div className="hidden lg:flex items-center justify-center">
-                <span className="text-4xl text-gray-400">→</span>
-              </div>
 
-              {/* 4단계: 최종검사*/}
-              <div className="flex flex-col items-center text-center">
-                <div className="w-24 h-24 relative mb-4">
-                  <Image
-                    src="/images/service_test.png"
-                    alt="최종검사"
-                    layout="fill"
-                    objectFit="contain"
-                  />
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-24 h-24 relative mb-4">
+                    <Image
+                      src="/images/service_order.png"
+                      alt="발주 (소재/부품)"
+                      fill
+                      objectFit="contain"
+                    />
+                  </div>
+                  <p className="text-lg font-semibold">
+                    발주
+                    <br />
+                    (소재/부품)
+                  </p>
                 </div>
-                <p className="text-lg font-semibold">최종검사</p>
-              </div>
-              <div className="hidden lg:flex items-center justify-center">
-                <span className="text-4xl text-gray-400">→</span>
-              </div>
+                <div className="hidden lg:flex items-center justify-center">
+                  <span className="text-4xl text-gray-400">→</span>
+                </div>
 
-              {/* 5단계: 납품 및 피드백*/}
-              <div className="flex flex-col items-center text-center">
-                <div className="w-24 h-24 relative mb-4">
-                  <Image
-                    src="/images/service_deliver.png"
-                    alt="납품 및 피드백"
-                    layout="fill"
-                    objectFit="contain"
-                  />
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-24 h-24 relative mb-4">
+                    <Image
+                      src="/images/service_product.png"
+                      alt="가공/제작"
+                      fill
+                      objectFit="contain"
+                    />
+                  </div>
+                  <p className="text-lg font-semibold">가공/제작</p>
                 </div>
-                <p className="text-lg font-semibold">납품 및 피드백</p>
+                <div className="hidden lg:flex items-center justify-center">
+                  <span className="text-4xl text-gray-400">→</span>
+                </div>
+
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-24 h-24 relative mb-4">
+                    <Image
+                      src="/images/service_test.png"
+                      alt="최종검사"
+                      fill
+                      objectFit="contain"
+                    />
+                  </div>
+                  <p className="text-lg font-semibold">최종검사</p>
+                </div>
+                <div className="hidden lg:flex items-center justify-center">
+                  <span className="text-4xl text-gray-400">→</span>
+                </div>
+
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-24 h-24 relative mb-4">
+                    <Image
+                      src="/images/service_deliver.png"
+                      alt="납품 및 피드백"
+                      fill
+                      objectFit="contain"
+                    />
+                  </div>
+                  <p className="text-lg font-semibold">납품 및 피드백</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
 
       {/* 4. Products Section - Process 섹션 위에 겹쳐지도록 설정 */}
       <motion.div
@@ -338,7 +343,7 @@ export default function ServicePage() {
                   <Image
                     src={product.image}
                     alt={product.name}
-                    layout="fill"
+                    fill
                     className="object-contain"
                   />
                 </div>
@@ -365,11 +370,12 @@ export default function ServicePage() {
             viewport={{ once: true, amount: 0.3 }}
             variants={itemVariants}
           >
-            고정밀 부품 / 모듈 설계 / 맞춤형 설비제작기술 / 고정밀 가공기술 / 모듈 제작 기술 / 솔루션 서비스 기술 융합
+            {footerText}          
           </motion.p>
         </div>{" "}
       </motion.div>
     </Layout>
+
     </>
   );
 }
