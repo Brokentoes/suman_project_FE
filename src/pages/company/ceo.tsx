@@ -94,8 +94,8 @@ export default function CeoPage() {
             <p className="mb-4 text-lg whitespace-pre-line">{body}</p>
             <p className="mb-4 text-lg">{closing}</p>
             {/* 서명 영역 - 이제 별도의 motion.div가 아님 */}
-            <div className="signature-area text-lg font-semibold text-gray-800 mt-8">
-              (주) 수만 그룹 대표이사 임태형{" "}
+            <div className="signature-area text-lg  text-gray-800 mt-8">
+              (주) 수만 대표이사 <strong>임태형</strong>{" "}
               {/* <Image
                 src="/images/signature.png"
                 alt="대표이사 서명"
