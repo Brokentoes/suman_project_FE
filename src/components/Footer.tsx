@@ -19,6 +19,7 @@ const menuGroups = {
         { label: "조직도", href: "/company/org" },
         { label: "CI", href: "/company/ci" },
         { label: "오시는 길", href: "/company/location" },
+        { label: "인증 현황", href: "/company/certifications" },
       ],
     },
     {
@@ -52,6 +53,7 @@ const menuGroups = {
         { label: "Organization", href: "/eng/company/org" },
         { label: "CI", href: "/eng/company/ci" },
         { label: "Location", href: "/eng/company/location" },
+        { label: "Certifications", href: "/eng/company/certifications" },
       ],
     },
     {

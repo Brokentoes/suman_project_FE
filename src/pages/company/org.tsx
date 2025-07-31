@@ -23,7 +23,7 @@ export default function OrgPage() {
       <HeroSection
         title="조직도"
         subtitle="Organization Chart"
-        backgroundImage="/images/company_hero.png"
+        backgroundImage="/images/sub_banner/company_banner.png"
       />
 
       <BreadcrumbSection path="회사소개 > 조직도" />
@@ -31,7 +31,7 @@ export default function OrgPage() {
       <main className="content-wrapper py-20 px-4 md:px-8 bg-white flex justify-center items-center">
         <div className="max-w-7xl mx-auto w-full flex flex-col items-center">
           <motion.div
-            className="w-full max-w-4xl"
+            className="w-full max-w-7xl" // Changed from max-w-4xl to max-w-7xl
             variants={fadeIn}
             initial="hidden"
             whileInView="visible"

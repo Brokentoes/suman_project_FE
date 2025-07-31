@@ -1,10 +1,11 @@
+// src/components/HeroSection.tsx
 import { motion } from "framer-motion";
-import Image from "next/image"; // 이미지 최적화를 위한 Next.js Image 컴포넌트 임포트
+import Image from "next/image";
 
 interface HeroSectionProps {
-  title: React.ReactNode; // 히어로 섹션의 메인 제목
-  subtitle?: React.ReactNode; // 히어로 섹션의 서브 제목
-  backgroundImage: string; // 배경 이미지 경로
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  backgroundImage: string;
 }
 
 export default function HeroSection({
@@ -17,20 +18,23 @@ export default function HeroSection({
       <Image
         src={backgroundImage}
         alt={`${title} 배경 이미지`}
-        fill // 부모 요소에 맞게 이미지를 채움
-        priority // 이 이미지를 우선적으로 로드 (LCP 최적화)
-        className="object-cover object-center" // 이미지가 섹션에 꽉 차도록 설정
+        fill
+        priority
+        className="object-cover object-center"
       />
 
-      {/* 어둡게 오버레이 */}
+      {/* 어둡게 오버레이 - motion.div는 z-index, position, w-full 역할만 남김 */}
       <motion.div
-        className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full"
+        className="relative z-10 w-full"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-2">{title}</h1>
-        <p className="text-lg md:text-xl font-medium">{subtitle}</p>
+        {/* 새로운 div를 추가하여 max-w-7xl mx-auto와 헤더와 동일한 패딩 적용 */}
+        <div className="max-w-7xl mx-auto px-6 md:px-[60px] lg:px-[0px]">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2">{title}</h1>
+          <p className="text-lg md:text-xl font-medium">{subtitle}</p>
+        </div>
       </motion.div>
     </section>
   );
