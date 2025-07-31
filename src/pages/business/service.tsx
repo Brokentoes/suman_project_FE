@@ -64,23 +64,27 @@ export default function ServicePage() {
 
   const productCategories = [
     {
+      label: "Secondary Battery",
       name: "이차전지",
-      subtitle: "정밀 부품 / 모듈 설계",
+      subtitle: "고정밀 부품 / 모듈 설계",
       image: "/images/business/service/service_battery.png",
     },
     {
-      name: "전기전자",
-      subtitle: "정밀 부품 / 모듈 설계기술",
+      label: "Electrical & Electronics",
+      name: "전기·전자",
+      subtitle: "고정밀 부품 / 맞춤형 설비제작기술",
       image: "/images/business/service/service_elec.png",
     },
     {
+      label: "Semiconductor",
       name: "반도체",
-      subtitle: "정밀 부품 / 모듈 설계 / 자동화 기술 통합",
+      subtitle: "고정밀 부품 / 솔루션 서비스 기술 융합",
       image: "/images/business/service/service_semi.png",
     },
     {
+      label: "Mobility",
       name: "자동차",
-      subtitle: "정밀 가공 기술",
+      subtitle: "고정밀 가공기술",
       image: "/images/business/service/service_mob.png",
     },
   ];
@@ -104,7 +108,7 @@ export default function ServicePage() {
 
       {/* 1. Main Equipment Section  */}
       <div className="bg-white py-20">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
           <motion.h2
             className="text-base sm:text-lg lg:text-2xl font-semibold tracking-wide mb-10"
             initial="hidden"
@@ -139,9 +143,8 @@ export default function ServicePage() {
               priority
             />
           </div>
-        {/* <div className="absolute inset-0 bg-black opacity-10 z-0"></div> */}
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="max-w-7xl mx-auto ">
           <motion.div
             className={`relative transition-all duration-500 ease-in-out ${
               showAllEquipment
@@ -150,9 +153,15 @@ export default function ServicePage() {
             }`}
           >
             {/* 생산가공 / 조립 */}
-            <button className="text-base sm:text-lg bg-[#505050]/40 text-white rounded-full px-6 py-1 mb-16">
+            <motion.button
+              className="text-base sm:text-lg bg-[#505050]/40 text-white rounded-full px-6 py-1 mb-16"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={leftAlignTextVariants}
+            >
               정밀가공 / 조립
-            </button>
+            </motion.button>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {equipmentList.map((equipment, index) => (
                 <motion.div
@@ -336,8 +345,8 @@ export default function ServicePage() {
 
       {/* 4. Products Section - Process 섹션 위에 겹쳐지도록 설정 */}
       <motion.div
-        className="bg-gray-800 py-20 px-4 md:px-8 text-white rounded-t-[60px] mt-[-200px] relative z-20 overflow-hidden" // overflow-hidden 추가
-        initial={{ y: 200, opacity: 0 }} // Product 섹션은 Process 섹션 위에 겹치므로 Process 섹션과 같은 높이로 시작
+        className="relative z-20 bg-[#000B24] pt-20 pb-35 px-4 md:px-8 rounded-t-[60px] mt-[-100px] overflow-hidden"
+        initial={{ y: 200, opacity: 0 }}
         whileInView={{
           y: 0,
           opacity: 1,
@@ -345,25 +354,18 @@ export default function ServicePage() {
         }}
         viewport={{ once: true, amount: 0.3 }}
       >
-        {/* 배경 이미지와 오버레이를 위한 div 추가 */}
-        <div
-          className="absolute inset-0" // 부모 motion.div에 대한 절대 위치 설정
-          style={{
-            backgroundImage: `url('/images/service_product_bg.png')`, // 배경 이미지 경로
-            backgroundSize: "cover", // 이미지가 요소를 꽉 채우도록 설정
-            backgroundPosition: "center", // 이미지를 가운데 정렬
-            backgroundRepeat: "no-repeat", // 이미지가 반복되지 않도록 설정
-          }}
-        >
-          {/* 어둡게 할 오버레이 div 추가 */}
-          <div className="absolute inset-0 bg-gray-800 opacity-90"></div>{" "}
-          {/* 검은색 반투명 오버레이 */}
+        
+        {/* 배경 이미지 */}
+
+        <div 
+          className="absolute inset-0 pointer-events-none flex bg-no-repeat bg-top bg-contain"
+          style={{backgroundImage:"url('/images/business/Group 124.png')"}}>
         </div>
         <div className="max-w-7xl mx-auto relative z-10">
           {" "}
           {/* This div needs to remain to center the content within the full-width section */}
-          <h2 className="text-base sm:text-lg lg:text-2xl font-semibold tracking-wide mb-10">Products</h2>
-          <p className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide leading-[1.3]">
+          <h2 className="text-white text-base sm:text-lg lg:text-2xl font-semibold tracking-wide mb-10">Products</h2>
+          <p className="text-white text-xl md:text-2xl lg:text-4xl font-bold tracking-wide leading-[1.3] mb-12">
             정밀 부품, 모듈, 자동화 장비까지
             <br />
             미래 산업에 필요한 핵심 솔루션을 제조합니다
@@ -375,45 +377,50 @@ export default function ServicePage() {
             viewport={{ once: true, amount: 0.3}}
             variants={{
               visible: {
-                transition: {
-                  staggerChildren: 0.1,
-                },
+                transition: {staggerChildren: 0.1},
               },
             }}
           >
             {productCategories.map((product, index) => (
               <motion.div
                 key={index}
-                className="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out group" /* Added 'group' class */
+                className="bg-[#7E7E7E]/25 rounded-[30px] overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out group mt-15 hover:bg-white"
                 variants={itemVariants}
               >
-                <div className="relative w-full h-48">
+                <div className="relative w-full h-44 mx-auto mt-4">
                   <Image
                     src={product.image}
                     alt={product.name}
                     layout="fill"
-                    objectFit="cover"
+                    className="object-contain"
                   />
                 </div>
-                <div className="p-6 transition-colors duration-300 group-hover:bg-white">
-                  {" "}
-                  {/* Added hover:bg-white */}
-                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-black transition-colors duration-300">
-                    {" "}
-                    {/* Added group-hover:text-black */}
+                <div className="p-4">
+                  {product.label && (
+                    <span className="tracking-wide font-light text-[#CACACA] text-base transition-colors duration-300 group-hover:text-gray-700">
+                      {product.label}
+                    </span>
+                  )}
+                  <h3 className="tracking-wide text-2xl font-semibold text-white mb-1 mt-5 transition-colors duration-300 group-hover:text-black">
                     {product.name}
                   </h3>
-                  <p className="text-gray-400 text-sm group-hover:text-gray-700 transition-colors duration-300">
-                    {" "}
-                    {/* Changed group-hover:text-gray-700 for better contrast */}
+                  <p className="tracking-wide font-light text-[#CACACA] text-sm mb-7 transition-colors duration-300 group-hover:text-gray-700">
                     {product.subtitle}
                   </p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
+          <motion.p
+            className="text-[#B2B2B2] font-light text-sm md:text-base mt-7 text-right tracking-wide"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={itemVariants}
+          >
+            고정밀 부품 / 모듈 설계 / 맞춤형 설비제작기술 / 고정밀 가공기술 / 모듈 제작 기술 / 솔루션 서비스 기술 융합
+          </motion.p>
         </div>{" "}
-        {/* closing the max-w-7xl mx-auto div for centering content */}
       </motion.div>
     </Layout>
     </>
