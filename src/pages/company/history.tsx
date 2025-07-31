@@ -1,4 +1,3 @@
-// history.tsx
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import BreadcrumbSection from "@/components/BreadcrumbSection";
@@ -28,15 +27,6 @@ export default function HistoryPage() {
         staggerChildren: 0.1,
         delayChildren: 0.2,
       },
-    },
-  };
-
-  const timelineItemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.5, ease: "easeOut" } as Transition,
     },
   };
 
@@ -175,12 +165,23 @@ export default function HistoryPage() {
                       {entry.items.map((item, idx) => (
                         <motion.div
                           key={idx}
-                          className={`timeline-item mb-3 relative ml-[90px] md:ml-[155px]`}
-                          variants={timelineItemVariants}
+                          className="timeline-item mb-3 relative ml-[90px] md:ml-[155px]"
+                          initial={{ opacity: 0, x: -30, y: -10 }}
+                          whileInView={{ opacity: 1, x: 0, y: 0 }}
+                          transition={{
+                            duration: 0.25,
+                            delay: idx * 0.05,
+                            ease: "easeOut",
+                          }}
+                          viewport={{ once: true }}
                         >
-                          <p
-                            className={`text-lg font-semibold tracking-wide ${item.includes("⦁") ? "text-black font-bold" : item.includes("➔") ? "text-[#8C8C8C] text-base" : "text-[#4C4C4C]"}`}
-                          >
+                          <p className={`text-lg font-semibold tracking-wide ${
+                            item.includes("⦁")
+                              ? "text-black font-bold"
+                              : item.includes("➔")
+                              ? "text-[#8C8C8C] text-base"
+                              : "text-[#4C4C4C]"
+                          }`}>
                             {item}
                           </p>
                         </motion.div>
@@ -188,6 +189,8 @@ export default function HistoryPage() {
                     </motion.div>
                   ))}
                 </motion.div>
+
+                {/* 점들 */}
                 <motion.div className="absolute left-0 top-[1%] w-12 h-12 bg-[#0f172a] rounded-full border-[12px] border-gray-200 ml-32" initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.9, ease: "easeOut" }} viewport={{ once: true }} />
                 <motion.div className="absolute left-0 top-[22%] w-12 h-12 bg-[#0f172a] rounded-full border-[12px] border-gray-200 ml-32" initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }} viewport={{ once: true }} />
                 <motion.div className="absolute left-0 top-[61%] w-12 h-12 bg-[#0f172a] rounded-full border-[12px] border-gray-200 ml-32" initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }} viewport={{ once: true }} />
