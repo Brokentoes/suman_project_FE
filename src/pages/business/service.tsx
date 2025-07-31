@@ -4,9 +4,21 @@ import BreadcrumbSection from "@/components/BreadcrumbSection";
 import { motion, type Transition } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import { serviceContent } from "@/data/service";
+import { useLangStore } from "@/stores/langStore";
+import Head from "next/head";
+interface sectionList {
+  title: string;
+  subtitle: string;
+}
 
 export default function ServicePage() {
   const [showAllEquipment, setShowAllEquipment] = useState(false);
+  const { lang } = useLangStore();
+  const { equipmentList, measurementEquipmentList, productCategories } = 
+    serviceContent[lang];
+  const allEquipment = [...equipmentList, ...measurementEquipmentList];
+  const section = serviceContent[lang].sectionList?.[0];
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -26,77 +38,13 @@ export default function ServicePage() {
     },
   };
 
-  const equipmentList = [
-    { name: "85호기", image: "/images/business/equipment/equip1.png" },
-    { name: "조각기", image: "/images/business/equipment/equip2.png" },
-    { name: "MCT", image: "/images/business/equipment/equip3.png" },
-    { name: "레이저마킹기", image: "/images/business/equipment/equip4.png" },
-    { name: "자동포장기", image: "/images/business/equipment/equip5.png" },
-    { name: "CNC 가공기", image: "/images/business/equipment/equip6.png" },
-    { name: "CNC ROUTER", image: "/images/business/equipment/equip7.png" },
-    {
-      name: "3D PRINT\n대면적 3D PRINT",
-      image: "/images/business/equipment/equip8.png",
-    },
-    {
-      name: "CO2 LAZER CUTTER",
-      image: "/images/business/equipment/equip2.png",
-    },
-    {
-      name: "DIGITAL FLAT CUTTER",
-      image: "/images/business/equipment/equip9.png",
-    },
-    { name: "CNC 가공기", image: "/images/business/equipment/equip10.png" },
-    { name: "CNC ROUTER", image: "/images/business/equipment/equip4.png" },
-  ];
-
-  const measurementEquipmentList = [
-    { name: "3D 측정기", image: "/images/business/equipment/equip11.png" }, // Changed name
-    {
-      name: "투영기", // Changed name
-      image: "/images/business/equipment/equip12.png",
-    },
-    { name: "계측기", image: "/images/business/equipment/equip1.png" }, // Changed name
-  ];
-
-  // Combine both lists for easier management of "show all" logic
-  const allEquipment = [...equipmentList, ...measurementEquipmentList];
-
-  const productCategories = [
-    {
-      label: "Secondary Battery",
-      name: "이차전지",
-      subtitle: "고정밀 부품 / 모듈 설계",
-      image: "/images/business/service/service_battery.png",
-    },
-    {
-      label: "Electrical & Electronics",
-      name: "전기·전자",
-      subtitle: "고정밀 부품 / 맞춤형 설비제작기술",
-      image: "/images/business/service/service_elec.png",
-    },
-    {
-      label: "Semiconductor",
-      name: "반도체",
-      subtitle: "고정밀 부품 / 솔루션 서비스 기술 융합",
-      image: "/images/business/service/service_semi.png",
-    },
-    {
-      label: "Mobility",
-      name: "자동차",
-      subtitle: "고정밀 가공기술",
-      image: "/images/business/service/service_mob.png",
-    },
-  ];
-
-  // 초기에 보여줄 설비 아이템 개수 (5열 2행)
-  const initialDisplayCount = 10; // This will now apply to the combined list
+  const initialDisplayCount = 10;
 
   return (
     <>
-    <head>
+    <Head>
         <title>기술소개 | 수만</title>
-    </head>
+    </Head>
     <Layout>
       <HeroSection
         title="기술 소개"
@@ -125,9 +73,9 @@ export default function ServicePage() {
             viewport={{ once: true, amount: 0.3 }}
             variants={leftAlignTextVariants}
           >
-            최적의 생산 환경을 위한
+            {section?.maintitle}
             <br />
-            다양한 설비를 갖추고 있습니다
+            {section?.mainsubtitle}
           </motion.p>
         </div>
       </div>
@@ -160,7 +108,7 @@ export default function ServicePage() {
               viewport={{ once: true, amount: 0.3 }}
               variants={leftAlignTextVariants}
             >
-              정밀가공 / 조립
+              {section?.production}
             </motion.button>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {equipmentList.map((equipment, index) => (
@@ -194,7 +142,7 @@ export default function ServicePage() {
 
             {/* 신뢰성 (측정 / 분석) 섹션 */}
             <button className="text-base sm:text-lg bg-[#505050]/40 text-white rounded-full px-6 py-1 mb-16 mt-28">
-              신뢰성 (측정 / 분석)
+              {section?.measurement}
             </button>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {" "}
@@ -251,9 +199,9 @@ export default function ServicePage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-base sm:text-lg lg:text-2xl font-semibold tracking-wide mt-10 mb-10">Process</h2>
           <p className="text-xl md:text-2xl lg:text-4xl font-bold tracking-wide leading-[1.3]">
-            제조 및 품질 프로세스는 자재 선정부터 최종 검사까지
+            {section?.process}
             <br />
-            제품의 신뢰성과 고객 만족을 보장하도록 설계되어 있습니다
+            {section?.processsub}
           </p>
 
           <div className="mt-16 flex flex-col items-center">
@@ -356,7 +304,6 @@ export default function ServicePage() {
       >
         
         {/* 배경 이미지 */}
-
         <div 
           className="absolute inset-0 pointer-events-none flex bg-no-repeat bg-top bg-contain"
           style={{backgroundImage:"url('/images/business/Group 124.png')"}}>
@@ -366,9 +313,9 @@ export default function ServicePage() {
           {/* This div needs to remain to center the content within the full-width section */}
           <h2 className="text-white text-base sm:text-lg lg:text-2xl font-semibold tracking-wide mb-10">Products</h2>
           <p className="text-white text-xl md:text-2xl lg:text-4xl font-bold tracking-wide leading-[1.3] mb-12">
-            정밀 부품, 모듈, 자동화 장비까지
+            {section?.production2}
             <br />
-            미래 산업에 필요한 핵심 솔루션을 제조합니다
+            {section?.production2sub}
           </p>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
